@@ -3,7 +3,7 @@ services:
     name: m2isda-2027
     runtime: python
     plan: free
-    buildCommand: "./build.sh"
+    buildCommand: "bash build.sh"
     startCommand: "gunicorn config.wsgi:application"
     healthCheckPath: /
     envVars:
