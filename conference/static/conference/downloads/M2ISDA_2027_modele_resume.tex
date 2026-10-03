@@ -1,0 +1,71 @@
+% =====================================================================
+%  M2ISDA 2027 — Modele de resume / Abstract template
+%  2e Conference internationale de modelisation mathematique
+%  et d'innovations en sciences des donnees avancees
+%  19 - 21 janvier 2027, Universite de Djibouti
+%  Envoi du resume : lamo@univ.edu.dj   —   avant le 5 janvier 2027
+%  Longueur : une page maximum, references comprises.
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french,english]{babel}   % langue principale en dernier
+\usepackage{amsmath,amssymb}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\pagestyle{empty}
+
+\begin{document}
+
+% ---------------------------------------------------------------- TITRE
+\begin{center}
+  {\Large\bfseries Titre de la communication\par}
+  \vspace{4mm}
+
+  % Auteur presentant : souligner le nom
+  \underline{Prenom Nom}$^{1}$, Prenom Nom$^{2}$, Prenom Nom$^{1,3}$
+  \vspace{2mm}
+
+  {\small
+   $^{1}$ Laboratoire, Universite, Ville, Pays\\
+   $^{2}$ Laboratoire, Universite, Ville, Pays\\
+   $^{3}$ Institution, Ville, Pays\\
+   \texttt{auteur.correspondant@exemple.org}
+  }
+\end{center}
+\vspace{2mm}
+\hrule
+\vspace{4mm}
+
+% ------------------------------------------------------------- RESUME
+\noindent\textbf{Resume.}
+Exposez en un paragraphe le probleme traite, le modele ou la methode
+proposee, les donnees utilisees et les principaux resultats obtenus.
+Les equations sont admises, par exemple
+\begin{equation*}
+  \frac{\partial u}{\partial t} = \Delta u + f(u), \qquad u(0)=u_{0},
+\end{equation*}
+ainsi qu'une figure ou un tableau si la place le permet.
+Terminez par la portee des resultats pour la discipline ou pour
+la decision publique.
+
+\vspace{3mm}
+\noindent\textbf{Mots-cles :} mot-cle 1, mot-cle 2, mot-cle 3, mot-cle 4.
+
+\vspace{3mm}
+\noindent\textbf{Axe thematique :} indiquer l'un des huit axes de la conference.
+
+\vspace{1mm}
+\noindent\textbf{Type de communication souhaite :} orale $\square$ \quad poster $\square$
+
+% --------------------------------------------------------- REFERENCES
+\vspace{4mm}
+\begin{thebibliography}{9}\footnotesize
+\bibitem{ref1} Nom, P., Nom, P. (2026).
+  Titre de l'article. \emph{Nom de la revue}, 12(3), 145--167.
+\bibitem{ref2} Nom, P. (2024).
+  \emph{Titre de l'ouvrage}. Editeur, Ville.
+\end{thebibliography}
+
+\end{document}
