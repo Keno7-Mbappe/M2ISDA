@@ -11,3 +11,7 @@ class IndexTests(TestCase):
         response = self.client.get("/", secure=True)
         self.assertNotContains(response, "{% static")
         self.assertNotContains(response, "{% verbatim")
+
+    def test_healthz(self):
+        response = self.client.get("/healthz", secure=True)
+        self.assertEqual(response.content, b"ok")
