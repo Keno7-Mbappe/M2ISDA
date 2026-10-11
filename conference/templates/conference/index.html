@@ -1,664 +1,484 @@
-{% load static %}<!doctype html>
+{% load static i18n_tags %}<!doctype html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>M2ISDA 2027</title>
-<meta name="description" content="2e Conférence internationale de modélisation mathématique et d’innovations en sciences des données avancées — 19-21 janvier 2027, Université de Djibouti.">
+<meta name="theme-color" content="#0E0F13">
+<title>M2ISDA 2027 — Djibouti, 19–21 janvier 2027</title>
+<meta name="description" content="M2ISDA 2027 : 2e conférence internationale de modélisation mathématique et d’innovations en sciences des données avancées. Université de Djibouti, 19–21 janvier 2027.">
+<meta property="og:title" content="M2ISDA 2027 — Djibouti, 19–21 janvier 2027">
+<meta property="og:description" content="Modélisation mathématique et innovations en sciences des données avancées. Appel à communications ouvert jusqu’au 5 janvier 2027.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{% static 'conference/img/poster-fr.jpg' %}">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230E0F13'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='40' text-anchor='middle' fill='%23F2EDE4'%3EM%3C/text%3E%3Ccircle cx='51' cy='14' r='6' fill='%23E4472B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Poppins:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..700&family=Hanken+Grotesk:wght@300..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="{% static 'conference/css/site.css' %}">
+<script>
+(function(){
+  var h=document.documentElement; h.classList.add('js');
+  try{ if(!sessionStorage.getItem('m2isda_intro') && !matchMedia('(prefers-reduced-motion: reduce)').matches) h.classList.add('intro'); }catch(e){}
+})();
+</script>
 </head>
 <body>
+<a class="skip" href="#conference">{% t "Aller au contenu" "Skip to content" %}</a>
 
-<header class="topbar">
-  <div class="inner">
-    <div class="brand">
-      <img src="{% static 'conference/img/laboratoire-lamo.png' %}" alt="Laboratoire LAMO">
-      <span class="rule"></span>
-      <img src="{% static 'conference/img/universite-de-djibouti.png' %}" alt="Université de Djibouti">
-      <span class="brand-txt">M2ISDA&nbsp;<b>2027</b></span>
-    </div>
+<div id="root" class="root">
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-top"><span>M2ISDA — {% t "2ᵉ édition" "2nd edition" %}</span><span>Djibouti</span></div>
+  <div class="loader-mid">
+    <div class="loader-quote">{% t "Modéliser l’incertain." "Modelling uncertainty." %}</div>
+    <div class="loader-num" id="loader-num">0</div>
+  </div>
+  <div class="loader-bar" id="loader-bar"></div>
+</div>
+
+<div class="cur-ring" id="cur-ring" aria-hidden="true"></div>
+<div class="cur-dot" id="cur-dot" aria-hidden="true"></div>
+<div class="float-pic" id="float-pic" aria-hidden="true"><img id="float-img" src="{% static 'conference/img/p/djidjou.png' %}" alt=""><span></span></div>
+
+<nav class="nav" aria-label="Navigation principale">
+  <a class="nav-brand" href="#top"><span class="nav-logo">M2ISDA</span><span class="nav-year">2027</span></a>
+  <div class="nav-links">
+    <a href="#conference">{% t "Conférence" "Conference" %}</a>
+    <a href="#intervenants">{% t "Intervenants" "Speakers" %}</a>
+    <a href="#programme">Programme</a>
+    <a href="#axes">{% t "Axes" "Topics" %}</a>
+    <a href="#calendrier">{% t "Calendrier" "Calendar" %}</a>
+    <a href="#soumission">{% t "Soumission" "Submission" %}</a>
+    <a href="#comites">{% t "Comités" "Committees" %}</a>
+    <a href="#partenaires">{% t "Partenaires" "Partners" %}</a>
+  </div>
+  <div class="nav-right">
     <div class="lang" role="group" aria-label="Langue / Language">
-      <button type="button" id="btn-fr" aria-pressed="true">FR</button>
-      <button type="button" id="btn-en" aria-pressed="false">EN</button>
+      <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
     </div>
+    <a class="btn btn--red nav-cta" href="#inscription" data-magnetic>{% t "S’inscrire" "Register" %} <span aria-hidden="true">→</span></a>
+    <button type="button" class="nav-menu" id="menu-btn" aria-expanded="false" aria-controls="menu"><span data-en="Menu" id="menu-lbl">Menu</span></button>
+  </div>
+  <div class="nav-prog" id="nav-prog"></div>
+</nav>
+
+<div class="menu" id="menu" hidden>
+  <div class="menu-links">
+    <a data-in href="#conference"><i>01</i>{% t "La conférence" "The conference" %}</a>
+    <a data-in href="#intervenants"><i>02</i>{% t "Intervenants" "Speakers" %}</a>
+    <a data-in href="#programme"><i>03</i>Programme</a>
+    <a data-in href="#axes"><i>04</i>{% t "Axes" "Topics" %}</a>
+    <a data-in href="#calendrier"><i>05</i>{% t "Calendrier" "Calendar" %}</a>
+    <a data-in href="#soumission"><i>06</i>{% t "Soumission" "Submission" %}</a>
+    <a data-in href="#comites"><i>07</i>{% t "Comités" "Committees" %}</a>
+    <a data-in href="#inscription"><i>08</i>Inscription</a>
+    <a data-in href="#partenaires"><i>09</i>{% t "Partenaires" "Partners" %}</a>
+  </div>
+  <div class="menu-foot">
+    <div class="lang lang--menu" role="group" aria-label="Langue / Language">
+      <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <span>19 — 21 {% t "janvier" "January" %} 2027 · lamo@univ.edu.dj</span>
+  </div>
+</div>
+
+<!-- ============================ HERO ============================ -->
+<header id="top" class="hero">
+  <canvas class="hero-cv" id="hero-cv" aria-hidden="true"></canvas>
+  <div class="hero-vig"></div>
+  <div class="hero-grain"></div>
+
+  <div class="hero-in" id="hero-text">
+    <div class="hero-meta">
+      <span data-hero class="hero-eyebrow"><i></i>{% t "2ᵉ édition · Conférence internationale" "2nd edition · International conference" %}</span>
+      <span data-hero>11°35′ N — 43°09′ E · Djibouti</span>
+    </div>
+
+    <div>
+      <h1 class="hero-h1" aria-label="M2ISDA 2027">
+        <span class="hl" aria-hidden="true"><span data-letter>M</span></span><span class="hl" aria-hidden="true"><span data-letter>2</span></span><span class="hl" aria-hidden="true"><span data-letter>I</span></span><span class="hl" aria-hidden="true"><span data-letter>S</span></span><span class="hl" aria-hidden="true"><span data-letter>D</span></span><span class="hl" aria-hidden="true"><span data-letter>A</span></span><span class="hl hl--yr" aria-hidden="true"><span data-letter>’27</span></span>
+      </h1>
+      <p data-hero class="hero-sub">{% t "Modélisation mathématique & innovations en sciences des données avancées" "Mathematical modelling & innovations in advanced data sciences" %}</p>
+    </div>
+
+    <div class="hero-grid">
+      <div data-hero class="hero-cell">
+        <div class="mono-label">Dates</div>
+        <div class="hero-val">19 — 21 {% t "janvier" "January" %} 2027</div>
+      </div>
+      <div data-hero class="hero-cell">
+        <div class="mono-label">{% t "Lieu" "Venue" %}</div>
+        <div class="hero-val">{% t "Université de Djibouti" "University of Djibouti" %}</div>
+      </div>
+      <div data-hero class="hero-cell">
+        <div class="mono-label">{% t "Ouverture dans" "Opens in" %}</div>
+        <div class="countdown" id="countdown" aria-live="off">
+          <span><span id="cd-d">—</span><em>{% t "j" "d" %}</em></span>
+          <span><span id="cd-h">--</span><em>h</em></span>
+          <span><span id="cd-m">--</span><em>m</em></span>
+          <span><span id="cd-s">--</span><em>s</em></span>
+        </div>
+      </div>
+      <div data-hero class="hero-cta">
+        <a class="btn btn--red btn--lg" href="#soumission" data-magnetic>{% t "Soumettre un résumé" "Submit an abstract" %} <span aria-hidden="true">→</span></a>
+        <a class="btn btn--ghost btn--lg" href="#programme" data-magnetic>Programme</a>
+      </div>
+    </div>
+  </div>
+
+  <div data-hero class="lorenz-box" aria-hidden="true">
+    <div class="lz-eq">ẋ = σ(y − x)</div>
+    <div class="lz-eq">ẏ = x(ρ − z) − y</div>
+    <div class="lz-eq">ż = xy − βz</div>
+    <div class="lz-dim">σ = 10 · ρ = 28 · β = 8/3</div>
+    <div class="lz-live" id="lz-live"></div>
+    <div class="lz-note">{% t "Deux trajectoires, écart initial δ₀ = 10⁻⁵" "Two trajectories, initial gap δ₀ = 10⁻⁵" %}</div>
+    <div class="lz-delta"><b>|δ(t)|</b> = <span id="lz-d"></span></div>
   </div>
 </header>
 
-<div class="shell">
-  <aside class="rail">
-    <div class="sticky">
-      <p class="label" data-fr="Navigation" data-en="Navigation">Navigation</p>
-      <a href="#accueil" data-nav="accueil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/></svg><span data-fr="Accueil" data-en="Home">Accueil</span></a>
-      <a href="#organisation" data-nav="organisation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.9-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.5 14.6c2.2-.5 4.4.9 5 4.4"/></svg><span data-fr="Comité d’organisation" data-en="Organising committee">Comité d’organisation</span></a>
-      <a href="#scientifique" data-nav="scientifique"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="M8.5 13.2 7 21l5-2.4L17 21l-1.5-7.8"/></svg><span data-fr="Comité scientifique" data-en="Scientific committee">Comité scientifique</span></a>
-      <a href="#conferenciers" data-nav="conferenciers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="10" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/><path d="M8.5 21h7"/></svg><span data-fr="Conférenciers invités" data-en="Invited speakers">Conférenciers invités</span></a>
-      <a href="#dates" data-nav="dates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17"/><path d="M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></svg><span data-fr="Dates importantes" data-en="Key dates">Dates importantes</span></a>
-      <a href="#inscription" data-nav="inscription"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h11A2.5 2.5 0 0 1 20 8.5v1.2a2.3 2.3 0 0 0 0 4.6v1.2a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 15.5v-1.2a2.3 2.3 0 0 0 0-4.6z"/><path d="M14 6v12" stroke-dasharray="2.5 2.5"/></svg><span data-fr="Inscription" data-en="Registration">Inscription</span></a>
-      <a href="#programme" data-nav="programme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.3l3.4 2"/></svg><span data-fr="Programme" data-en="Programme">Programme</span></a>
-      <a href="#publications" data-nav="publications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H19v3H6.5A2.5 2.5 0 0 1 4 20.5z"/><path d="M8 7.5h7M8 11h5"/></svg><span data-fr="Publications" data-en="Publications">Publications</span></a>
-      <a href="#soumission" data-nav="soumission"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4.5"/><path d="m7.5 9 4.5-4.5L16.5 9"/><path d="M4.5 15v3.5A2 2 0 0 0 6.5 20.5h11a2 2 0 0 0 2-2V15"/></svg><span data-fr="Soumission de résumé" data-en="Abstract submission">Soumission de résumé</span></a>
-      <a href="#partenaires" data-nav="partenaires"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 12 3.5-3.5L12 11l5.5-2.5L21 12"/><path d="M6.5 8.5V16l5.5 3.5L17.5 16V8.5"/><path d="M9 12.5 12 14l3-1.5"/></svg><span data-fr="Partenaires" data-en="Partners">Partenaires</span></a>
-    </div>
-  </aside>
-
-  <main>
-    <div class="banner">
-      <div class="banner-txt">
-        <p class="eyebrow" data-fr="2e édition · Conférence internationale" data-en="2nd edition · International conference">2e édition · Conférence internationale</p>
-        <h1>M2ISDA <span class="yr">2027</span></h1>
-        <p class="lead" data-fr="Modélisation mathématique et innovations en sciences des données avancées" data-en="Mathematical modelling and innovations in advanced data sciences">Modélisation mathématique et innovations en sciences des données avancées</p>
-        <div class="meta">
-          <span><b data-fr="19 – 21 janvier 2027" data-en="19 – 21 January 2027">19 – 21 janvier 2027</b></span>
-          <span data-fr="Université de Djibouti · Laboratoire LAMO" data-en="University of Djibouti · LAMO Laboratory">Université de Djibouti · Laboratoire LAMO</span>
-        </div>
-      </div>
-      <img class="banner-pic" src="{% static 'conference/img/campus-de-luniversite-de-djibouti.jpg' %}" alt="Campus de l’Université de Djibouti" width="309" height="278">
-    </div>
-
-    <section id="accueil">
-      <div class="section-head" style="margin-top:44px">
-        <p class="kicker" data-fr="Objectif de la conférence" data-en="Aim of the conference">Objectif de la conférence</p>
-        <h2 style="font-size:clamp(22px,2.6vw,28px)" data-fr="2e Conférence internationale de modélisation mathématique et d’innovations en sciences des données avancées" data-en="2nd International Conference on Mathematical Modelling and Innovations in Advanced Data Sciences">2e Conférence internationale de modélisation mathématique et d’innovations en sciences des données avancées</h2>
-      </div>
-      <div class="prose">
-        <p data-fr="La 2e édition de la Conférence internationale de modélisation mathématique et d’innovations en sciences des données avancées (M2ISDA 2027) vise à offrir aux chercheurs une plateforme pour présenter leurs travaux récents, partager leurs idées et développer de nouvelles méthodes dans les différents domaines des mathématiques appliquées, de la statistique et des sciences des données." data-en="The 2nd International Conference on Mathematical Modelling and Innovations in Advanced Data Sciences (M2ISDA 2027) aims to offer researchers a platform to present their recent work, share ideas and develop new methods across the various fields of applied mathematics, statistics and data science.">La 2e édition de la Conférence internationale de modélisation mathématique et d’innovations en sciences des données avancées (M2ISDA 2027) vise à offrir aux chercheurs une plateforme pour présenter leurs travaux récents, partager leurs idées et développer de nouvelles méthodes dans les différents domaines des mathématiques appliquées, de la statistique et des sciences des données.</p>
-        <p data-fr="Elle offre également l’occasion de renforcer la collaboration entre chercheurs de pays différents partageant des intérêts de recherche voisins. Pendant trois jours, les conférences plénières des invités ouvrent chaque demi-journée ; les sessions qui suivent sont consacrées aux travaux soumis, en communication orale ou en poster." data-en="It also provides an opportunity to strengthen collaboration between researchers from different countries sharing similar research interests. Over three days, the invited plenary lectures open each half-day; the sessions that follow are devoted to the submitted work, as oral presentations or posters.">Elle offre également l’occasion de renforcer la collaboration entre chercheurs de pays différents partageant des intérêts de recherche voisins. Pendant trois jours, les conférences plénières des invités ouvrent chaque demi-journée ; les sessions qui suivent sont consacrées aux travaux soumis, en communication orale ou en poster.</p>
-        <p data-fr="Une place particulière est faite aux doctorants : pour beaucoup d’entre eux, M2ISDA est la première tribune internationale où présenter un travail de thèse, répondre aux questions d’un comité scientifique et rencontrer les équipes avec lesquelles ils publieront." data-en="Doctoral students hold a special place: for many of them, M2ISDA is the first international platform to present a thesis project, answer a scientific committee’s questions and meet the teams they will go on to publish with.">Une place particulière est faite aux doctorants : pour beaucoup d’entre eux, M2ISDA est la première tribune internationale où présenter un travail de thèse, répondre aux questions d’un comité scientifique et rencontrer les équipes avec lesquelles ils publieront.</p>
-        <p data-fr="La conférence est organisée par le Laboratoire d’Analyse, de Modélisation et d’Optimisation (LAMO) de l’Université de Djibouti. Elle associe les institutions nationales, qui apportent les données de terrain, aux équipes de recherche, qui apportent les méthodes : santé publique, environnement, climat, transports et systèmes portuaires. Les meilleures contributions sont invitées à un numéro spécial après la conférence." data-en="The conference is organised by the Laboratory of Analysis, Modeling and Optimization (LAMO) of the University of Djibouti. It brings together national institutions, which contribute field data, and research teams, which contribute the methods: public health, environment, climate, transport and port systems. The best contributions are invited to a special issue after the conference.">La conférence est organisée par le Laboratoire d’Analyse, de Modélisation et d’Optimisation (LAMO) de l’Université de Djibouti. Elle associe les institutions nationales, qui apportent les données de terrain, aux équipes de recherche, qui apportent les méthodes : santé publique, environnement, climat, transports et systèmes portuaires. Les meilleures contributions sont invitées à un numéro spécial après la conférence.</p>
-      </div>
-      <ul class="stats">
-        <li><b>3</b><span data-fr="journées" data-en="days">journées</span></li>
-        <li><b>10</b><span data-fr="conférenciers invités" data-en="invited speakers">conférenciers invités</span></li>
-        <li><b>8</b><span data-fr="axes thématiques" data-en="topic areas">axes thématiques</span></li>
-      </ul>
-      <div class="cta" style="margin-top:26px">
-        <a class="btn btn-gold" href="#soumission" data-fr="Soumettre un résumé" data-en="Submit an abstract">Soumettre un résumé</a>
-        <a class="btn btn-dark" href="#conferenciers" data-fr="Conférenciers invités" data-en="Invited speakers">Conférenciers invités</a>
-      </div>
-      <p class="countdown" id="countdown"></p>
-    </section>
-
-    <section id="organisation" hidden>
-      <div class="section-head">
-        <p class="kicker" data-fr="LAMO — Université de Djibouti" data-en="LAMO — University of Djibouti">LAMO — Université de Djibouti</p>
-        <h2 data-fr="Comité d’organisation" data-en="Organising committee">Comité d’organisation</h2>
-        <p data-fr="Quatre enseignants-chercheurs permanents, six doctorants et les étudiants du Master Intelligence artificielle et modélisation des données assurent la préparation scientifique, l’accueil des conférenciers et la logistique des trois journées." data-en="Four permanent researchers, six doctoral students and the students of the Master’s programme in Artificial Intelligence and Data Modelling handle the scientific preparation, the welcome of speakers and the logistics of the three days.">Quatre enseignants-chercheurs permanents, six doctorants et les étudiants du Master Intelligence artificielle et modélisation des données assurent la préparation scientifique, l’accueil des conférenciers et la logistique des trois journées.</p>
-      </div>
-      <p class="sub" data-fr="Membres permanents" data-en="Permanent members">Membres permanents</p>
-      <div class="people grid-4">
-      <figure class="person small">
-        <img src="{% static 'conference/img/dr-yahyeh-souleiman.jpg' %}" alt="Dr Yahyeh Souleiman" width="96" height="96">
-        <figcaption><strong>Dr Yahyeh Souleiman</strong><span class="org" data-fr="Maître de conférences" data-en="Associate professor">Maître de conférences</span></figcaption>
-      </figure>
-      <figure class="person small">
-        <img src="{% static 'conference/img/dr-liban-ismail.jpg' %}" alt="Dr Liban Ismail" width="96" height="96">
-        <figcaption><strong>Dr Liban Ismail</strong><span class="org" data-fr="Maître de conférences" data-en="Associate professor">Maître de conférences</span></figcaption>
-      </figure>
-      <figure class="person small">
-        <img src="{% static 'conference/img/dr-souleiman-omar.jpg' %}" alt="Dr Souleiman Omar" width="96" height="96">
-        <figcaption><strong>Dr Souleiman Omar</strong><span class="org" data-fr="Maître de conférences" data-en="Associate professor">Maître de conférences</span></figcaption>
-      </figure>
-      <figure class="person small">
-        <img src="{% static 'conference/img/dr-doualeh-ali.jpg' %}" alt="Dr Doualeh Ali" width="96" height="96">
-        <figcaption><strong>Dr Doualeh Ali</strong><span class="org" data-fr="Maître de conférences" data-en="Associate professor">Maître de conférences</span></figcaption>
-      </figure>
-      </div>
-      <p class="sub" style="margin-top:34px" data-fr="Doctorants" data-en="Doctoral students">Doctorants</p>
-      <div class="people grid-6">
-      <figure class="person tiny">
-        <img src="{% static 'conference/img/said-ismail.jpg' %}" alt="Said Ismail" width="76" height="76">
-        <figcaption><strong>Said Ismail</strong><span class="org">Le Havre Normandie</span></figcaption>
-      </figure>
-      <figure class="person tiny">
-        <img src="{% static 'conference/img/gouled-souleiman.jpg' %}" alt="Gouled Souleiman" width="76" height="76">
-        <figcaption><strong>Gouled Souleiman</strong><span class="org">Le Havre Normandie</span></figcaption>
-      </figure>
-      <figure class="person tiny">
-        <img src="{% static 'conference/img/ali-mohamed.jpg' %}" alt="Ali Mohamed" width="76" height="76">
-        <figcaption><strong>Ali Mohamed</strong><span class="org">La Rochelle</span></figcaption>
-      </figure>
-      <figure class="person tiny">
-        <img src="{% static 'conference/img/saida-ballah.jpg' %}" alt="Saida Ballah" width="76" height="76">
-        <figcaption><strong>Saida Ballah</strong><span class="org">Nantes</span></figcaption>
-      </figure>
-      <figure class="person tiny">
-        <img src="{% static 'conference/img/hakim-amer.jpg' %}" alt="Hakim Amer" width="76" height="76">
-        <figcaption><strong>Hakim Amer</strong><span class="org">Toulon</span></figcaption>
-      </figure>
-      <figure class="person tiny">
-        <img src="{% static 'conference/img/kadir-ali.jpg' %}" alt="Kadir Ali" width="76" height="76">
-        <figcaption><strong>Kadir Ali</strong><span class="org">Marie et Louis Pasteur</span></figcaption>
-      </figure>
-      </div>
-      <p class="sub" style="margin-top:34px" data-fr="Étudiants du master" data-en="Master’s students">Étudiants du master</p>
-      <div class="card">
-        <h3 data-fr="Master Intelligence artificielle et modélisation des données" data-en="Master’s in Artificial Intelligence and Data Modelling">Master Intelligence artificielle et modélisation des données</h3>
-        <p data-fr="Les étudiants du master participent à l’organisation de la conférence : accueil et accompagnement des participants, secrétariat des sessions, appui technique en salle et couverture de l’événement. Ils y assistent également comme auditeurs, aux côtés des doctorants." data-en="The Master’s students take part in running the conference: welcoming and assisting participants, session secretariat, technical support in the rooms and coverage of the event. They also attend as listeners, alongside the doctoral students.">Les étudiants du master participent à l’organisation de la conférence : accueil et accompagnement des participants, secrétariat des sessions, appui technique en salle et couverture de l’événement. Ils y assistent également comme auditeurs, aux côtés des doctorants.</p>
-      </div>
-    </section>
-
-    <section id="scientifique" hidden>
-      <div class="section-head">
-        <p class="kicker" data-fr="Évaluation des résumés" data-en="Abstract review">Évaluation des résumés</p>
-        <h2 data-fr="Comité scientifique" data-en="Scientific committee">Comité scientifique</h2>
-        <p data-fr="Neuf enseignants-chercheurs de Djibouti, de France, d’Éthiopie et de Somalie évaluent les résumés soumis, établissent le programme des sessions et sélectionnent les contributions retenues pour le numéro spécial." data-en="Nine researchers from Djibouti, France, Ethiopia and Somalia review the submitted abstracts, set the session programme and select the contributions retained for the special issue.">Neuf enseignants-chercheurs de Djibouti, de France, d’Éthiopie et de Somalie évaluent les résumés soumis, établissent le programme des sessions et sélectionnent les contributions retenues pour le numéro spécial.</p>
-      </div>
-      <div class="people grid-5">
-      <figure class="person small">
-        <img src="{% static 'conference/img/dr-liban-ismail.jpg' %}" alt="Dr Liban Ismail" width="96" height="96">
-        <figcaption>
-          <strong>Dr Liban Ismail</strong>
-          <span class="org" data-fr="Maître de conférences, Université de Djibouti" data-en="Associate Professor, University of Djibouti">Maître de conférences, Université de Djibouti</span>
-          <span class="chip" data-fr="Djibouti" data-en="Djibouti">Djibouti</span>
-        </figcaption>
-      </figure>
-      <figure class="person small">
-        <img src="{% static 'conference/img/dr-yahyeh-souleiman.jpg' %}" alt="Dr Yahyeh Souleiman" width="96" height="96">
-        <figcaption>
-          <strong>Dr Yahyeh Souleiman</strong>
-          <span class="org" data-fr="Maître de conférences, Université de Djibouti" data-en="Associate Professor, University of Djibouti">Maître de conférences, Université de Djibouti</span>
-          <span class="chip" data-fr="Djibouti" data-en="Djibouti">Djibouti</span>
-        </figcaption>
-      </figure>
-      <figure class="person small">
-        <img src="{% static 'conference/img/dr-souleiman-omar.jpg' %}" alt="Dr Souleiman Omar" width="96" height="96">
-        <figcaption>
-          <strong>Dr Souleiman Omar</strong>
-          <span class="org" data-fr="Maître de conférences, Université de Djibouti" data-en="Associate Professor, University of Djibouti">Maître de conférences, Université de Djibouti</span>
-          <span class="chip" data-fr="Djibouti" data-en="Djibouti">Djibouti</span>
-        </figcaption>
-      </figure>
-      <figure class="person small">
-        <img src="{% static 'conference/img/dr-doualeh-ali.jpg' %}" alt="Dr Doualeh Ali" width="96" height="96">
-        <figcaption>
-          <strong>Dr Doualeh Ali</strong>
-          <span class="org" data-fr="Maître de conférences, Université de Djibouti" data-en="Associate Professor, University of Djibouti">Maître de conférences, Université de Djibouti</span>
-          <span class="chip" data-fr="Djibouti" data-en="Djibouti">Djibouti</span>
-        </figcaption>
-      </figure>
-      <figure class="person small">
-        <img src="{% static 'conference/img/dr-abdisalam-hassan.jpg' %}" alt="Dr Abdisalam Hassan" width="96" height="96">
-        <figcaption>
-          <strong>Dr Abdisalam Hassan</strong>
-          <span class="org" data-fr="Maître de conférences, Université Amoud" data-en="Associate Professor, Amoud University">Maître de conférences, Université Amoud</span>
-          <span class="chip" data-fr="Somalie" data-en="Somalia">Somalie</span>
-        </figcaption>
-      </figure>
-      <figure class="person small">
-        <img src="{% static 'conference/img/pr-nathalie-verdiere.jpg' %}" alt="Pr Nathalie Verdière" width="96" height="96">
-        <figcaption>
-          <strong>Pr Nathalie Verdière</strong>
-          <span class="org" data-fr="Université Le Havre Normandie" data-en="Le Havre Normandie University">Université Le Havre Normandie</span>
-          <span class="chip" data-fr="France" data-en="France">France</span>
-        </figcaption>
-      </figure>
-      <figure class="person small">
-        <img src="{% static 'conference/img/pr-hacene-djellout.jpg' %}" alt="Pr Hacène Djellout" width="96" height="96">
-        <figcaption>
-          <strong>Pr Hacène Djellout</strong>
-          <span class="org" data-fr="Université Clermont Auvergne" data-en="Clermont Auvergne University">Université Clermont Auvergne</span>
-          <span class="chip" data-fr="France" data-en="France">France</span>
-        </figcaption>
-      </figure>
-      <figure class="person small">
-        <img src="{% static 'conference/img/pr-raluca-eftimie.jpg' %}" alt="Pr Raluca Eftimie" width="96" height="96">
-        <figcaption>
-          <strong>Pr Raluca Eftimie</strong>
-          <span class="org" data-fr="Université Marie et Louis Pasteur" data-en="Marie &amp; Louis Pasteur University">Université Marie et Louis Pasteur</span>
-          <span class="chip" data-fr="France" data-en="France">France</span>
-        </figcaption>
-      </figure>
-      <figure class="person small">
-        <img src="{% static 'conference/img/pr-legesse-lemecha-obsu.jpg' %}" alt="Pr Legesse Lemecha Obsu" width="96" height="96">
-        <figcaption>
-          <strong>Pr Legesse Lemecha Obsu</strong>
-          <span class="org" data-fr="Adama Science and Technology University" data-en="Adama Science and Technology University">Adama Science and Technology University</span>
-          <span class="chip" data-fr="Éthiopie" data-en="Ethiopia">Éthiopie</span>
-        </figcaption>
-      </figure>
-      </div>
-    </section>
-
-    <section id="conferenciers" hidden>
-      <div class="section-head">
-        <p class="kicker" data-fr="Programme scientifique" data-en="Scientific programme">Programme scientifique</p>
-        <h2 data-fr="Conférenciers invités" data-en="Invited speakers">Conférenciers invités</h2>
-        <p data-fr="Dix conférenciers venus de France, du Maroc, du Sénégal, d’Éthiopie et de Somalie." data-en="Ten speakers from France, Morocco, Senegal, Ethiopia and Somalia.">Dix conférenciers venus de France, du Maroc, du Sénégal, d’Éthiopie et de Somalie.</p>
-      </div>
-      <div class="people">
-      <figure class="person">
-        <img src="{% static 'conference/img/ramses-djidjou-demasse.jpg' %}" alt="Ramsès Djidjou-Demasse" width="118" height="118">
-        <figcaption>
-          <strong>Ramsès Djidjou-Demasse</strong>
-          <span class="org" data-fr="IRD — MIVEGEC" data-en="IRD — MIVEGEC">IRD — MIVEGEC</span>
-          <span class="chip" data-fr="France" data-en="France">France</span>
-        </figcaption>
-      </figure>
-      <figure class="person">
-        <img src="{% static 'conference/img/pr-nathalie-verdiere.jpg' %}" alt="Nathalie Verdière" width="118" height="118">
-        <figcaption>
-          <strong>Nathalie Verdière</strong>
-          <span class="org" data-fr="Université Le Havre Normandie" data-en="Le Havre Normandie University">Université Le Havre Normandie</span>
-          <span class="chip" data-fr="France" data-en="France">France</span>
-        </figcaption>
-      </figure>
-      <figure class="person">
-        <img src="{% static 'conference/img/m-a-aziz-alaoui.jpg' %}" alt="M. A. Aziz-Alaoui" width="118" height="118">
-        <figcaption>
-          <strong>M. A. Aziz-Alaoui</strong>
-          <span class="org" data-fr="LMAH — Le Havre Normandie" data-en="LMAH — Le Havre Normandie">LMAH — Le Havre Normandie</span>
-          <span class="chip" data-fr="France" data-en="France">France</span>
-        </figcaption>
-      </figure>
-      <figure class="person">
-        <img src="{% static 'conference/img/pr-hacene-djellout.jpg' %}" alt="Hacène Djellout" width="118" height="118">
-        <figcaption>
-          <strong>Hacène Djellout</strong>
-          <span class="org" data-fr="Université Clermont Auvergne" data-en="Clermont Auvergne University">Université Clermont Auvergne</span>
-          <span class="chip" data-fr="France" data-en="France">France</span>
-        </figcaption>
-      </figure>
-      <figure class="person">
-        <img src="{% static 'conference/img/pr-raluca-eftimie.jpg' %}" alt="Raluca Eftimie" width="118" height="118">
-        <figcaption>
-          <strong>Raluca Eftimie</strong>
-          <span class="org" data-fr="Université Marie et Louis Pasteur" data-en="Marie &amp; Louis Pasteur University">Université Marie et Louis Pasteur</span>
-          <span class="chip" data-fr="France" data-en="France">France</span>
-        </figcaption>
-      </figure>
-      <figure class="person">
-        <img src="{% static 'conference/img/el-azroul.jpg' %}" alt="El Azroul" width="118" height="118">
-        <figcaption>
-          <strong>El Azroul</strong>
-          <span class="org" data-fr="Université Sidi Mohamed Ben Abdellah" data-en="Sidi Mohamed Ben Abdellah University">Université Sidi Mohamed Ben Abdellah</span>
-          <span class="chip" data-fr="Maroc" data-en="Morocco">Maroc</span>
-        </figcaption>
-      </figure>
-      <figure class="person">
-        <img src="{% static 'conference/img/clement-manga.jpg' %}" alt="Clément Manga" width="118" height="118">
-        <figcaption>
-          <strong>Clément Manga</strong>
-          <span class="org" data-fr="Université Assane Seck de Ziguinchor" data-en="Assane Seck Ziguinchor University">Université Assane Seck de Ziguinchor</span>
-          <span class="chip" data-fr="Sénégal" data-en="Senegal">Sénégal</span>
-        </figcaption>
-      </figure>
-      <figure class="person">
-        <img src="{% static 'conference/img/pr-legesse-lemecha-obsu.jpg' %}" alt="Legesse Lemecha Obsu" width="118" height="118">
-        <figcaption>
-          <strong>Legesse Lemecha Obsu</strong>
-          <span class="org" data-fr="Adama Science and Technology University" data-en="Adama Science and Technology University">Adama Science and Technology University</span>
-          <span class="chip" data-fr="Éthiopie" data-en="Ethiopia">Éthiopie</span>
-        </figcaption>
-      </figure>
-      <figure class="person">
-        <img src="{% static 'conference/img/dr-abdisalam-hassan.jpg' %}" alt="Abdisalam Hassan" width="118" height="118">
-        <figcaption>
-          <strong>Abdisalam Hassan</strong>
-          <span class="org" data-fr="Université Amoud" data-en="Amoud University">Université Amoud</span>
-          <span class="chip" data-fr="Somalie" data-en="Somalia">Somalie</span>
-        </figcaption>
-      </figure>
-      <figure class="person">
-        <img src="{% static 'conference/img/daud-ali-aser.jpg' %}" alt="Daud Ali Aser" width="118" height="118">
-        <figcaption>
-          <strong>Daud Ali Aser</strong>
-          <span class="org" data-fr="Mogadishu University" data-en="Mogadishu University">Mogadishu University</span>
-          <span class="chip" data-fr="Somalie" data-en="Somalia">Somalie</span>
-        </figcaption>
-      </figure>
-      </div>
-    </section>
-
-    <section id="dates" hidden>
-      <div class="section-head">
-        <p class="kicker" data-fr="Calendrier" data-en="Calendar">Calendrier</p>
-        <h2 data-fr="Dates importantes" data-en="Key dates">Dates importantes</h2>
-      </div>
-      <ol class="dates">
-        <li>
-          <time data-fr="31 décembre 2026" data-en="31 December 2026">31 décembre 2026</time>
-          <span data-fr="Clôture des inscriptions" data-en="Registration closes">Clôture des inscriptions</span>
-        </li>
-        <li>
-          <time data-fr="5 janvier 2027" data-en="5 January 2027">5 janvier 2027</time>
-          <span data-fr="Date limite d’envoi des résumés" data-en="Abstract submission deadline">Date limite d’envoi des résumés</span>
-        </li>
-        <li>
-          <time data-fr="10 janvier 2027" data-en="10 January 2027">10 janvier 2027</time>
-          <span data-fr="Notification aux auteurs" data-en="Notification to authors">Notification aux auteurs</span>
-        </li>
-        <li>
-          <time data-fr="19 – 21 janvier 2027" data-en="19 – 21 January 2027">19 – 21 janvier 2027</time>
-          <span data-fr="Conférence à Djibouti" data-en="Conference in Djibouti">Conférence à Djibouti</span>
-        </li>
-      </ol>
-    </section>
-
-    <section id="inscription" hidden>
-      <div class="section-head">
-        <p class="kicker" data-fr="Participer" data-en="Take part">Participer</p>
-        <h2 data-fr="Inscription" data-en="Registration">Inscription</h2>
-        <p data-fr="L’inscription se fait en ligne et reste ouverte jusqu’au 31 décembre 2026. Elle est obligatoire pour toute personne assistant à la conférence, avec ou sans communication." data-en="Registration is completed online and stays open until 31 December 2026. It is required for everyone attending, with or without a presentation.">L’inscription se fait en ligne et reste ouverte jusqu’au 31 décembre 2026. Elle est obligatoire pour toute personne assistant à la conférence, avec ou sans communication.</p>
-      </div>
-      <div class="register">
-        <div>
-          <h3 style="font-size:19px" data-fr="Formulaire et contact" data-en="Form and contact">Formulaire et contact</h3>
-          <p style="color:var(--muted);font-size:13.5px;margin-top:8px" data-fr="Le comité d’organisation répond à l’adresse du laboratoire pour toute question sur l’inscription, l’accueil ou les formalités d’entrée sur le territoire." data-en="The organising committee replies at the laboratory address for any question about registration, arrival or entry formalities.">Le comité d’organisation répond à l’adresse du laboratoire pour toute question sur l’inscription, l’accueil ou les formalités d’entrée sur le territoire.</p>
-          <div class="mailbox">
-            <span class="mail">lamo@univ.edu.dj</span>
-            <button class="copy" type="button" data-fr="Copier" data-en="Copy">Copier</button>
-          </div>
-          <div class="cta" style="margin-top:16px">
-            <a class="btn btn-gold" href="https://urls.fr/SHONvz" target="_blank" rel="noopener" data-fr="Formulaire en ligne" data-en="Online form">Formulaire en ligne</a>
-          </div>
-        </div>
-        <div class="qr">
-          <img src="{% static 'conference/img/qr-code-urls-fr-shonvz.png' %}" alt="QR code — urls.fr/SHONvz" width="126" height="126">
-          <span>urls.fr/SHONvz</span>
-        </div>
-      </div>
-      <p class="sub" style="margin-top:36px" data-fr="Venir à Djibouti" data-en="Coming to Djibouti">Venir à Djibouti</p>
-      <div class="cards2">
-        <div class="card">
-          <h3 data-fr="Formalités d’entrée" data-en="Entry formalities">Formalités d’entrée</h3>
-          <p data-fr="La plupart des participants entrent à Djibouti avec un e-Visa, demandé en ligne sur le portail de l’État et reçu par courriel. Le comité d’organisation établit sur demande une lettre d’invitation à joindre au dossier." data-en="Most participants enter Djibouti with an e-Visa, applied for online on the government portal and received by email. The organising committee issues an invitation letter on request, to be attached to the application.">La plupart des participants entrent à Djibouti avec un e-Visa, demandé en ligne sur le portail de l’État et reçu par courriel. Le comité d’organisation établit sur demande une lettre d’invitation à joindre au dossier.</p>
-          <div class="cta" style="margin-top:12px">
-            <a class="btn btn-ghost btn-dark" href="https://www.egouv.dj/" target="_blank" rel="noopener" data-fr="Portail e-Visa · egouv.dj" data-en="e-Visa portal · egouv.dj">Portail e-Visa · egouv.dj</a>
-          </div>
-        </div>
-        <div class="card">
-          <h3 data-fr="Lieu et saison" data-en="Venue and season">Lieu et saison</h3>
-          <p data-fr="La conférence se tient sur le campus de Balbala de l’Université de Djibouti. Janvier est la période la plus clémente de l’année à Djibouti. L’aéroport international Djibouti-Ambouli est à une trentaine de minutes du campus." data-en="The conference takes place on the Balbala campus of the University of Djibouti. January is the mildest time of year in Djibouti. Djibouti-Ambouli international airport is about thirty minutes from the campus.">La conférence se tient sur le campus de Balbala de l’Université de Djibouti. Janvier est la période la plus clémente de l’année à Djibouti. L’aéroport international Djibouti-Ambouli est à une trentaine de minutes du campus.</p>
-          <p style="margin-top:10px" data-fr="Les informations sur l’hébergement et les transports seront communiquées aux participants inscrits." data-en="Accommodation and transport information will be sent to registered participants.">Les informations sur l’hébergement et les transports seront communiquées aux participants inscrits.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="programme" hidden>
-      <div class="section-head">
-        <p class="kicker" data-fr="19 – 21 janvier 2027" data-en="19 – 21 January 2027">19 – 21 janvier 2027</p>
-        <h2 data-fr="Programme" data-en="Programme">Programme</h2>
-        <p data-fr="Déroulé prévisionnel des trois journées : conférences plénières, panel, sessions de communication, excursion le mercredi après-midi et dîner de gala le jeudi soir. Les horaires, les salles et l’affectation des communications seront publiés après la notification aux auteurs." data-en="Provisional outline of the three days: plenary lectures, a panel, contributed sessions, an excursion on Wednesday afternoon and a gala dinner on Thursday evening. Times, rooms and the allocation of talks will be published after the notification to authors.">Déroulé prévisionnel des trois journées : conférences plénières, panel, sessions de communication, excursion le mercredi après-midi et dîner de gala le jeudi soir. Les horaires, les salles et l’affectation des communications seront publiés après la notification aux auteurs.</p>
-      </div>
-      <div class="prog">
-        <div class="day">
-          <p class="tag" data-fr="Mardi 19 janvier" data-en="Tuesday 19 January">Mardi 19 janvier</p>
-          <h3 data-fr="Ouverture et conférences plénières" data-en="Opening and plenary lectures">Ouverture et conférences plénières</h3>
-          <ul>
-            <li><b data-fr="Matin" data-en="Morning">Matin</b><span data-fr="Cérémonie d’ouverture, puis premières conférences plénières des invités" data-en="Opening ceremony, then the first invited plenary lectures">Cérémonie d’ouverture, puis premières conférences plénières des invités</span></li>
-            <li><b data-fr="Après-midi" data-en="Afternoon">Après-midi</b><span data-fr="Session 1 — Modélisation épidémiologique et santé publique · Session 2 — Statistique, biostatistique et sciences des données" data-en="Session 1 — Epidemiological modelling and public health · Session 2 — Statistics, biostatistics and data science">Session 1 — Modélisation épidémiologique et santé publique · Session 2 — Statistique, biostatistique et sciences des données</span></li>
-          </ul>
-        </div>
-        <div class="day">
-          <p class="tag" data-fr="Mercredi 20 janvier" data-en="Wednesday 20 January">Mercredi 20 janvier</p>
-          <h3 data-fr="Conférences, panel et excursion" data-en="Lectures, panel and excursion">Conférences, panel et excursion</h3>
-          <ul>
-            <li><b data-fr="Matin" data-en="Morning">Matin</b><span data-fr="Conférences plénières · Panel « Modélisation et décision publique à Djibouti », avec les institutions nationales" data-en="Plenary lectures · Panel “Modelling and public decision-making in Djibouti”, with the national institutions">Conférences plénières · Panel « Modélisation et décision publique à Djibouti », avec les institutions nationales</span></li>
-            <li><b data-fr="Après-midi" data-en="Afternoon">Après-midi</b><span data-fr="Excursion" data-en="Excursion">Excursion</span></li>
-          </ul>
-        </div>
-        <div class="day">
-          <p class="tag" data-fr="Jeudi 21 janvier" data-en="Thursday 21 January">Jeudi 21 janvier</p>
-          <h3 data-fr="Présentations, clôture et dîner de gala" data-en="Presentations, closing and gala dinner">Présentations, clôture et dîner de gala</h3>
-          <ul>
-            <li><b data-fr="Matin" data-en="Morning">Matin</b><span data-fr="Session 3 — Optimisation et recherche opérationnelle · Session 4 — Écosystèmes, climat et environnement" data-en="Session 3 — Optimization and operations research · Session 4 — Ecosystems, climate and environment">Session 3 — Optimisation et recherche opérationnelle · Session 4 — Écosystèmes, climat et environnement</span></li>
-            <li><b data-fr="Après-midi" data-en="Afternoon">Après-midi</b><span data-fr="Session 5 — Systèmes portuaires et logistiques · Session posters des doctorants · Synthèse et clôture" data-en="Session 5 — Port and logistics systems · Doctoral poster session · Summary and closing">Session 5 — Systèmes portuaires et logistiques · Session posters des doctorants · Synthèse et clôture</span></li>
-            <li><b data-fr="Soir" data-en="Evening">Soir</b><span data-fr="Dîner de gala" data-en="Gala dinner">Dîner de gala</span></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="publications" hidden>
-      <div class="section-head">
-        <p class="kicker" data-fr="Après la conférence" data-en="After the conference">Après la conférence</p>
-        <h2 data-fr="Publications — numéro spécial" data-en="Publications — special issue">Publications — numéro spécial</h2>
-        <p data-fr="Les meilleures contributions présentées à la conférence sont invitées à être soumises, sous forme d’article complet, à un numéro spécial." data-en="The best contributions presented at the conference are invited for submission, as full papers, to a special issue.">Les meilleures contributions présentées à la conférence sont invitées à être soumises, sous forme d’article complet, à un numéro spécial.</p>
-      </div>
-      <div class="cards2">
-        <div class="card">
-          <h3 data-fr="Soumission des articles" data-en="Paper submission">Soumission des articles</h3>
-          <p data-fr="La sélection est faite par le comité scientifique à l’issue de la conférence. Les articles suivent ensuite le processus d’évaluation par les pairs de la revue." data-en="The selection is made by the scientific committee after the conference. Papers then follow the journal’s own peer-review process.">La sélection est faite par le comité scientifique à l’issue de la conférence. Les articles suivent ensuite le processus d’évaluation par les pairs de la revue.</p>
-        </div>
-        <div class="card">
-          <h3 data-fr="Revue d’accueil" data-en="Host journal">Revue d’accueil</h3>
-          <p data-fr="La revue retenue et le calendrier de soumission seront annoncés sur cette page." data-en="The selected journal and the submission schedule will be announced on this page.">La revue retenue et le calendrier de soumission seront annoncés sur cette page.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="soumission" hidden>
-      <div class="section-head">
-        <p class="kicker" data-fr="Appel à communications" data-en="Call for papers">Appel à communications</p>
-        <h2 data-fr="Soumission de résumé" data-en="Abstract submission">Soumission de résumé</h2>
-        <p data-fr="Les résumés sont attendus avant le 5 janvier 2027, en français ou en anglais, dans l’un des huit axes de la conférence." data-en="Abstracts are due by 5 January 2027, in French or English, in one of the eight areas of the conference.">Les résumés sont attendus avant le 5 janvier 2027, en français ou en anglais, dans l’un des huit axes de la conférence.</p>
-      </div>
-      <div class="cards2">
-        <div class="card">
-          <h3 data-fr="Ce que doit contenir le résumé" data-en="What the abstract should contain">Ce que doit contenir le résumé</h3>
-          <ul>
-            <li data-fr="Titre, auteurs et affiliations" data-en="Title, authors and affiliations">Titre, auteurs et affiliations</li>
-            <li data-fr="Une page au maximum, références comprises" data-en="One page maximum, references included">Une page au maximum, références comprises</li>
-            <li data-fr="Axe thématique choisi" data-en="Chosen topic area">Axe thématique choisi</li>
-            <li data-fr="Préférence : communication orale ou poster" data-en="Preference: oral presentation or poster">Préférence : communication orale ou poster</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3 data-fr="Comment soumettre" data-en="How to submit">Comment soumettre</h3>
-          <p data-fr="Le résumé est envoyé par courriel à l’adresse du laboratoire, en fichier PDF ou Word, avant le 5 janvier 2027. Les auteurs reçoivent la décision du comité scientifique le 10 janvier 2027." data-en="The abstract is sent by email to the laboratory address, as a PDF or Word file, before 5 January 2027. Authors receive the scientific committee’s decision on 10 January 2027.">Le résumé est envoyé par courriel à l’adresse du laboratoire, en fichier PDF ou Word, avant le 5 janvier 2027. Les auteurs reçoivent la décision du comité scientifique le 10 janvier 2027.</p>
-          <div class="mailbox">
-            <span class="mail">lamo@univ.edu.dj</span>
-            <button class="copy" type="button" data-fr="Copier" data-en="Copy">Copier</button>
-          </div>
-        </div>
-      </div>
-      <p class="sub" style="margin-top:34px" data-fr="Axes thématiques" data-en="Topic areas">Axes thématiques</p>
-      <ul class="topics" style="margin-top:0">
-        <li data-fr="Modélisation épidémiologique et santé publique" data-en="Epidemiological modelling and public health">Modélisation épidémiologique et santé publique</li>
-        <li data-fr="Statistique, biostatistique et science des données" data-en="Statistics, biostatistics and data science">Statistique, biostatistique et science des données</li>
-        <li data-fr="Optimisation et recherche opérationnelle" data-en="Optimization and operations research">Optimisation et recherche opérationnelle</li>
-        <li data-fr="Modélisation des écosystèmes et écologie" data-en="Ecosystem modelling and ecology">Modélisation des écosystèmes et écologie</li>
-        <li data-fr="Modèles climatiques et environnementaux" data-en="Climate and environmental models">Modèles climatiques et environnementaux</li>
-        <li data-fr="Modélisation des systèmes portuaires et logistiques" data-en="Port and logistics systems modelling">Modélisation des systèmes portuaires et logistiques</li>
-        <li data-fr="Mathématiques appliquées à l’industrie et à l’ingénierie" data-en="Applied mathematics for industry and engineering">Mathématiques appliquées à l’industrie et à l’ingénierie</li>
-        <li data-fr="Aide à la décision et systèmes d’aide à la décision" data-en="Decision support systems">Aide à la décision et systèmes d’aide à la décision</li>
-      </ul>
-      <p class="sub" style="margin-top:34px" data-fr="Modèles de résumé" data-en="Abstract templates">Modèles de résumé</p>
-      <div class="cards2">
-        <div class="card">
-          <h3>LaTeX</h3>
-          <p data-fr="Classe article, 11 pt, A4, marges de 2,5 cm. Copiez le code ci-dessous dans un fichier .tex, ou téléchargez le modèle." data-en="Article class, 11 pt, A4, 2.5 cm margins. Copy the code below into a .tex file, or download the template.">Classe article, 11 pt, A4, marges de 2,5 cm. Copiez le code ci-dessous dans un fichier .tex, ou téléchargez le modèle.</p>
-          <div class="cta" style="margin-top:12px">
-            <a class="btn btn-dark" href="{% static 'conference/downloads/M2ISDA_2027_modele_resume.tex' %}" download data-fr="Télécharger le .tex" data-en="Download the .tex">Télécharger le .tex</a>
-            <button class="btn btn-dark" type="button" id="copy-tex" data-fr="Copier le code" data-en="Copy the code">Copier le code</button>
-          </div>
-        </div>
-        <div class="card">
-          <h3>Word</h3>
-          <p data-fr="Document .docx prêt à remplir : en-tête de la conférence, zone titre, auteurs et affiliations, résumé, mots-clés, axe thématique et références." data-en="A .docx document ready to fill in: conference header, title area, authors and affiliations, abstract, keywords, topic area and references.">Document .docx prêt à remplir : en-tête de la conférence, zone titre, auteurs et affiliations, résumé, mots-clés, axe thématique et références.</p>
-          <div class="cta" style="margin-top:12px">
-            <a class="btn btn-dark" href="{% static 'conference/downloads/M2ISDA_2027_modele_resume.docx' %}" download data-fr="Télécharger le .docx" data-en="Download the .docx">Télécharger le .docx</a>
-          </div>
-        </div>
-      </div>
-      <details class="tex-box">
-        <summary data-fr="Voir le code LaTeX" data-en="View the LaTeX code">Voir le code LaTeX</summary>
-        <pre id="tex-src"><code>{% verbatim %}% =====================================================================
-%  M2ISDA 2027 — Modele de resume / Abstract template
-%  2e Conference internationale de modelisation mathematique
-%  et d&#x27;innovations en sciences des donnees avancees
-%  19 - 21 janvier 2027, Universite de Djibouti
-%  Envoi du resume : lamo@univ.edu.dj   —   avant le 5 janvier 2027
-%  Longueur : une page maximum, references comprises.
-% =====================================================================
-\documentclass[11pt,a4paper]{article}
-
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[french,english]{babel}   % langue principale en dernier
-\usepackage{amsmath,amssymb}
-\usepackage[margin=2.5cm]{geometry}
-\usepackage{graphicx}
-\pagestyle{empty}
-
-\begin{document}
-
-% ---------------------------------------------------------------- TITRE
-\begin{center}
-  {\Large\bfseries Titre de la communication\par}
-  \vspace{4mm}
-
-  % Auteur presentant : souligner le nom
-  \underline{Prenom Nom}$^{1}$, Prenom Nom$^{2}$, Prenom Nom$^{1,3}$
-  \vspace{2mm}
-
-  {\small
-   $^{1}$ Laboratoire, Universite, Ville, Pays\\
-   $^{2}$ Laboratoire, Universite, Ville, Pays\\
-   $^{3}$ Institution, Ville, Pays\\
-   \texttt{auteur.correspondant@exemple.org}
-  }
-\end{center}
-\vspace{2mm}
-\hrule
-\vspace{4mm}
-
-% ------------------------------------------------------------- RESUME
-\noindent\textbf{Resume.}
-Exposez en un paragraphe le probleme traite, le modele ou la methode
-proposee, les donnees utilisees et les principaux resultats obtenus.
-Les equations sont admises, par exemple
-\begin{equation*}
-  \frac{\partial u}{\partial t} = \Delta u + f(u), \qquad u(0)=u_{0},
-\end{equation*}
-ainsi qu&#x27;une figure ou un tableau si la place le permet.
-Terminez par la portee des resultats pour la discipline ou pour
-la decision publique.
-
-\vspace{3mm}
-\noindent\textbf{Mots-cles :} mot-cle 1, mot-cle 2, mot-cle 3, mot-cle 4.
-
-\vspace{3mm}
-\noindent\textbf{Axe thematique :} indiquer l&#x27;un des huit axes de la conference.
-
-\vspace{1mm}
-\noindent\textbf{Type de communication souhaite :} orale $\square$ \quad poster $\square$
-
-% --------------------------------------------------------- REFERENCES
-\vspace{4mm}
-\begin{thebibliography}{9}\footnotesize
-\bibitem{ref1} Nom, P., Nom, P. (2026).
-  Titre de l&#x27;article. \emph{Nom de la revue}, 12(3), 145--167.
-\bibitem{ref2} Nom, P. (2024).
-  \emph{Titre de l&#x27;ouvrage}. Editeur, Ville.
-\end{thebibliography}
-
-\end{document}
-{% endverbatim %}</code></pre>
-      </details>
-      <p class="sub" style="margin-top:34px" data-fr="Affiche de la conférence" data-en="Conference poster">Affiche de la conférence</p>
-      <figure class="fig poster">
-        <img id="poster-fr" src="{% static 'conference/img/poster-fr.jpg' %}" alt="Affiche M2ISDA 2027" width="860" height="1216">
-        <img id="poster-en" src="{% static 'conference/img/poster-en.jpg' %}" alt="M2ISDA 2027 poster" width="860" height="1216" hidden>
-      </figure>
-    </section>
-
-    <section id="partenaires" hidden>
-      <div class="section-head">
-        <p class="kicker" data-fr="Les données et les méthodes" data-en="Data and methods">Les données et les méthodes</p>
-        <h2 data-fr="Partenaires" data-en="Partners">Partenaires</h2>
-        <p data-fr="Sept institutions nationales djiboutiennes participent à la conférence, aux côtés des universités partenaires du laboratoire." data-en="Seven Djiboutian national institutions take part in the conference, alongside the laboratory’s partner universities.">Sept institutions nationales djiboutiennes participent à la conférence, aux côtés des universités partenaires du laboratoire.</p>
-      </div>
-      <p class="sub" data-fr="Institutions nationales" data-en="National institutions">Institutions nationales</p>
-      <ul class="logos">
-      <li class="logo-card">
-        <span class="logo-disc"><img src="{% static 'conference/img/instad.png' %}" alt="INSTAD"></span>
-        <strong>INSTAD</strong>
-        <span class="org" data-fr="Institut national de la statistique de Djibouti" data-en="National Institute of Statistics of Djibouti">Institut national de la statistique de Djibouti</span>
-      </li>
-      <li class="logo-card">
-        <span class="logo-disc"><img src="{% static 'conference/img/inspd.png' %}" alt="INSPD"></span>
-        <strong>INSPD</strong>
-        <span class="org" data-fr="Institut national de santé publique de Djibouti" data-en="National Institute of Public Health of Djibouti">Institut national de santé publique de Djibouti</span>
-      </li>
-      <li class="logo-card">
-        <span class="logo-disc"><img src="{% static 'conference/img/chu-de-djibouti.png' %}" alt="CHU de Djibouti"></span>
-        <strong>CHU de Djibouti</strong>
-        <span class="org" data-fr="Centre hospitalier universitaire" data-en="University Hospital">Centre hospitalier universitaire</span>
-      </li>
-      <li class="logo-card">
-        <span class="logo-disc"><img src="{% static 'conference/img/hopital-militaire.png' %}" alt="Hôpital militaire"></span>
-        <strong>Hôpital militaire</strong>
-        <span class="org" data-fr="Service de santé des armées — CSSA" data-en="Army Health Service — CSSA">Service de santé des armées — CSSA</span>
-      </li>
-      <li class="logo-card">
-        <span class="logo-disc"><img src="{% static 'conference/img/dpcs.png' %}" alt="DPCS"></span>
-        <strong>DPCS</strong>
-        <span class="org" data-fr="Djibouti Port Community Systems" data-en="Djibouti Port Community Systems">Djibouti Port Community Systems</span>
-      </li>
-      <li class="logo-card">
-        <span class="logo-disc"><img src="{% static 'conference/img/sgtd.png' %}" alt="SGTD"></span>
-        <strong>SGTD</strong>
-        <span class="org" data-fr="Terminal à conteneurs de Doraleh" data-en="Doraleh Container Terminal">Terminal à conteneurs de Doraleh</span>
-      </li>
-      <li class="logo-card">
-        <span class="logo-disc"><img src="{% static 'conference/img/dpcr.png' %}" alt="DPCR"></span>
-        <strong>DPCR</strong>
-        <span class="org" data-fr="Djibouti Ports Corridor Road" data-en="Djibouti Ports Corridor Road">Djibouti Ports Corridor Road</span>
-      </li>
-      </ul>
-      <p class="sub" style="margin-top:36px" data-fr="Universités partenaires" data-en="Partner universities">Universités partenaires</p>
-      <ul class="logos mini-grid">
-      <li class="logo-card mini">
-        <span class="logo-disc"><img src="{% static 'conference/img/universite-de-djibouti.png' %}" alt="Université de Djibouti"></span>
-        <strong>Université de Djibouti</strong>
-      </li>
-      <li class="logo-card mini">
-        <span class="logo-disc"><img src="{% static 'conference/img/le-havre-normandie.png' %}" alt="Le Havre Normandie"></span>
-        <strong>Le Havre Normandie</strong>
-      </li>
-      <li class="logo-card mini">
-        <span class="logo-disc"><img src="{% static 'conference/img/clermont-auvergne.png' %}" alt="Clermont Auvergne"></span>
-        <strong>Clermont Auvergne</strong>
-      </li>
-      <li class="logo-card mini">
-        <span class="logo-disc"><img src="{% static 'conference/img/marie-et-louis-pasteur.png' %}" alt="Marie et Louis Pasteur"></span>
-        <strong>Marie et Louis Pasteur</strong>
-      </li>
-      <li class="logo-card mini">
-        <span class="logo-disc"><img src="{% static 'conference/img/adama-science-and-technology.png' %}" alt="Adama Science and Technology"></span>
-        <strong>Adama Science and Technology</strong>
-      </li>
-      <li class="logo-card mini">
-        <span class="logo-disc"><img src="{% static 'conference/img/amoud-university.png' %}" alt="Amoud University"></span>
-        <strong>Amoud University</strong>
-      </li>
-      <li class="logo-card mini">
-        <span class="logo-disc"><img src="{% static 'conference/img/mogadishu-university.png' %}" alt="Mogadishu University"></span>
-        <strong>Mogadishu University</strong>
-      </li>
-      </ul>
-    </section>
-  </main>
+<!-- ============================ MARQUEE ============================ -->
+<div class="marq" aria-hidden="true">
+  <div class="marq-row marq-row--big" data-marquee="70">
+    {% for pass in "ab" %}{% for a in marquee_axes %}<span class="marq-item">{% t a.0 a.1 %}<b>∂</b></span>{% endfor %}{% endfor %}
+  </div>
+  <div class="marq-row marq-row--small" data-marquee="55" data-dir="r">
+    {% for pass in "ab" %}{% for p in marquee_partners %}<span class="marq-p">{{ p }}<b>/</b></span>{% endfor %}{% endfor %}
+  </div>
 </div>
 
-<footer>
-  <div class="inner">
-    <div class="fine">
-      <strong>M2ISDA 2027</strong>
-      <span data-fr="Laboratoire d’Analyse, de Modélisation et d’Optimisation (LAMO)" data-en="Laboratory of Analysis, Modeling and Optimization (LAMO)">Laboratoire d’Analyse, de Modélisation et d’Optimisation (LAMO)</span><br>
-      <span data-fr="Université de Djibouti · Campus de Balbala" data-en="University of Djibouti · Balbala Campus">Université de Djibouti · Campus de Balbala</span>
+<main>
+<!-- ============================ §01 CONFERENCE ============================ -->
+<section id="conference" class="sec sec--paper">
+  <div class="wrap">
+    <div class="sec-head" data-reveal="fade"><span class="sec-n">§ 01</span><span class="sec-line" data-reveal="line"></span><span>{% t "La conférence" "The conference" %}</span></div>
+    <p class="lead" data-words data-lead-fr="{{ lead_fr }}" data-lead-en="{{ lead_en }}" data-accent-fr="{{ accent_fr }}" data-accent-en="{{ accent_en }}">{% for w in lead_words %}<span data-w{% if w.accent %} class="acc"{% endif %}>{{ w.t }} </span>{% endfor %}</p>
+
+    <div class="defs">
+      <div data-reveal="up" class="def"><div class="def-n">{% t "Déf." "Def." %} 1.1</div><h3>{% t "Un format resserré" "A tight format" %}</h3><p>{% t "Pendant trois jours, une conférence plénière ouvre chaque demi-journée. Les sessions qui suivent accueillent les travaux soumis, présentés en communication orale ou en poster." "Over three days, a plenary lecture opens each half-day. The sessions that follow host the submitted work, presented orally or as posters." %}</p></div>
+      <div data-reveal="up" data-delay="120" class="def"><div class="def-n">{% t "Déf." "Def." %} 1.2</div><h3>{% t "Une tribune pour les doctorants" "A stage for doctoral students" %}</h3><p>{% t "Pour beaucoup de doctorants, M2ISDA est la première scène internationale : on y présente un travail de thèse, on répond au comité scientifique, on rencontre les équipes avec lesquelles on publiera." "For many doctoral students, M2ISDA is the first international stage: you present thesis work, answer the scientific committee and meet the teams you will publish with." %}</p></div>
+      <div data-reveal="up" data-delay="240" class="def"><div class="def-n">{% t "Déf." "Def." %} 1.3</div><h3>{% t "Des données de terrain" "Field data" %}</h3><p>{% t "Organisée par le LAMO, la conférence associe les institutions nationales, qui apportent les données, aux équipes de recherche, qui apportent les méthodes : santé publique, environnement, climat, transports et systèmes portuaires." "Organised by LAMO, the conference brings together national institutions, which provide the data, and research teams, which provide the methods: public health, environment, climate, transport and port systems." %}</p></div>
     </div>
-    <div class="fine">
-      <strong data-fr="19 – 21 janvier 2027" data-en="19 – 21 January 2027">19 – 21 janvier 2027</strong>
-      <span>lamo@univ.edu.dj · urls.fr/SHONvz</span>
+
+    <div class="stats">
+      <div data-reveal="up" class="stat"><div class="stat-n" data-count="3">3</div><div class="mono-label mono-label--dk">{% t "Journées" "Days" %}</div></div>
+      <div data-reveal="up" data-delay="100" class="stat"><div class="stat-n" data-count="10">10</div><div class="mono-label mono-label--dk">{% t "Conférenciers invités" "Invited speakers" %}</div></div>
+      <div data-reveal="up" data-delay="200" class="stat"><div class="stat-n" data-count="8">8</div><div class="mono-label mono-label--dk">{% t "Axes thématiques" "Topic areas" %}</div></div>
+      <div data-reveal="up" data-delay="300" class="stat"><div class="stat-n stat-n--red" data-count="14">14</div><div class="mono-label mono-label--dk">{% t "Institutions partenaires" "Partner institutions" %}</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ §02 INTERVENANTS ============================ -->
+<section id="intervenants" class="sec sec--ink">
+  <div class="wrap">
+    <div class="sec-head" data-reveal="fade"><span class="sec-n">§ 02</span><span class="sec-line" data-reveal="line"></span><span>{% t "Conférenciers invités" "Invited speakers" %}</span></div>
+    <div class="sec-top">
+      <h2 class="h2"><span class="mask"><span class="rise" data-reveal="rise">{% t "Dix conférenciers," "Ten speakers," %}</span></span><span class="mask"><span class="rise accent" data-reveal="rise" data-delay="100">{% t "cinq pays." "five countries." %}</span></span></h2>
+      <p class="sec-p" data-reveal="up" data-delay="200">{% t "Leurs conférences plénières ouvrent chaque demi-journée. Ils viennent de France, du Maroc, du Sénégal, d’Éthiopie et de Somalie." "Their plenary lectures open each half-day. They come from France, Morocco, Senegal, Ethiopia and Somalia." %}</p>
+    </div>
+
+    <ul class="speakers" id="speakers">
+      {% for s in speakers %}
+      <li class="spk" data-reveal="up" data-img="{% static s.img %}">
+        <span class="spk-line"></span>
+        <span class="spk-n">{{ s.n }}</span>
+        <img src="{% static s.img %}" alt="{{ s.name }}" width="58" height="58" loading="lazy">
+        <div class="spk-txt"><div class="spk-name">{{ s.name }}</div><div class="spk-aff">{% t s.aff.0 s.aff.1 %}</div></div>
+        <span class="chip">{% t s.country.0 s.country.1 %}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ §03 PROGRAMME ============================ -->
+<section id="programme" class="sec sec--paper">
+  <div class="wrap">
+    <div class="sec-head" data-reveal="fade"><span class="sec-n">§ 03</span><span class="sec-line" data-reveal="line"></span><span>Programme</span></div>
+    <div class="sec-top">
+      <h2 class="h2"><span class="mask"><span class="rise" data-reveal="rise">{% t "Trois journées" "Three days" %}</span></span><span class="mask"><span class="rise accent" data-reveal="rise" data-delay="100">{% t "à Balbala." "in Balbala." %}</span></span></h2>
+      <p class="sec-p" data-reveal="up" data-delay="200">{% t "Déroulé prévisionnel : conférences plénières, panel, sessions de communication, excursion le mercredi après-midi et dîner de gala le jeudi soir." "Provisional outline: plenary lectures, a panel, contributed sessions, an excursion on Wednesday afternoon and a gala dinner on Thursday evening." %}</p>
+    </div>
+
+    <div class="days" role="tablist" aria-label="Jours" data-reveal="up">
+      {% for d in days %}
+      <button type="button" role="tab" class="day-tab{% if forloop.first %} on{% endif %}" id="day-tab-{{ forloop.counter0 }}" data-day="{{ forloop.counter0 }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="day-{{ forloop.counter0 }}">
+        <span class="day-wd">{% t d.wd.0 d.wd.1 %}</span>
+        <span class="day-num">{{ d.num }}</span>
+        <span class="day-bar"></span>
+      </button>
+      {% endfor %}
+    </div>
+
+    <div class="day-panels" id="day-panels">
+      {% for d in days %}
+      <div class="day-panel" id="day-{{ forloop.counter0 }}" role="tabpanel" aria-labelledby="day-tab-{{ forloop.counter0 }}">
+        <div>
+          <div data-in class="mono-label mono-label--red">{% t d.date.0 d.date.1 %}</div>
+          <h3 data-in class="day-title">{% t d.title.0 d.title.1 %}</h3>
+        </div>
+        <div>
+          {% for slot in d.slots %}
+          <div data-in class="slot">
+            <div class="slot-t">{% t slot.0.0 slot.0.1 %}</div>
+            <div class="slot-items">{% for it in slot.1 %}<div>{% t it.0 it.1 %}</div>{% endfor %}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <p class="fine" data-reveal="fade">{% t "Les horaires, les salles et l’affectation des communications seront publiés après la notification aux auteurs." "Times, rooms and the allocation of talks will be published after the notification to authors." %}</p>
+  </div>
+</section>
+
+<!-- ============================ §04 AXES ============================ -->
+<section id="axes" class="sec sec--ink">
+  <div class="wrap">
+    <div class="sec-head" data-reveal="fade"><span class="sec-n">§ 04</span><span class="sec-line" data-reveal="line"></span><span>{% t "Axes thématiques" "Topic areas" %}</span></div>
+    <h2 class="h2 h2--solo"><span class="mask"><span class="rise" data-reveal="rise">{% t "Huit axes," "Eight areas," %}</span></span><span class="mask"><span class="rise accent" data-reveal="rise" data-delay="100">{% t "huit équations." "eight equations." %}</span></span></h2>
+    <div class="axes">
+      {% for a in axes %}
+      <div class="axe" data-reveal="up" data-delay="{{ a.delay }}" tabindex="0">
+        <div class="axe-top"><span>{% t "Axe" "Area" %} {{ a.num }}</span><span class="axe-tag">{{ a.tag }}</span></div>
+        <div class="axe-eq">{{ a.eq }}</div>
+        <div class="axe-title">{% t a.title.0 a.title.1 %}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ============================ §05 CALENDRIER ============================ -->
+<section id="calendrier" class="sec sec--paper">
+  <div class="wrap">
+    <div class="sec-head" data-reveal="fade"><span class="sec-n">§ 05</span><span class="sec-line" data-reveal="line"></span><span>{% t "Dates importantes" "Key dates" %}</span></div>
+    <h2 class="h2 h2--solo"><span class="mask"><span class="rise" data-reveal="rise">{% t "Quatre dates" "Four dates" %}</span></span><span class="mask"><span class="rise accent" data-reveal="rise" data-delay="100">{% t "à retenir." "to remember." %}</span></span></h2>
+    <div class="tl">
+      <div class="tl-line" data-reveal="line"></div>
+      <ol class="tl-grid">
+        {% for m in milestones %}
+        <li class="ms" data-reveal="up" data-delay="{{ m.delay }}" data-iso="{{ m.iso }}">
+          <span class="ms-dot{% if m.last %} ms-dot--on{% endif %}"></span>
+          <div class="ms-left mono-label mono-label--red"></div>
+          <div class="ms-date">{% t m.date.0 m.date.1 %}</div>
+          <div class="ms-year">{{ m.year }}</div>
+          <div class="ms-label">{% t m.label.0 m.label.1 %}</div>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ §06 SOUMISSION ============================ -->
+<section id="soumission" class="sec sec--ink">
+  <div class="wrap">
+    <div class="sec-head" data-reveal="fade"><span class="sec-n">§ 06</span><span class="sec-line" data-reveal="line"></span><span>{% t "Soumission de résumé" "Abstract submission" %}</span></div>
+    <div class="sub-top">
+      <h2 class="h2"><span class="mask"><span class="rise" data-reveal="rise">{% t "Appel à" "Call for" %}</span></span><span class="mask"><span class="rise accent" data-reveal="rise" data-delay="100">{% t "communications." "papers." %}</span></span></h2>
+      <div class="deadline" data-reveal="up" data-delay="200">
+        <div class="mono-label">{% t "Date limite" "Deadline" %}</div>
+        <div class="deadline-n">05.01.27</div>
+      </div>
+    </div>
+    <p class="sub-lead" data-reveal="up">{% t "Les résumés sont attendus avant le 5 janvier 2027, en français ou en anglais, dans l’un des huit axes de la conférence." "Abstracts are due by 5 January 2027, in French or English, in one of the eight areas of the conference." %}</p>
+
+    <div class="cells">
+      <div class="cell" data-reveal="up">
+        <div class="mono-label mono-label--red">{% t "Contenu du résumé" "What the abstract contains" %}</div>
+        <ol class="roman">
+          <li><span>i</span>{% t "Titre, auteurs et affiliations" "Title, authors and affiliations" %}</li>
+          <li><span>ii</span>{% t "Une page au maximum, références comprises" "One page maximum, references included" %}</li>
+          <li><span>iii</span>{% t "Axe thématique choisi" "Chosen topic area" %}</li>
+          <li><span>iv</span>{% t "Préférence : communication orale ou poster" "Preference: oral presentation or poster" %}</li>
+        </ol>
+      </div>
+      <div class="cell cell--send" data-reveal="up" data-delay="120">
+        <div>
+          <div class="mono-label mono-label--red">{% t "Envoi" "Sending" %}</div>
+          <p class="cell-p">{% t "Le résumé est envoyé par courriel à l’adresse du laboratoire, en PDF ou en Word, avant le 5 janvier 2027. Les auteurs reçoivent la décision du comité scientifique le 10 janvier 2027." "The abstract is sent by email to the laboratory address, as a PDF or Word file, before 5 January 2027. Authors receive the scientific committee’s decision on 10 January 2027." %}</p>
+        </div>
+        <div class="mailrow">
+          <a class="mail" href="mailto:lamo@univ.edu.dj">lamo@univ.edu.dj</a>
+          <button type="button" class="pill" data-copy="mail" data-label-fr="Copier" data-label-en="Copy">Copier</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tools">
+      <div class="code" data-reveal="up">
+        <div class="code-head">
+          <div class="code-title"><span>LaTeX</span><small>{% t "article · 11 pt · A4 · marges 2,5 cm" "article · 11 pt · A4 · 2.5 cm margins" %}</small></div>
+          <div class="code-btns">
+            <button type="button" class="pill" data-copy="code" data-label-fr="Copier le code" data-label-en="Copy code">Copier le code</button>
+            <a class="pill pill--red" href="{% url 'tex_template' %}" download>.tex ↓</a>
+          </div>
+        </div>
+        <div class="code-body" tabindex="0" role="region" aria-label="LaTeX">{% for ln in tex_lines %}<div class="ln"><span class="no">{{ ln.no }}</span>{% for kind, txt in ln.parts %}<span class="t-{{ kind }}">{{ txt }}</span>{% endfor %}</div>{% endfor %}</div>
+      </div>
+      <div class="word" data-reveal="up" data-delay="120">
+        <div>
+          <div class="word-t">Word</div>
+          <p class="cell-p">{% t "Document .docx prêt à remplir : en-tête de la conférence, zone titre, auteurs et affiliations, résumé, mots-clés, axe thématique et références." "A .docx document ready to fill in: conference header, title area, authors and affiliations, abstract, keywords, topic area and references." %}</p>
+        </div>
+        <a class="btn btn--ghost btn--lg" href="{% static 'conference/downloads/M2ISDA_2027_modele_resume.docx' %}" download data-magnetic>{% t "Télécharger le .docx" "Download the .docx" %} <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+
+    <div id="publications" class="pubs">
+      <div data-reveal="up">
+        <div class="mono-label mono-label--red">{% t "Après la conférence" "After the conference" %}</div>
+        <h3 class="pubs-h">{% t "Un numéro" "A" %} <em>{% t "spécial" "special issue" %}</em></h3>
+      </div>
+      <div data-reveal="up" data-delay="100" class="pubs-p">
+        <p>{% t "Les meilleures contributions présentées à la conférence sont invitées à être soumises, sous forme d’article complet, à un numéro spécial. La sélection est faite par le comité scientifique à l’issue de la conférence ; les articles suivent ensuite le processus d’évaluation par les pairs de la revue." "The best contributions presented at the conference are invited for submission, as full papers, to a special issue. The selection is made by the scientific committee after the conference; papers then follow the journal’s own peer-review process." %}</p>
+        <p class="fine fine--dk">{% t "La revue retenue et le calendrier de soumission seront annoncés sur cette page." "The selected journal and the submission schedule will be announced on this page." %}</p>
+      </div>
+    </div>
+
+    <div class="poster" data-reveal="up">
+      <div class="mono-label">{% t "Affiche de la conférence" "Conference poster" %}</div>
+      <img id="poster-fr" src="{% static 'conference/img/poster-fr.jpg' %}" alt="Affiche M2ISDA 2027" width="860" height="1216" loading="lazy">
+      <img id="poster-en" src="{% static 'conference/img/poster-en.jpg' %}" alt="M2ISDA 2027 poster" width="860" height="1216" loading="lazy" hidden>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ §07 COMITES ============================ -->
+<section id="comites" class="sec sec--paper">
+  <div class="wrap">
+    <div class="sec-head" data-reveal="fade"><span class="sec-n">§ 07</span><span class="sec-line" data-reveal="line"></span><span>{% t "Comités" "Committees" %}</span></div>
+    <div class="sec-top">
+      <h2 class="h2"><span class="mask"><span class="rise" data-reveal="rise">{% t "Celles et ceux" "The people" %}</span></span><span class="mask"><span class="rise accent" data-reveal="rise" data-delay="100">{% t "qui l’organisent." "who run it." %}</span></span></h2>
+      <div class="seg" role="tablist" aria-label="Comités" data-reveal="up" data-delay="200">
+        <span class="seg-thumb" id="seg-thumb"></span>
+        <button type="button" role="tab" class="on" data-com="org" aria-selected="true" aria-controls="com-org" id="com-tab-org">Organisation</button>
+        <button type="button" role="tab" data-com="sci" aria-selected="false" aria-controls="com-sci" id="com-tab-sci">{% t "Scientifique" "Scientific" %}</button>
+      </div>
+    </div>
+
+    <div class="com">
+      <div id="com-org" class="com-panel" role="tabpanel" aria-labelledby="com-tab-org">
+        <p data-in class="com-lead">{% t "Quatre enseignants-chercheurs permanents, six doctorants et les étudiants du Master Intelligence artificielle et modélisation des données assurent la préparation scientifique, l’accueil des conférenciers et la logistique des trois journées." "Four permanent researchers, six doctoral students and the students of the Master’s programme in Artificial Intelligence and Data Modelling handle the scientific preparation, the welcome of speakers and the logistics of the three days." %}</p>
+        <div data-in class="mono-label mono-label--dk com-sub">{% t "Membres permanents" "Permanent members" %}</div>
+        <div class="people people--lg">
+          {% for p in permanents %}
+          <figure data-in class="person"><img src="{% static p.img %}" alt="{{ p.name }}" width="150" height="150" loading="lazy"><figcaption><div class="person-name">{{ p.name }}</div><div class="person-role">{% t mcf.0 mcf.1 %}</div></figcaption></figure>
+          {% endfor %}
+        </div>
+        <div data-in class="mono-label mono-label--dk com-sub com-sub--2">{% t "Doctorants" "Doctoral students" %}</div>
+        <div class="people people--sm">
+          {% for p in doctorants %}
+          <figure data-in class="person person--sm"><img src="{% static p.img %}" alt="{{ p.name }}" width="96" height="96" loading="lazy"><figcaption><div class="person-name">{{ p.name }}</div><div class="person-aff">{{ p.aff }}</div></figcaption></figure>
+          {% endfor %}
+        </div>
+        <div data-in class="masterbox">
+          <div>
+            <div class="mono-label mono-label--red">{% t "Étudiants du master" "Master’s students" %}</div>
+            <div class="masterbox-t">{% t "Master Intelligence artificielle et modélisation des données" "Master’s in Artificial Intelligence and Data Modelling" %}</div>
+          </div>
+          <p class="cell-p">{% t "Les étudiants du master participent à l’organisation de la conférence : accueil et accompagnement des participants, secrétariat des sessions, appui technique en salle et couverture de l’événement. Ils y assistent également comme auditeurs, aux côtés des doctorants." "The Master’s students take part in running the conference: welcoming and assisting participants, session secretariat, technical support in the rooms and coverage of the event. They also attend as listeners, alongside the doctoral students." %}</p>
+        </div>
+      </div>
+
+      <div id="com-sci" class="com-panel" role="tabpanel" aria-labelledby="com-tab-sci">
+        <p data-in class="com-lead">{% t "Neuf enseignants-chercheurs de Djibouti, de France, d’Éthiopie et de Somalie évaluent les résumés soumis, établissent le programme des sessions et sélectionnent les contributions retenues pour le numéro spécial." "Nine researchers from Djibouti, France, Ethiopia and Somalia review the submitted abstracts, set the session programme and select the contributions retained for the special issue." %}</p>
+        <div class="people people--md">
+          {% for p in scientists %}
+          <figure data-in class="person person--md"><img src="{% static p.img %}" alt="{{ p.name }}" width="130" height="130" loading="lazy"><figcaption><div class="person-name">{{ p.name }}</div><div class="person-aff person-aff--lg">{% t p.aff.0 p.aff.1 %}</div><span class="chip chip--dk">{% t p.country.0 p.country.1 %}</span></figcaption></figure>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ §08 INSCRIPTION ============================ -->
+<section id="inscription" class="sec sec--red">
+  <div class="wrap">
+    <div class="sec-head sec-head--red" data-reveal="fade"><span>§ 08</span><span class="sec-line" data-reveal="line"></span><span>Inscription</span></div>
+    <h2 class="h2 h2--reg"><span class="mask"><span class="rise" data-reveal="rise">{% t "Inscriptions ouvertes" "Registration open" %}</span></span><span class="mask"><span class="rise it" data-reveal="rise" data-delay="100">{% t "jusqu’au 31 décembre 2026." "until 31 December 2026." %}</span></span></h2>
+
+    <div class="reg">
+      <div class="reg-card" data-reveal="up">
+        <p class="reg-p">{% t "L’inscription se fait en ligne. Elle est obligatoire pour toute personne assistant à la conférence, avec ou sans communication." "Registration is completed online. It is required for everyone attending, with or without a presentation." %}</p>
+        <div class="reg-act">
+          <div class="reg-row">
+            <a class="btn btn--red btn--xl" href="https://urls.fr/SHONvz" target="_blank" rel="noopener" data-magnetic>{% t "Accéder au formulaire" "Open the form" %} <span aria-hidden="true">↗</span></a>
+            <a class="qr" href="https://urls.fr/SHONvz" target="_blank" rel="noopener" aria-label="QR code — urls.fr/SHONvz"><img src="{% static 'conference/img/qr-code-urls-fr-shonvz.png' %}" alt="QR code — urls.fr/SHONvz" width="84" height="84" loading="lazy"></a>
+          </div>
+          <div class="reg-note">{% t "Questions sur l’inscription, l’accueil ou les formalités d’entrée : le comité d’organisation répond à" "Questions about registration, arrival or entry formalities: the organising committee replies at" %} <a href="mailto:lamo@univ.edu.dj">lamo@univ.edu.dj</a></div>
+        </div>
+      </div>
+      <div class="campus" data-reveal="scale" data-delay="120">
+        <img id="campus-img" src="{% static 'conference/img/campus.jpg' %}" alt="Campus de Balbala, Université de Djibouti" width="568" height="508" loading="lazy">
+        <div class="campus-cap"><span>{% t "Campus de Balbala" "Balbala Campus" %}</span><span>{% t "Université de Djibouti" "University of Djibouti" %}</span></div>
+      </div>
+    </div>
+
+    <div class="mono-label mono-label--ink come" data-reveal="fade">{% t "Venir à Djibouti" "Coming to Djibouti" %}</div>
+    <div class="come-grid">
+      <div data-reveal="up" class="come-c">
+        <h3>{% t "Formalités d’entrée" "Entry formalities" %}</h3>
+        <p>{% t "La plupart des participants entrent à Djibouti avec un e-Visa, demandé en ligne sur le portail de l’État et reçu par courriel. Le comité d’organisation établit sur demande une lettre d’invitation à joindre au dossier." "Most participants enter Djibouti with an e-Visa, applied for online on the government portal and received by email. The organising committee issues an invitation letter on request, to be attached to the application." %}</p>
+        <a class="ulink" href="https://www.egouv.dj/" target="_blank" rel="noopener">{% t "Portail e-Visa · egouv.dj" "e-Visa portal · egouv.dj" %} ↗</a>
+      </div>
+      <div data-reveal="up" data-delay="120" class="come-c">
+        <h3>{% t "Lieu et saison" "Venue and season" %}</h3>
+        <p>{% t "La conférence se tient sur le campus de Balbala de l’Université de Djibouti. Janvier est la période la plus clémente de l’année à Djibouti. L’aéroport international Djibouti–Ambouli est à une trentaine de minutes du campus. Les informations sur l’hébergement et les transports seront communiquées aux participants inscrits." "The conference takes place on the Balbala campus of the University of Djibouti. January is the mildest time of year in Djibouti. Djibouti–Ambouli international airport is about thirty minutes from the campus. Accommodation and transport information will be sent to registered participants." %}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ §09 PARTENAIRES ============================ -->
+<section id="partenaires" class="sec sec--paper">
+  <div class="wrap">
+    <div class="sec-head" data-reveal="fade"><span class="sec-n">§ 09</span><span class="sec-line" data-reveal="line"></span><span>{% t "Partenaires" "Partners" %}</span></div>
+    <div class="sec-top">
+      <h2 class="h2"><span class="mask"><span class="rise" data-reveal="rise">{% t "Les données" "The data" %}</span></span><span class="mask"><span class="rise accent" data-reveal="rise" data-delay="100">{% t "et les méthodes." "and the methods." %}</span></span></h2>
+      <p class="sec-p" data-reveal="up" data-delay="200">{% t "Sept institutions nationales djiboutiennes participent à la conférence, aux côtés des universités partenaires du laboratoire." "Seven Djiboutian national institutions take part in the conference, alongside the laboratory’s partner universities." %}</p>
+    </div>
+
+    <div class="mono-label mono-label--dk part-h" data-reveal="fade">{% t "Institutions nationales" "National institutions" %}</div>
+    <div class="partners partners--nat">
+      {% for p in national %}
+      <div class="partner" data-reveal="up" data-delay="{{ p.delay }}"><img src="{% static p.img %}" alt="{{ p.abbr }}" width="72" height="72" loading="lazy"><div><div class="partner-n">{{ p.abbr }}</div><div class="partner-d">{% t p.name.0 p.name.1 %}</div></div></div>
+      {% endfor %}
+    </div>
+
+    <div class="mono-label mono-label--dk part-h part-h--2" data-reveal="fade">{% t "Universités partenaires" "Partner universities" %}</div>
+    <div class="partners partners--uni">
+      {% for u in universities %}
+      <div class="partner partner--sm" data-reveal="up" data-delay="{{ u.delay }}"><img src="{% static u.img %}" alt="{{ u.fr }}" width="60" height="60" loading="lazy"><div class="partner-n partner-n--sm">{% t u.fr u.en %}</div></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div data-reveal="up"><div class="mono-label">Organisation</div><p>{% t "Laboratoire d’Analyse, de Modélisation et d’Optimisation (LAMO)" "Laboratory of Analysis, Modeling and Optimization (LAMO)" %}<br>{% t "Université de Djibouti · Campus de Balbala" "University of Djibouti · Balbala Campus" %}</p></div>
+      <div data-reveal="up" data-delay="100"><div class="mono-label">Contact</div><p><a href="mailto:lamo@univ.edu.dj">lamo@univ.edu.dj</a><br><a href="https://urls.fr/SHONvz" target="_blank" rel="noopener">{% t "Formulaire d’inscription" "Registration form" %} ↗</a></p></div>
+      <div data-reveal="up" data-delay="200"><div class="mono-label">Dates</div><p>19 — 21 {% t "janvier" "January" %} 2027<br>Djibouti</p></div>
+      <div data-reveal="up" data-delay="300"><div class="foot-logo"><img src="{% static 'conference/img/logos-header.png' %}" alt="LAMO — Université de Djibouti" width="170" height="auto" loading="lazy"></div></div>
+    </div>
+    <div class="foot-big" aria-hidden="true"><span data-reveal="up">M</span><span data-reveal="up" data-delay="60">2</span><span data-reveal="up" data-delay="120">I</span><span data-reveal="up" data-delay="180">S</span><span data-reveal="up" data-delay="240">D</span><span data-reveal="up" data-delay="300">A</span></div>
+    <div class="foot-bar">
+      <span>M2ISDA 2027 · {% t "2ᵉ Conférence internationale de modélisation mathématique et d’innovations en sciences des données avancées" "2nd International Conference on Mathematical Modelling and Innovations in Advanced Data Sciences" %}</span>
+      <a href="#top">{% t "Haut de page" "Back to top" %} ↑</a>
     </div>
   </div>
 </footer>
+</div>
 
-<script src="{% static 'conference/js/site.js' %}"></script>
+{{ tex|json_script:"tex-src" }}
+<script src="{% static 'conference/js/site.js' %}" defer></script>
 </body>
 </html>
