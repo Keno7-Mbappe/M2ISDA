@@ -10,7 +10,7 @@
 <meta property="og:description" content="Modélisation mathématique et innovations en sciences des données avancées. Appel à communications ouvert jusqu’au 5 janvier 2027.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="{% static 'conference/img/campus.jpg' %}">
-<link rel="icon" href="{% static 'conference/img/ud-logo.webp' %}" type="image/webp">
+<link rel="icon" href="{% static 'conference/img/ud-logo.png' %}" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500..800;1,500..700&family=Manrope:wght@400..800&display=swap">
@@ -23,11 +23,11 @@
 <!-- ============================ EN-TÊTE ============================ -->
 <header class="top" id="top">
   <div class="top-bar" aria-hidden="true"><i></i><i></i><i></i></div>
-  <div class="top-in">
+  <div class="top-main"><div class="top-in">
     <a class="brand" href="#accueil" aria-label="M2ISDA 2027">
       <span class="brand-logos">
-        <img src="{% static 'conference/img/ud-logo.webp' %}" alt="Université de Djibouti" width="64" height="39">
-        <img src="{% static 'conference/img/lamo-logo.png' %}" alt="LAMO — Laboratoire d’Analyse, de Modélisation et d’Optimisation" width="68" height="40">
+        <img src="{% static 'conference/img/ud-logo.png' %}" alt="Université de Djibouti" width="59" height="52">
+        <img src="{% static 'conference/img/lamo-logo.png' %}" alt="LAMO — Laboratoire d’Analyse, de Modélisation et d’Optimisation" width="82" height="44">
       </span>
       <span class="brand-txt"><b>M2ISDA <em>2027</em></b><small>{% t "Université de Djibouti · Laboratoire LAMO" "University of Djibouti · LAMO Laboratory" %}</small></span>
     </a>
@@ -38,7 +38,22 @@
       </div>
       <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="drawer" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
-  </div>
+  </div></div>
+  <nav class="topnav" id="topnav" aria-label="Navigation principale">
+    <div class="topnav-in">
+      <span class="nav-pill" aria-hidden="true"></span>
+        <a href="#accueil">{{ icons.accueil|safe }}<span>{% t "Accueil" "Home" %}</span></a>
+        <a href="#organisation">{{ icons.organisation|safe }}<span>{% t "Comité d’organisation" "Organising committee" %}</span></a>
+        <a href="#scientifique">{{ icons.scientifique|safe }}<span>{% t "Comité scientifique" "Scientific committee" %}</span></a>
+        <a href="#conferenciers">{{ icons.conferenciers|safe }}<span>{% t "Conférenciers invités" "Invited speakers" %}</span></a>
+        <a href="#dates">{{ icons.dates|safe }}<span>{% t "Dates importantes" "Key dates" %}</span></a>
+        <a href="#inscription">{{ icons.inscription|safe }}<span>Inscription</span></a>
+        <a href="#programme">{{ icons.programme|safe }}<span>Programme</span></a>
+        <a href="#publications">{{ icons.publications|safe }}<span>Publications</span></a>
+        <a href="#soumission">{{ icons.soumission|safe }}<span>{% t "Soumission de résumé" "Abstract submission" %}</span></a>
+        <a href="#partenaires">{{ icons.partenaires|safe }}<span>{% t "Partenaires" "Partners" %}</span></a>
+    </div>
+  </nav>
   <nav class="drawer" id="drawer" aria-label="Navigation" hidden>
     <a href="#accueil">{{ icons.accueil|safe }}<span>{% t "Accueil" "Home" %}</span></a>
     <a href="#organisation">{{ icons.organisation|safe }}<span>{% t "Comité d’organisation" "Organising committee" %}</span></a>
@@ -51,28 +66,10 @@
     <a href="#soumission">{{ icons.soumission|safe }}<span>{% t "Soumission de résumé" "Abstract submission" %}</span></a>
     <a href="#partenaires">{{ icons.partenaires|safe }}<span>{% t "Partenaires" "Partners" %}</span></a>
   </nav>
+  <div class="progress" id="progress" aria-hidden="true"></div>
 </header>
 
 <div class="shell">
-  <!-- ============================ MENU LATÉRAL ============================ -->
-  <aside class="side" aria-label="Navigation">
-    <div class="side-in">
-      <p class="side-label">{% t "Navigation" "Navigation" %}</p>
-      <nav class="side-nav" id="side-nav">
-        <a href="#accueil">{{ icons.accueil|safe }}<span>{% t "Accueil" "Home" %}</span></a>
-        <a href="#organisation">{{ icons.organisation|safe }}<span>{% t "Comité d’organisation" "Organising committee" %}</span></a>
-        <a href="#scientifique">{{ icons.scientifique|safe }}<span>{% t "Comité scientifique" "Scientific committee" %}</span></a>
-        <a href="#conferenciers">{{ icons.conferenciers|safe }}<span>{% t "Conférenciers invités" "Invited speakers" %}</span></a>
-        <a href="#dates">{{ icons.dates|safe }}<span>{% t "Dates importantes" "Key dates" %}</span></a>
-        <a href="#inscription">{{ icons.inscription|safe }}<span>Inscription</span></a>
-        <a href="#programme">{{ icons.programme|safe }}<span>Programme</span></a>
-        <a href="#publications">{{ icons.publications|safe }}<span>Publications</span></a>
-        <a href="#soumission">{{ icons.soumission|safe }}<span>{% t "Soumission de résumé" "Abstract submission" %}</span></a>
-        <a href="#partenaires">{{ icons.partenaires|safe }}<span>{% t "Partenaires" "Partners" %}</span></a>
-      </nav>
-    </div>
-  </aside>
-
 <main id="contenu" tabindex="-1">
 
 <!-- ============================ ACCUEIL ============================ -->
@@ -105,7 +102,7 @@
     <figure class="hero-pic">
       <img src="{% static 'conference/img/campus.jpg' %}" alt="Campus de l’Université de Djibouti" width="950" height="556" fetchpriority="high">
       <figcaption class="id-card">
-        <img class="id-ud" src="{% static 'conference/img/ud-logo.webp' %}" alt="" width="72" height="44">
+        <img class="id-ud" src="{% static 'conference/img/ud-logo.png' %}" alt="" width="72" height="44">
         <div class="id-txt">
           <strong>{% t "Université de Djibouti" "University of Djibouti" %}</strong>
           <span class="motto"><b class="m-b">Engagement</b><i>|</i><b class="m-g">Équité</b><i>|</i><b class="m-r">Qualité</b></span>
@@ -371,15 +368,15 @@
 <!-- ============================ PIED DE PAGE ============================ -->
 <footer class="foot">
   <div class="foot-in">
-    <div class="foot-grid">
+    <div class="foot-grid rv">
       <div class="foot-id">
-        <div class="foot-logos"><img src="{% static 'conference/img/ud-logo.webp' %}" alt="Université de Djibouti" width="88" height="53"><span class="foot-sep" aria-hidden="true"></span><img src="{% static 'conference/img/lamo-logo.png' %}" alt="LAMO — Laboratoire d’Analyse, de Modélisation et d’Optimisation" width="150" height="48"></div>
+        <div class="foot-logos"><img src="{% static 'conference/img/ud-logo.png' %}" alt="Université de Djibouti" width="88" height="53"><span class="foot-sep" aria-hidden="true"></span><img src="{% static 'conference/img/lamo-logo.png' %}" alt="LAMO — Laboratoire d’Analyse, de Modélisation et d’Optimisation" width="150" height="48"></div>
         <p class="foot-motto"><b>Engagement</b><i>|</i><b>Équité</b><i>|</i><b>Qualité</b></p>
       </div>
       <div><h4>M2ISDA 2027</h4><p>{% t "Laboratoire d’Analyse, de Modélisation et d’Optimisation (LAMO)" "Laboratory of Analysis, Modeling and Optimization (LAMO)" %}<br>{% t "Université de Djibouti · Campus de Balbala" "University of Djibouti · Balbala Campus" %}</p></div>
       <div><h4>{% t "19 – 21 janvier 2027" "19 – 21 January 2027" %}</h4><p><a href="mailto:lamo@univ.edu.dj">lamo@univ.edu.dj</a> · <a href="https://urls.fr/SHONvz" target="_blank" rel="noopener">urls.fr/SHONvz</a></p></div>
     </div>
-    <div class="foot-bar"><span>M2ISDA 2027</span><a href="#top">{% t "Haut de page" "Back to top" %} ↑</a></div>
+    <div class="foot-bar rv" style="--d:120ms"><span>M2ISDA 2027</span><a href="#top">{% t "Haut de page" "Back to top" %} ↑</a></div>
   </div>
 </footer>
 

@@ -26,9 +26,10 @@ class SiteTests(TestCase):
         missing = [(fr, en) for fr, en in pairs if norm(fr) not in page or norm(en) not in page]
         self.assertEqual(missing, [])
 
-    def test_menu_has_the_ten_original_entries_in_order(self):
+    def test_top_menu_has_the_ten_original_entries_in_order(self):
         page = self.get("/").content.decode()
-        side = page[page.index('id="side-nav"'):page.index("</nav>", page.index('id="side-nav"'))]
+        start = page.index('id="topnav"')
+        side = page[start:page.index("</nav>", start)]
         hrefs = re.findall(r'href="#(\w+)"', side)
         self.assertEqual(hrefs, ["accueil", "organisation", "scientifique", "conferenciers", "dates",
                                  "inscription", "programme", "publications", "soumission", "partenaires"])
