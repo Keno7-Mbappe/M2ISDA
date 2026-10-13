@@ -13,12 +13,12 @@
 <link rel="icon" href="{% static 'conference/img/ud-logo.webp' %}" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=Hanken+Grotesk:wght@400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500..800;1,500..700&family=Manrope:wght@400..800&family=STIX+Two+Text:ital,wght@1,400&display=swap">
 <link rel="stylesheet" href="{% static 'conference/css/site.css' %}">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
-<a class="skip" href="#conference">{% t "Aller au contenu" "Skip to content" %}</a>
+<a class="skip" href="#contenu">{% t "Aller au contenu" "Skip to content" %}</a>
 
 <!-- ============================ EN-TÊTE ============================ -->
 <header class="top" id="top">
@@ -29,7 +29,7 @@
       <span class="brand-txt"><b>M2ISDA <em>2027</em></b><small>{% t "Université de Djibouti · LAMO" "University of Djibouti · LAMO" %}</small></span>
     </a>
     <nav class="nav" id="nav" aria-label="Navigation principale">
-      <a href="#conference">{% t "Conférence" "Conference" %}</a>
+      <a href="#accueil">{% t "Accueil" "Home" %}</a>
       <a href="#intervenants">{% t "Intervenants" "Speakers" %}</a>
       <a href="#programme">Programme</a>
       <a href="#axes">{% t "Axes" "Topics" %}</a>
@@ -48,7 +48,7 @@
     </div>
   </div>
   <div class="drawer" id="drawer" hidden>
-    <a href="#conference">{% t "La conférence" "The conference" %}</a>
+    <a href="#accueil">{% t "Accueil" "Home" %}</a>
     <a href="#intervenants">{% t "Intervenants" "Speakers" %}</a>
     <a href="#programme">Programme</a>
     <a href="#axes">{% t "Axes thématiques" "Topic areas" %}</a>
@@ -64,13 +64,14 @@
   </div>
 </header>
 
-<main>
+<main id="contenu" tabindex="-1">
 <!-- ============================ HERO ============================ -->
+<div id="accueil" class="page">
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="hero-txt">
       <p class="eyebrow rv"><span class="dot"></span>{% t "2ᵉ édition · Conférence internationale" "2nd edition · International conference" %}</p>
-      <h1 class="hero-h1 rv" style="--d:60ms" aria-label="M2ISDA 2027">M2ISDA <span class="yr">2027</span></h1>
+      <h1 class="hero-h1" aria-label="M2ISDA 2027"><span class="ln" aria-hidden="true"><span>M2ISDA</span></span> <span class="ln yr" aria-hidden="true"><span>2027</span></span></h1>
       <p class="hero-sub rv" style="--d:120ms">{% t "Modélisation mathématique et innovations en sciences des données avancées" "Mathematical modelling and innovations in advanced data sciences" %}</p>
 
       <ul class="facts rv" style="--d:180ms">
@@ -92,7 +93,7 @@
       </div>
     </div>
 
-    <figure class="hero-pic rv" style="--d:120ms">
+    <figure class="hero-pic">
       <img src="{% static 'conference/img/campus.jpg' %}" alt="Campus de Balbala, Université de Djibouti" width="950" height="556" fetchpriority="high">
       <figcaption class="id-card">
         <img src="{% static 'conference/img/ud-logo.webp' %}" alt="" width="72" height="44">
@@ -106,17 +107,17 @@
 </section>
 
 <!-- ============================ CONFERENCE ============================ -->
-<section id="conference" class="sec sec--soft">
+<section class="sec sec--soft">
   <div class="wrap">
     <div class="head rv"><p class="kicker">{% t "La conférence" "The conference" %}</p>
       <h2>{% t "Un rendez-vous scientifique à Djibouti" "A scientific gathering in Djibouti" %}</h2></div>
     <div class="about">
       <p class="lead rv">{% t lead_fr lead_en %}</p>
       <div class="stats rv" style="--d:100ms">
-        <div><b>3</b><span>{% t "journées" "days" %}</span></div>
-        <div><b>10</b><span>{% t "conférenciers invités" "invited speakers" %}</span></div>
-        <div><b>8</b><span>{% t "axes thématiques" "topic areas" %}</span></div>
-        <div><b>14</b><span>{% t "institutions partenaires" "partner institutions" %}</span></div>
+        <div><b data-count="3">3</b><span>{% t "journées" "days" %}</span></div>
+        <div><b data-count="10">10</b><span>{% t "conférenciers invités" "invited speakers" %}</span></div>
+        <div><b data-count="8">8</b><span>{% t "axes thématiques" "topic areas" %}</span></div>
+        <div><b data-count="14">14</b><span>{% t "institutions partenaires" "partner institutions" %}</span></div>
       </div>
     </div>
     <div class="grid3">
@@ -126,9 +127,11 @@
     </div>
   </div>
 </section>
+</div>
 
 <!-- ============================ INTERVENANTS ============================ -->
-<section id="intervenants" class="sec">
+<div id="intervenants" class="page">
+<section class="sec">
   <div class="wrap">
     <div class="head rv"><p class="kicker">{% t "Conférenciers invités" "Invited speakers" %}</p>
       <h2>{% t "Dix conférenciers, cinq pays" "Ten speakers, five countries" %}</h2>
@@ -143,9 +146,11 @@
     </ul>
   </div>
 </section>
+</div>
 
 <!-- ============================ PROGRAMME ============================ -->
-<section id="programme" class="sec sec--soft">
+<div id="programme" class="page">
+<section class="sec sec--soft">
   <div class="wrap">
     <div class="head rv"><p class="kicker">Programme</p>
       <h2>{% t "Trois journées à Balbala" "Three days in Balbala" %}</h2>
@@ -172,9 +177,11 @@
     <p class="note">{% t "Les horaires, les salles et l’affectation des communications seront publiés après la notification aux auteurs." "Times, rooms and the allocation of talks will be published after the notification to authors." %}</p>
   </div>
 </section>
+</div>
 
 <!-- ============================ AXES ============================ -->
-<section id="axes" class="sec">
+<div id="axes" class="page">
+<section class="sec">
   <div class="wrap">
     <div class="head rv"><p class="kicker">{% t "Axes thématiques" "Topic areas" %}</p>
       <h2>{% t "Huit axes de recherche" "Eight research areas" %}</h2>
@@ -190,9 +197,11 @@
     </div>
   </div>
 </section>
+</div>
 
 <!-- ============================ CALENDRIER ============================ -->
-<section id="calendrier" class="sec sec--soft">
+<div id="calendrier" class="page">
+<section class="sec sec--soft">
   <div class="wrap">
     <div class="head rv"><p class="kicker">{% t "Dates importantes" "Key dates" %}</p>
       <h2>{% t "Quatre dates à retenir" "Four dates to remember" %}</h2></div>
@@ -209,9 +218,11 @@
     </ol>
   </div>
 </section>
+</div>
 
 <!-- ============================ SOUMISSION ============================ -->
-<section id="soumission" class="sec">
+<div id="soumission" class="page">
+<section class="sec">
   <div class="wrap">
     <div class="head rv"><p class="kicker">{% t "Appel à communications" "Call for papers" %}</p>
       <h2>{% t "Soumission de résumé" "Abstract submission" %}</h2>
@@ -272,13 +283,16 @@
     </div>
   </div>
 </section>
+</div>
 
 <!-- ============================ COMITES ============================ -->
-<section id="comites" class="sec sec--soft">
+<div id="comites" class="page">
+<section class="sec sec--soft">
   <div class="wrap">
     <div class="head rv"><p class="kicker">{% t "Comités" "Committees" %}</p>
       <h2>{% t "Celles et ceux qui l’organisent" "The people who run it" %}</h2></div>
     <div class="seg rv" role="tablist" aria-label="Comités">
+      <span class="seg-thumb" aria-hidden="true"></span>
       <button type="button" role="tab" class="on" data-com="org" aria-selected="true" aria-controls="com-org" id="com-tab-org">Organisation</button>
       <button type="button" role="tab" data-com="sci" aria-selected="false" aria-controls="com-sci" id="com-tab-sci">{% t "Scientifique" "Scientific" %}</button>
     </div>
@@ -307,9 +321,11 @@
     </div>
   </div>
 </section>
+</div>
 
 <!-- ============================ INSCRIPTION ============================ -->
-<section id="inscription" class="sec">
+<div id="inscription" class="page">
+<section class="sec">
   <div class="wrap">
     <div class="head rv"><p class="kicker">{% t "Participer" "Take part" %}</p>
       <h2>{% t "Inscriptions ouvertes jusqu’au 31 décembre 2026" "Registration open until 31 December 2026" %}</h2></div>
@@ -336,9 +352,11 @@
     </div>
   </div>
 </section>
+</div>
 
 <!-- ============================ PARTENAIRES ============================ -->
-<section id="partenaires" class="sec sec--soft">
+<div id="partenaires" class="page">
+<section class="sec sec--soft">
   <div class="wrap">
     <div class="head rv"><p class="kicker">{% t "Les données et les méthodes" "Data and methods" %}</p>
       <h2>{% t "Partenaires" "Partners" %}</h2>
@@ -359,7 +377,9 @@
     </div>
   </div>
 </section>
+</div>
 </main>
+<script>(function(){var h=location.hash.slice(1),e=h&&document.getElementById(h),p=e&&(e.classList.contains("page")?e:e.closest(".page"));(p||document.getElementById("accueil")).classList.add("cur");})();</script>
 
 <!-- ============================ PIED DE PAGE ============================ -->
 <footer class="foot">
