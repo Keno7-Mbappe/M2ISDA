@@ -120,10 +120,8 @@ UNIVERSITIES = [
 ]
 
 LEAD = {
-    "fr": ("La deuxième édition de M2ISDA réunit à Djibouti des chercheurs en mathématiques appliquées, en statistique et en sciences des données pour présenter leurs travaux récents, partager leurs idées et développer de nouvelles méthodes.",
-           ["Djibouti", "mathématiques", "appliquées,", "nouvelles", "méthodes."]),
-    "en": ("The second edition of M2ISDA brings together researchers in applied mathematics, statistics and data science in Djibouti to present their recent work, share ideas and develop new methods.",
-           ["Djibouti", "applied", "mathematics,", "new", "methods."]),
+    "fr": "La deuxième édition de M2ISDA réunit à Djibouti des chercheurs en mathématiques appliquées, en statistique et en sciences des données pour présenter leurs travaux récents, partager leurs idées et développer de nouvelles méthodes.",
+    "en": "The second edition of M2ISDA brings together researchers in applied mathematics, statistics and data science in Djibouti to present their recent work, share ideas and develop new methods.",
 }
 
 TEX = r"""% M2ISDA 2027 — modèle de résumé
@@ -178,8 +176,3 @@ def tex_lines():
                 parts = [("txt", " ")]
         out.append({"no": i, "parts": parts})
     return out
-
-
-def lead_words():
-    text, accent = LEAD["fr"]
-    return [{"t": w, "accent": w in accent} for w in text.split(" ")]

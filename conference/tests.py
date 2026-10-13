@@ -22,7 +22,7 @@ class SiteTests(TestCase):
             self.assertIn(name, html)
 
     def test_english_translations_embedded(self):
-        self.assertContains(self.get("/"), 'data-en="Ten speakers,"')
+        self.assertContains(self.get("/"), 'data-en="Ten speakers, five countries"')
 
     def test_healthz(self):
         self.assertEqual(self.get("/healthz").content, b"ok")
