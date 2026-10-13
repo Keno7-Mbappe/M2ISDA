@@ -243,24 +243,21 @@
     <h2>Programme</h2>
     <p class="sub">{% t "Déroulé prévisionnel des trois journées : conférences plénières, panel, sessions de communication, excursion le mercredi après-midi et dîner de gala le jeudi soir. Les horaires, les salles et l’affectation des communications seront publiés après la notification aux auteurs." "Provisional outline of the three days: plenary lectures, a panel, contributed sessions, an excursion on Wednesday afternoon and a gala dinner on Thursday evening. Times, rooms and the allocation of talks will be published after the notification to authors." %}</p></div>
 
-  <div class="tabs rv" role="tablist" aria-label="Jours">
+  <div class="days">
     {% for d in days %}
-    <button type="button" role="tab" class="tab{% if forloop.first %} on{% endif %}" id="day-tab-{{ forloop.counter0 }}" data-day="{{ forloop.counter0 }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="day-{{ forloop.counter0 }}">
-      <small>{% t d.wd.0 d.wd.1 %}</small><b>{{ d.num }}</b><span>{% t "janvier" "January" %}</span>
-    </button>
+    <article class="day rv" style="--d:{% widthratio forloop.counter0 1 90 %}ms">
+      <div class="day-head">
+        <span class="day-num" aria-hidden="true">{{ d.num }}</span>
+        <div><p class="kicker">{% t d.tag.0 d.tag.1 %}</p><h3>{% t d.title.0 d.title.1 %}</h3></div>
+      </div>
+      <ol class="slots">
+        {% for slot in d.slots %}
+        <li class="slot"><span class="slot-t">{% t slot.0.0 slot.0.1 %}</span><p>{% t slot.1.0 slot.1.1 %}</p></li>
+        {% endfor %}
+      </ol>
+    </article>
     {% endfor %}
   </div>
-
-  {% for d in days %}
-  <div class="panel day" id="day-{{ forloop.counter0 }}" role="tabpanel" aria-labelledby="day-tab-{{ forloop.counter0 }}">
-    <div class="day-head"><p class="kicker">{% t d.tag.0 d.tag.1 %}</p><h3>{% t d.title.0 d.title.1 %}</h3></div>
-    <ol class="slots">
-      {% for slot in d.slots %}
-      <li class="slot"><span class="slot-t">{% t slot.0.0 slot.0.1 %}</span><p>{% t slot.1.0 slot.1.1 %}</p></li>
-      {% endfor %}
-    </ol>
-  </div>
-  {% endfor %}
 </section>
 </div>
 
@@ -325,7 +322,7 @@
       <div class="btnrow"><a class="btn btn--primary btn--sm" href="{% static 'conference/downloads/M2ISDA_2027_modele_resume.docx' %}" download>{% t "Télécharger le .docx" "Download the .docx" %}</a></div>
     </div>
   </div>
-  <details class="codebox rv">
+  <details class="codebox rv" open>
     <summary>{% t "Voir le code LaTeX" "View the LaTeX code" %}</summary>
     <div class="code-body" tabindex="0" role="region" aria-label="LaTeX">{% for ln in tex_lines %}<div class="ln"><span class="no">{{ ln.no }}</span>{% for kind, txt in ln.parts %}<span class="t-{{ kind }}">{{ txt }}</span>{% endfor %}</div>{% endfor %}</div>
   </details>

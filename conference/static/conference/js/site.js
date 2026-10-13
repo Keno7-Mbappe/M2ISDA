@@ -146,19 +146,6 @@
   }
 
   /* ------------------------------------------------------------ onglets : programme & comités */
-  var dayTabs = $$('.tab'), dayPanels = $$('.day');
-  function showDay(i) {
-    dayTabs.forEach(function (t, k) { var on = k === i; t.classList.toggle('on', on); t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
-    dayPanels.forEach(function (p, k) { p.hidden = k !== i; });
-  }
-  dayTabs.forEach(function (t, i) {
-    t.addEventListener('click', function () { showDay(i); });
-    t.addEventListener('keydown', function (e) {
-      var n = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!n) return;
-      e.preventDefault(); var k = (i + n + dayTabs.length) % dayTabs.length; showDay(k); dayTabs[k].focus();
-    });
-  });
-  showDay(0);
 
 
   /* ------------------------------------------------------------ copier */

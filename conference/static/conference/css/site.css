@@ -246,25 +246,16 @@ main{padding:0 var(--pad)}
 @media (max-width:560px){.banner img{aspect-ratio:4/3}}
 
 /* ---------- programme ---------- */
-.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:22px}
-.tab{display:flex;flex-direction:column;align-items:center;padding:14px 8px;border:1.5px solid var(--line);border-radius:var(--r);background:var(--card);cursor:pointer;transition:background .3s,border-color .3s,color .3s,box-shadow .3s,transform .25s var(--ease)}
-.tab small{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;transition:color .3s}
-.tab b{font-family:var(--serif);font-size:clamp(34px,5vw,46px);line-height:1.1;font-weight:600;color:var(--navy);transition:color .3s}
-.tab span{font-size:13px;color:var(--muted);transition:color .3s}
-.tab.on{background:var(--navy);border-color:var(--navy);box-shadow:0 12px 24px -14px rgba(23,48,111,.7)}
-.tab.on small,.tab.on span{color:#C9D6F6}.tab.on b{color:#fff}
-@media (hover:hover){.tab:not(.on):hover{border-color:var(--navy);background:var(--tint);transform:translateY(-2px)}}
-.panel{animation:pageIn .5s var(--ease) both}
 .day{display:grid;gap:24px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,3.4vw,40px);box-shadow:var(--shadow)}
+.days{display:grid;gap:20px}
+.day-head{display:flex;align-items:flex-start;gap:20px}
+.day-num{font-family:var(--serif);font-size:clamp(54px,6vw,76px);line-height:.9;font-weight:600;color:var(--red);flex:none;font-variant-numeric:lining-nums}
 .day-head h3{margin-top:8px;font-family:var(--serif);font-size:clamp(24px,3vw,34px);font-weight:600;line-height:1.2;color:var(--navy);text-wrap:balance}
 .slots{display:grid}
 .slot{display:grid;grid-template-columns:110px 1fr;gap:18px;padding:18px 0;border-top:1px solid var(--line)}
 .slot:first-child{border-top:0;padding-top:0}
 .slot-t{font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);padding-top:3px}
 .slot p{font-size:17px;line-height:1.5}
-.day-head>*,.slot{animation:rise .7s var(--ease) both}
-.day-head h3{animation-delay:.08s}
-.slot:nth-child(1){animation-delay:.14s}.slot:nth-child(2){animation-delay:.24s}.slot:nth-child(3){animation-delay:.34s}
 @media (min-width:1100px){.day{grid-template-columns:.8fr 1.2fr;gap:48px}}
 @media (max-width:560px){.slot{grid-template-columns:1fr;gap:6px}}
 
