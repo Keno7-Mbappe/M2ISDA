@@ -10,7 +10,7 @@ SPEAKERS = [
     ("M. A. Aziz-Alaoui", ("LMAH — Le Havre Normandie", "LMAH — Le Havre Normandie"), "France", "aziz"),
     ("Hacène Djellout", ("Université Clermont Auvergne", "Clermont Auvergne University"), "France", "djellout"),
     ("Raluca Eftimie", ("Université Marie et Louis Pasteur", "Marie & Louis Pasteur University"), "France", "eftimie"),
-    ("El Azroul", ("Université Sidi Mohamed Ben Abdellah", "Sidi Mohamed Ben Abdellah University"), "Maroc", "elazroul"),
+    ("El Houssine Azroul", ("Université Sidi Mohamed Ben Abdellah", "Sidi Mohamed Ben Abdellah University"), "Maroc", "elazroul"),
     ("Clément Manga", ("Université Assane Seck de Ziguinchor", "Assane Seck Ziguinchor University"), "Sénégal", "manga"),
     ("Legesse Lemecha Obsu", ("Adama Science and Technology University",) * 2, "Éthiopie", "lemecha"),
     ("Abdisalam Hassan", ("Université Amoud", "Amoud University"), "Somalie", "abdisalam"),
