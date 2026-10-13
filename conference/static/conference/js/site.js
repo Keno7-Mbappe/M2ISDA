@@ -57,7 +57,7 @@
 
   /* ------------------------------------------------------------ rubriques (une seule visible) */
   var pages = $$('.page'), current = null;
-  var navLinks = $$('.nav a, .drawer a');
+  var navLinks = $$('.side-nav a, .drawer a');
   var top = $('#top'), burger = $('#burger'), drawer = $('#drawer');
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
@@ -104,7 +104,7 @@
   $$('a', drawer).forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
   doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !drawer.hidden) { setMenu(false); burger.focus(); } });
   doc.addEventListener('click', function (e) { if (!drawer.hidden && !top.contains(e.target)) setMenu(false); });
-  matchMedia('(min-width:1100px)').addEventListener('change', function (e) { if (e.matches) setMenu(false); });
+  matchMedia('(min-width:1000px)').addEventListener('change', function (e) { if (e.matches) setMenu(false); });
 
   var ticking = false;
   function onScroll() { ticking = false; top.classList.toggle('scrolled', window.scrollY > 8); }
@@ -142,20 +142,6 @@
   });
   showDay(0);
 
-  var seg = $('.seg'), comBtns = $$('[data-com]'), comPanels = { org: $('#com-org'), sci: $('#com-sci') };
-  function showCom(k) {
-    seg.classList.toggle('sci', k === 'sci');
-    comBtns.forEach(function (b) { var on = b.getAttribute('data-com') === k; b.classList.toggle('on', on); b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
-    Object.keys(comPanels).forEach(function (p) { comPanels[p].hidden = p !== k; });
-  }
-  comBtns.forEach(function (b) {
-    b.addEventListener('click', function () { showCom(b.getAttribute('data-com')); });
-    b.addEventListener('keydown', function (e) {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; e.preventDefault();
-      var o = b.getAttribute('data-com') === 'org' ? 'sci' : 'org'; showCom(o); $('[data-com="' + o + '"]').focus();
-    });
-  });
-  showCom('org');
 
   /* ------------------------------------------------------------ copier */
   var TEXTS = { mail: 'lamo@univ.edu.dj', code: '' };

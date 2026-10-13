@@ -1,4 +1,13 @@
+import html
+import json
+import re
+from pathlib import Path
+
 from django.test import TestCase
+
+
+def norm(text):
+    return re.sub(r"\s+", " ", text).strip()
 
 
 class SiteTests(TestCase):
@@ -9,7 +18,27 @@ class SiteTests(TestCase):
         response = self.get("/")
         self.assertContains(response, "M2ISDA")
         self.assertContains(response, "lamo@univ.edu.dj")
-        self.assertContains(response, "Dix conférenciers")
+
+    def test_original_content_is_preserved(self):
+        """Tous les textes de la version initiale (FR et EN) doivent rester présents."""
+        pairs = json.loads((Path(__file__).parent / "tests_data" / "original_content.json").read_text(encoding="utf-8"))
+        page = norm(html.unescape(self.get("/").content.decode()))
+        missing = [(fr, en) for fr, en in pairs if norm(fr) not in page or norm(en) not in page]
+        self.assertEqual(missing, [])
+
+    def test_menu_has_the_ten_original_entries_in_order(self):
+        page = self.get("/").content.decode()
+        side = page[page.index('id="side-nav"'):page.index("</nav>", page.index('id="side-nav"'))]
+        hrefs = re.findall(r'href="#(\w+)"', side)
+        self.assertEqual(hrefs, ["accueil", "organisation", "scientifique", "conferenciers", "dates",
+                                 "inscription", "programme", "publications", "soumission", "partenaires"])
+        for page_id in hrefs:
+            self.assertIn(f'id="{page_id}" class="page"', page)
+
+    def test_lamo_and_university_logos_present(self):
+        page = self.get("/").content.decode()
+        self.assertIn("lamo-logo", page)
+        self.assertIn("ud-logo", page)
 
     def test_no_unrendered_template_tags(self):
         response = self.get("/")
@@ -17,17 +46,14 @@ class SiteTests(TestCase):
         self.assertNotContains(response, "{{ ")
 
     def test_all_speakers_and_partners_present(self):
-        html = self.get("/").content.decode()
+        html_page = self.get("/").content.decode()
         for name in ("Ramsès Djidjou-Demasse", "Daud Ali Aser", "INSTAD", "Mogadishu University"):
-            self.assertIn(name, html)
-
-    def test_english_translations_embedded(self):
-        self.assertContains(self.get("/"), 'data-en="Ten speakers, five countries"')
+            self.assertIn(name, html_page)
 
     def test_healthz(self):
         self.assertEqual(self.get("/healthz").content, b"ok")
 
-    def test_tex_download(self):
+    def test_tex_download_is_the_original_template(self):
         response = self.get("/modele-resume.tex")
         self.assertIn("attachment", response["Content-Disposition"])
-        self.assertIn(b"\documentclass", response.content)
+        self.assertIn(b"Modele de resume", response.content)

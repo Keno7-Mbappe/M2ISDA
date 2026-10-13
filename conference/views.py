@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -6,14 +9,15 @@ from . import content as c
 
 def index(request):
     ctx = {
+        "icons": json.loads((Path(__file__).parent / "icons.json").read_text(encoding="utf-8")),
         "speakers": [
-            {"n": f"{i:02d}", "name": s[0], "aff": s[1], "country": (s[2], c.COUNTRIES[s[2]]), "img": c.P + s[3] + ".png"}
-            for i, s in enumerate(c.SPEAKERS, 1)
+            {"name": s[0], "aff": s[1], "country": (s[2], c.COUNTRIES[s[2]]), "img": c.P + s[3] + ".png"}
+            for s in c.SPEAKERS
         ],
-        "axes": [{"num": a[0], "title": a[1], "eq": a[2], "tag": a[3], "delay": (i % 4) * 90} for i, a in enumerate(c.AXES)],
+        "topics": [a[1] for a in c.AXES],
         "days": c.DAYS,
         "milestones": [
-            {"iso": m[0], "date": m[1], "year": m[2], "label": m[3], "delay": i * 120, "last": i == len(c.MILESTONES) - 1}
+            {"iso": m[0], "date": m[1], "year": m[2], "label": m[3], "delay": i * 100, "last": i == len(c.MILESTONES) - 1}
             for i, m in enumerate(c.MILESTONES)
         ],
         "mcf": c.MCF,
@@ -23,10 +27,8 @@ def index(request):
             {"name": s[0], "aff": s[1], "country": (s[2], c.COUNTRIES[s[2]]), "img": c.P + s[3] + ".png"}
             for s in c.SCIENTISTS
         ],
-        "national": [{"abbr": n[0], "name": n[1], "img": c.P + n[2] + ".png", "delay": (i % 4) * 80} for i, n in enumerate(c.NATIONAL)],
-        "universities": [{"fr": u[0], "en": u[1], "img": c.P + u[2] + ".png", "delay": (i % 6) * 70} for i, u in enumerate(c.UNIVERSITIES)],
-        "lead_fr": c.LEAD["fr"],
-        "lead_en": c.LEAD["en"],
+        "national": [{"abbr": n[0], "name": n[1], "img": c.P + n[2] + ".png"} for n in c.NATIONAL],
+        "universities": [{"name": u[0], "img": c.P + u[1] + ".png"} for u in c.UNIVERSITIES],
         "tex_lines": c.tex_lines(),
         "tex": c.TEX,
     }
