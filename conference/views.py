@@ -43,3 +43,19 @@ def tex_template(request):
     response = HttpResponse(c.TEX + "\n", content_type="application/x-tex; charset=utf-8")
     response["Content-Disposition"] = 'attachment; filename="M2ISDA2027_resume.tex"'
     return response
+
+
+def robots_txt(request):
+    lines = ["User-agent: *", "Allow: /", "Disallow: /healthz", "", "Sitemap: https://m2isda.com/sitemap.xml", ""]
+    return HttpResponse(chr(10).join(lines), content_type="text/plain")
+
+
+def sitemap_xml(request):
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        "  <url><loc>https://m2isda.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>",
+        "</urlset>",
+        "",
+    ]
+    return HttpResponse(chr(10).join(lines), content_type="application/xml")

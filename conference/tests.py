@@ -3,7 +3,7 @@ import json
 import re
 from pathlib import Path
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 
 def norm(text):
@@ -63,3 +63,22 @@ class SiteTests(TestCase):
         page = self.get("/").content.decode()
         self.assertIn('<link rel="canonical" href="https://m2isda.com/">', page)
         self.assertIn('content="https://m2isda.com/static/', page)
+
+    @override_settings(ALLOWED_HOSTS=["m2isda-2027.onrender.com", "m2isda.com", "localhost"])
+    def test_legacy_onrender_host_redirects_to_canonical_domain(self):
+        response = self.client.get("/?x=1", secure=True, HTTP_HOST="m2isda-2027.onrender.com")
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response["Location"], "https://m2isda.com/?x=1")
+
+    @override_settings(ALLOWED_HOSTS=["m2isda-2027.onrender.com", "m2isda.com", "localhost"])
+    def test_healthz_is_not_redirected_on_legacy_host(self):
+        response = self.client.get("/healthz", secure=True, HTTP_HOST="m2isda-2027.onrender.com")
+        self.assertEqual(response.status_code, 200)
+
+    @override_settings(ALLOWED_HOSTS=["m2isda.com", "localhost"])
+    def test_canonical_domain_is_served_not_redirected(self):
+        self.assertEqual(self.client.get("/", secure=True, HTTP_HOST="m2isda.com").status_code, 200)
+
+    def test_robots_and_sitemap(self):
+        self.assertContains(self.get("/robots.txt"), "Sitemap: https://m2isda.com/sitemap.xml")
+        self.assertContains(self.get("/sitemap.xml"), "<loc>https://m2isda.com/</loc>")
