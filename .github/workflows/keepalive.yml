@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping the site
-        run: curl --fail --silent --show-error --retry 3 --retry-delay 20 --max-time 90 https://m2isda-2027.onrender.com/healthz
+        run: curl --fail --silent --show-error --retry 3 --retry-delay 20 --max-time 90 https://m2isda.com/healthz

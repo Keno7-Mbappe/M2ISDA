@@ -58,3 +58,8 @@ class SiteTests(TestCase):
         response = self.get("/modele-resume.tex")
         self.assertIn("attachment", response["Content-Disposition"])
         self.assertIn(b"Modele de resume", response.content)
+
+    def test_canonical_domain_declared(self):
+        page = self.get("/").content.decode()
+        self.assertIn('<link rel="canonical" href="https://m2isda.com/">', page)
+        self.assertIn('content="https://m2isda.com/static/', page)
