@@ -269,6 +269,38 @@
   <div class="head rv"><p class="kicker">{% t "Après la conférence" "After the conference" %}</p>
     <h2>{% t "Publications — numéro spécial" "Publications — special issue" %}</h2>
     <p class="sub">{% t "Les meilleures contributions présentées à la conférence sont invitées à être soumises, sous forme d’article complet, à un numéro spécial." "The best contributions presented at the conference are invited for submission, as full papers, to a special issue." %}</p></div>
+  <article class="si rv">
+    <div class="si-main">
+      <p class="si-label">{% t "Revue" "Journal" %}</p>
+      <h3 class="si-journal">{{ si.journal }}</h3>
+      <ul class="si-badges">
+        <li>Open Access</li>
+        <li>{% t "Facteur d’impact 2,2" "Impact Factor 2.2" %}</li>
+        <li>CiteScore 2.8</li>
+      </ul>
+
+      <p class="si-label">{% t "Titre du numéro spécial" "Special issue title" %}</p>
+      <p class="si-title">{{ si.title }}</p>
+      <p class="si-conf"><span>{% t "Lié à" "Linked to" %}</span> {% t si.conference.0 si.conference.1 %}</p>
+
+      <p class="si-label">{% t "Message des Guest Editors" "Message from the Guest Editors" %}</p>
+      <div class="si-msg">
+        {% for m in si.message %}<p>{% t m.0 m.1 %}</p>{% endfor %}
+      </div>
+
+      <p class="si-label">Guest Editors</p>
+      <ul class="si-editors">
+        {% for e in si.editors %}<li>{{ e }}</li>{% endfor %}
+      </ul>
+    </div>
+    <aside class="si-side">
+      <p class="si-label">{% t "Date limite de soumission" "Submission deadline" %}</p>
+      <p class="si-deadline">{% t si.deadline.0 si.deadline.1 %}</p>
+      <a class="btn btn--light" href="{{ si.url }}" target="_blank" rel="noopener noreferrer">{% t "Page du numéro spécial" "Special issue page" %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      <a class="si-short" href="{{ si.short_url }}" target="_blank" rel="noopener noreferrer">{% t "Lien court" "Short link" %} : {{ si.short_label }}</a>
+    </aside>
+  </article>
+
   <div class="grid2">
     <article class="card rv"><span class="num">01</span><h3>{% t "Soumission des articles" "Paper submission" %}</h3><p>{% t "La sélection est faite par le comité scientifique à l’issue de la conférence. Les articles suivent ensuite le processus d’évaluation par les pairs de la revue." "The selection is made by the scientific committee after the conference. Papers then follow the journal’s own peer-review process." %}</p></article>
     <article class="card rv" style="--d:80ms"><span class="num">02</span><h3>{% t "Revue d’accueil" "Host journal" %}</h3><p>{% t "La revue retenue et le calendrier de soumission seront annoncés sur cette page." "The selected journal and the submission schedule will be announced on this page." %}</p></article>

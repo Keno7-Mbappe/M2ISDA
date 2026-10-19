@@ -29,6 +29,7 @@ def index(request):
         ],
         "national": [{"abbr": n[0], "name": n[1], "img": c.P + n[2] + ".png"} for n in c.NATIONAL],
         "universities": [{"name": u[0], "img": c.P + u[1] + ".png"} for u in c.UNIVERSITIES],
+        "si": c.SPECIAL_ISSUE,
         "tex_lines": c.tex_lines(),
         "tex": c.TEX,
     }

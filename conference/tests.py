@@ -82,3 +82,16 @@ class SiteTests(TestCase):
     def test_robots_and_sitemap(self):
         self.assertContains(self.get("/robots.txt"), "Sitemap: https://m2isda.com/sitemap.xml")
         self.assertContains(self.get("/sitemap.xml"), "<loc>https://m2isda.com/</loc>")
+
+    def test_special_issue_block(self):
+        page = html.unescape(self.get("/").content.decode())
+        for needle in (
+            "Mathematical and Computational Applications (MCA) — MDPI",
+            "https://www.mdpi.com/journal/mca/special_issues/UYV2YYZR4Q",
+            "http://mdpi.com/si/293143",
+            "Mathematical Modeling, Optimization and Innovations in Advanced Data Science (M2ISDA 2027)",
+            "Dr. Yahyeh Souleiman", "Dr. Nathalie Verdiere", "Dr. Hacene Djellout",
+            "Dr. Legesse Lemecha Obsu", "Prof. Dr. Raluca Eftimie",
+            "30 septembre 2027", "30 September 2027", "CiteScore 2.8",
+        ):
+            self.assertIn(needle, page)

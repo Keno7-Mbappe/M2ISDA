@@ -131,3 +131,22 @@ def tex_lines():
                 parts = [("txt", " ")]
         out.append({"no": i, "parts": parts})
     return out
+
+
+SPECIAL_ISSUE = {
+    "journal": "Mathematical and Computational Applications (MCA) — MDPI",
+    "url": "https://www.mdpi.com/journal/mca/special_issues/UYV2YYZR4Q",
+    "short_url": "http://mdpi.com/si/293143",
+    "short_label": "mdpi.com/si/293143",
+    "title": "Mathematical Modeling, Optimization and Innovations in Advanced Data Science (M2ISDA 2027)",
+    "conference": ("2nd International Conference M2ISDA 2027 — University of Djibouti / Laboratoire LAMO — 19-21 January 2027, Djibouti",
+                   "2nd International Conference M2ISDA 2027 — University of Djibouti / LAMO Laboratory — 19-21 January 2027, Djibouti"),
+    "message": [
+        ("Ce numéro spécial collecte des recherches originales sur la modélisation mathématique et computationnelle pour transformer les données en décisions (santé publique, environnement, industrie, ports et corridors de transport). Méthodes : systèmes dynamiques, contrôle optimal, recherche opérationnelle, optimisation, statistiques et machine learning.",
+         "This special issue collects original research on mathematical and computational modelling that turns data into decisions (public health, environment, industry, ports and transport corridors). Methods: dynamical systems, optimal control, operations research, optimization, statistics and machine learning."),
+        ("Toutes les contributions sélectionnées à M2ISDA seront invitées à soumettre une version étendue, mais le numéro spécial est ouvert à toute la communauté scientifique. Évaluation par les pairs selon le processus standard de MDPI.",
+         "All contributions selected at M2ISDA will be invited to submit an extended version, but the special issue is open to the whole scientific community. Standard MDPI peer review."),
+    ],
+    "editors": ["Dr. Yahyeh Souleiman", "Dr. Nathalie Verdiere", "Dr. Hacene Djellout", "Dr. Legesse Lemecha Obsu", "Prof. Dr. Raluca Eftimie"],
+    "deadline": ("30 septembre 2027", "30 September 2027"),
+}
