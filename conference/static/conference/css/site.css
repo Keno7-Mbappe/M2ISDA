@@ -298,6 +298,7 @@ main{padding:0 var(--pad)}
 
 /* ---------- numéro spécial (publications) ---------- */
 .si{display:grid;gap:30px;margin-bottom:22px;background:linear-gradient(150deg,var(--navy) 0%,#10265C 100%);color:#fff;border-radius:24px;padding:clamp(24px,4vw,44px);box-shadow:0 30px 60px -34px rgba(23,48,111,.75)}
+.si:last-child{margin-bottom:0}
 .si-main{display:grid;gap:14px;align-content:start}
 .si-label{margin-top:10px;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#9FB6F2}
 .si-label:first-child{margin-top:0}

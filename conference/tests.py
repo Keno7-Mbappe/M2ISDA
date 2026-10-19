@@ -95,3 +95,9 @@ class SiteTests(TestCase):
             "30 septembre 2027", "30 September 2027", "CiteScore 2.8",
         ):
             self.assertIn(needle, page)
+
+    def test_old_publication_placeholder_cards_removed(self):
+        page = html.unescape(self.get("/").content.decode())
+        self.assertNotIn("Revue d’accueil", page)
+        self.assertNotIn("seront annoncés sur cette page", page)
+        self.assertIn("Mathematical and Computational Applications (MCA)", page)
