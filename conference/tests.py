@@ -101,3 +101,10 @@ class SiteTests(TestCase):
         self.assertNotIn("Revue d’accueil", page)
         self.assertNotIn("seront annoncés sur cette page", page)
         self.assertIn("Mathematical and Computational Applications (MCA)", page)
+
+    def test_organising_committee_has_five_permanent_members(self):
+        page = html.unescape(self.get("/").content.decode())
+        for name in ("Dr Yahyeh Souleiman", "Dr Liban Ismail", "Dr Souleiman Omar", "Dr Doualeh Ali", "Dr Houssein Ahmed Assoweh"):
+            self.assertIn(name, page)
+        self.assertIn("Cinq enseignants-chercheurs permanents", page)
+        self.assertIn("assoweh", page)

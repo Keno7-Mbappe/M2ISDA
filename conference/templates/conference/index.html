@@ -138,11 +138,11 @@
 <section class="sec">
   <div class="head rv"><p class="kicker">{% t "LAMO — Université de Djibouti" "LAMO — University of Djibouti" %}</p>
     <h2>{% t "Comité d’organisation" "Organising committee" %}</h2>
-    <p class="sub">{% t "Quatre enseignants-chercheurs permanents, six doctorants et les étudiants du Master Intelligence artificielle et modélisation des données assurent la préparation scientifique, l’accueil des conférenciers et la logistique des trois journées." "Four permanent researchers, six doctoral students and the students of the Master’s programme in Artificial Intelligence and Data Modelling handle the scientific preparation, the welcome of speakers and the logistics of the three days." %}</p></div>
+    <p class="sub">{% t "Cinq enseignants-chercheurs permanents, six doctorants et les étudiants du Master Intelligence artificielle et modélisation des données assurent la préparation scientifique, l’accueil des conférenciers et la logistique des trois journées." "Five permanent researchers, six doctoral students and the students of the Master’s programme in Artificial Intelligence and Data Modelling handle the scientific preparation, the welcome of speakers and the logistics of the three days." %}</p></div>
 
   <h3 class="subh rv">{% t "Membres permanents" "Permanent members" %}</h3>
-  <div class="people">
-    {% for p in permanents %}<figure class="person rv" style="--d:{% widthratio forloop.counter0 1 70 %}ms"><img src="{% static p.img %}" alt="{{ p.name }}" width="224" height="224" loading="lazy"><figcaption><b>{{ p.name }}</b><span>{% t mcf.0 mcf.1 %}</span></figcaption></figure>{% endfor %}
+  <div class="people people--five">
+    {% for p in permanents %}<figure class="person rv" style="--d:{% widthratio forloop.counter0 1 70 %}ms"><img src="{% static p.img %}" alt="{{ p.name }}" width="224" height="224" loading="lazy"><figcaption><b>{{ p.name }}</b>{% if p.role %}<span>{% t mcf.0 mcf.1 %}</span>{% endif %}</figcaption></figure>{% endfor %}
   </div>
 
   <h3 class="subh rv">{% t "Doctorants" "Doctoral students" %}</h3>

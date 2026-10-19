@@ -21,7 +21,7 @@ def index(request):
             for i, m in enumerate(c.MILESTONES)
         ],
         "mcf": c.MCF,
-        "permanents": [{"name": p[0], "img": c.P + p[1] + ".png"} for p in c.PERMANENTS],
+        "permanents": [{"name": p[0], "img": c.P + p[1] + ".png", "role": p[2]} for p in c.PERMANENTS],
         "doctorants": [{"name": p[0], "aff": p[1], "img": c.P + p[2] + ".png"} for p in c.DOCTORANTS],
         "scientists": [
             {"name": s[0], "aff": s[1], "country": (s[2], c.COUNTRIES[s[2]]), "img": c.P + s[3] + ".png"}

@@ -72,7 +72,12 @@ MILESTONES = [
 ]
 
 MCF = ("Maître de conférences", "Associate professor")
-PERMANENTS = [("Dr Yahyeh Souleiman", "yahyeh"), ("Dr Liban Ismail", "liban"), ("Dr Souleiman Omar", "souleiman"), ("Dr Doualeh Ali", "doualeh")]
+# (nom, photo, afficher la fonction ?) — la fonction de Dr Houssein Ahmed Assoweh n'est pas précisée
+PERMANENTS = [
+    ("Dr Yahyeh Souleiman", "yahyeh", True), ("Dr Liban Ismail", "liban", True),
+    ("Dr Souleiman Omar", "souleiman", True), ("Dr Doualeh Ali", "doualeh", True),
+    ("Dr Houssein Ahmed Assoweh", "assoweh", False),
+]
 DOCTORANTS = [
     ("Said Ismail", "Le Havre Normandie", "said"), ("Gouled Souleiman", "Le Havre Normandie", "gouled"),
     ("Ali Mohamed", "La Rochelle", "alim"), ("Saida Ballah", "Nantes", "saida"),
