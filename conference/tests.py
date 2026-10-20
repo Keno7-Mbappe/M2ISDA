@@ -117,4 +117,8 @@ class SiteTests(TestCase):
         self.assertIn("Dr Houssein Ahmed Assoweh", sci)
         self.assertIn("assoweh", sci)
         self.assertIn("Dix enseignants-chercheurs de Djibouti", sci)
+        block = sci[sci.index("Dr Houssein Ahmed Assoweh"):]
+        self.assertIn("Maître de conférences, Université de Djibouti", block[:700])
+        self.assertIn("Associate Professor, University of Djibouti", block[:700])
+        self.assertIn("Djibouti</em>", block[:900].replace('<span data-en="Djibouti">', ''))
         self.assertEqual(sci.count('class="person rv"'), 10)

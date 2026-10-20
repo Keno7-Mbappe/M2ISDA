@@ -94,8 +94,7 @@ SCIENTISTS = [
     ("Pr Hacène Djellout", ("Université Clermont Auvergne", "Clermont Auvergne University"), "France", "djellout"),
     ("Pr Raluca Eftimie", ("Université Marie et Louis Pasteur", "Marie & Louis Pasteur University"), "France", "eftimie"),
     ("Pr Legesse Lemecha Obsu", ("Adama Science and Technology University",) * 2, "Éthiopie", "lemecha"),
-    # institution et pays non précisés : seul le nom est affiché
-    ("Dr Houssein Ahmed Assoweh", None, None, "assoweh"),
+    ("Dr Houssein Ahmed Assoweh", _UD, "Djibouti", "assoweh"),
 ]
 
 NATIONAL = [
