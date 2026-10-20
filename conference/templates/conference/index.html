@@ -371,14 +371,7 @@
 <section class="sec">
   <div class="head rv"><p class="kicker">{% t "Les données et les méthodes" "Data and methods" %}</p>
     <h2>{% t "Partenaires" "Partners" %}</h2>
-    <p class="sub">{% t "Sept institutions nationales djiboutiennes participent à la conférence, aux côtés des universités partenaires du laboratoire." "Seven Djiboutian national institutions take part in the conference, alongside the laboratory’s partner universities." %}</p></div>
-
-  <h3 class="subh rv">{% t "Institutions nationales" "National institutions" %}</h3>
-  <div class="partners">
-    {% for p in national %}
-    <div class="partner rv" style="--d:{% widthratio forloop.counter0 1 60 %}ms"><img src="{% static p.img %}" alt="{{ p.abbr }}" width="124" height="124" loading="lazy"><div><b>{{ p.abbr }}</b><span>{% t p.name.0 p.name.1 %}</span></div></div>
-    {% endfor %}
-  </div>
+    <p class="sub">{% t "Les universités partenaires du laboratoire participent à la conférence." "The laboratory’s partner universities take part in the conference." %}</p></div>
 
   <h3 class="subh rv">{% t "Universités partenaires" "Partner universities" %}</h3>
   <div class="partners partners--uni">

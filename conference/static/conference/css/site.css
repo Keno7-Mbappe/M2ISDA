@@ -355,7 +355,7 @@ main{padding:0}
 .partner--sm img{width:62px;height:62px}.partner--sm b{font-size:18px}
 @media (hover:hover){.partner:hover{background:#fff}.partner:hover img{filter:none}}
 @media (min-width:640px){.partners{grid-template-columns:repeat(3,minmax(0,1fr))}.partners--uni{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media (min-width:1180px){.partners{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (min-width:1180px){.partners{grid-template-columns:repeat(4,minmax(0,1fr))}.partners--uni{grid-template-columns:repeat(7,minmax(0,1fr))}.partners--uni .partner{padding:22px 14px}.partners--uni .partner b{font-size:17px}}
 @media (max-width:380px){.partner{padding:16px 12px}.partner b{font-size:16px}}
 
 /* ---------- pied de page ---------- */

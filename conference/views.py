@@ -27,7 +27,6 @@ def index(request):
             {"name": s[0], "aff": s[1], "country": (s[2], c.COUNTRIES[s[2]]) if s[2] else None, "img": c.P + s[3] + ".png"}
             for s in c.SCIENTISTS
         ],
-        "national": [{"abbr": n[0], "name": n[1], "img": c.P + n[2] + ".png"} for n in c.NATIONAL],
         "universities": [{"name": u[0], "img": c.P + u[1] + ".png"} for u in c.UNIVERSITIES],
         "si": c.SPECIAL_ISSUE,
         "tex_lines": c.tex_lines(),

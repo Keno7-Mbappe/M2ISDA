@@ -97,15 +97,6 @@ SCIENTISTS = [
     ("Dr Houssein Ahmed Assoweh", _UD, "Djibouti", "assoweh"),
 ]
 
-NATIONAL = [
-    ("INSTAD", ("Institut national de la statistique de Djibouti", "National Institute of Statistics of Djibouti"), "instad"),
-    ("INSPD", ("Institut national de santé publique de Djibouti", "National Institute of Public Health of Djibouti"), "inspd"),
-    ("CHU de Djibouti", ("Centre hospitalier universitaire", "University Hospital"), "chu"),
-    ("Hôpital militaire", ("Service de santé des armées — CSSA", "Army Health Service — CSSA"), "cssa"),
-    ("DPCS", ("Djibouti Port Community Systems",) * 2, "dpcs"),
-    ("SGTD", ("Terminal à conteneurs de Doraleh", "Doraleh Container Terminal"), "sgtd"),
-    ("DPCR", ("Djibouti Ports Corridor Road",) * 2, "dpcr"),
-]
 UNIVERSITIES = [
     ("Université de Djibouti", "ud"), ("Le Havre Normandie", "lehavre"), ("Clermont Auvergne", "uca"),
     ("Marie et Louis Pasteur", "umlp"), ("Adama Science and Technology", "adama"),

@@ -48,7 +48,7 @@ class SiteTests(TestCase):
 
     def test_all_speakers_and_partners_present(self):
         html_page = self.get("/").content.decode()
-        for name in ("Ramsès Djidjou-Demasse", "Daud Ali Aser", "INSTAD", "Mogadishu University"):
+        for name in ("Ramsès Djidjou-Demasse", "Daud Ali Aser", "Mogadishu University", "Le Havre Normandie"):
             self.assertIn(name, html_page)
 
     def test_healthz(self):
@@ -123,3 +123,12 @@ class SiteTests(TestCase):
         self.assertIn("Associate Professor, University of Djibouti", block[:700])
         self.assertIn("Djibouti</em>", block[:900].replace('<span data-en="Djibouti">', ''))
         self.assertEqual(sci.count('class="person rv"'), 10)
+
+    def test_national_institutions_section_removed(self):
+        page = html.unescape(self.get("/").content.decode())
+        part = page[page.index('id="partenaires" class="page"'):]
+        part = part[:part.index("</section>")]
+        for gone in ("Institutions nationales", "National institutions", "INSTAD", "INSPD", "SGTD", "DPCS", "DPCR", "Hôpital militaire"):
+            self.assertNotIn(gone, part)
+        self.assertIn("Universités partenaires", part)
+        self.assertEqual(part.count('class="partner partner--sm rv"'), 7)
