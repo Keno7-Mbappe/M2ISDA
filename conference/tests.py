@@ -102,13 +102,19 @@ class SiteTests(TestCase):
         self.assertNotIn("seront annoncés sur cette page", page)
         self.assertIn("Mathematical and Computational Applications (MCA)", page)
 
-    def test_organising_committee_has_six_researchers(self):
+    def test_organising_committee_has_five_researchers(self):
         page = html.unescape(self.get("/").content.decode())
-        for name in ("Dr Yahyeh Souleiman", "Dr Liban Ismail", "Dr Souleiman Omar", "Dr Doualeh Ali",
-                     "Dr Houssein Ahmed Assoweh", "Dr Souleiman Isman Guedi"):
-            self.assertIn(name, page)
-        self.assertIn("Six enseignants-chercheurs, six doctorants", page)
+        org = page[page.index('id="organisation" class="page"'):page.index('id="scientifique" class="page"')]
+        for name in ("Dr Yahyeh Souleiman", "Dr Liban Ismail", "Dr Souleiman Omar", "Dr Doualeh Ali", "Dr Souleiman Isman Guedi"):
+            self.assertIn(name, org)
+        self.assertNotIn("Assoweh", org)
+        self.assertIn("Cinq enseignants-chercheurs, six doctorants", org)
         self.assertNotIn("Membres permanents", page)
-        self.assertNotIn("enseignants-chercheurs permanents", page)
-        self.assertIn("assoweh", page)
-        self.assertIn("guedi", page)
+
+    def test_scientific_committee_includes_assoweh(self):
+        page = html.unescape(self.get("/").content.decode())
+        sci = page[page.index('id="scientifique" class="page"'):page.index('id="conferenciers" class="page"')]
+        self.assertIn("Dr Houssein Ahmed Assoweh", sci)
+        self.assertIn("assoweh", sci)
+        self.assertIn("Dix enseignants-chercheurs de Djibouti", sci)
+        self.assertEqual(sci.count('class="person rv"'), 10)

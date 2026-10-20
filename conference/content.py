@@ -72,11 +72,11 @@ MILESTONES = [
 ]
 
 MCF = ("Maître de conférences", "Associate professor")
-# (nom, photo, afficher la fonction ?) — la fonction de Dr Assoweh et de Dr Guedi n'est pas précisée
+# (nom, photo, afficher la fonction ?) — la fonction de Dr Guedi n'est pas précisée
 PERMANENTS = [
     ("Dr Yahyeh Souleiman", "yahyeh", True), ("Dr Liban Ismail", "liban", True),
     ("Dr Souleiman Omar", "souleiman", True), ("Dr Doualeh Ali", "doualeh", True),
-    ("Dr Houssein Ahmed Assoweh", "assoweh", False), ("Dr Souleiman Isman Guedi", "guedi", False),
+    ("Dr Souleiman Isman Guedi", "guedi", False),
 ]
 DOCTORANTS = [
     ("Said Ismail", "Le Havre Normandie", "said"), ("Gouled Souleiman", "Le Havre Normandie", "gouled"),
@@ -94,6 +94,8 @@ SCIENTISTS = [
     ("Pr Hacène Djellout", ("Université Clermont Auvergne", "Clermont Auvergne University"), "France", "djellout"),
     ("Pr Raluca Eftimie", ("Université Marie et Louis Pasteur", "Marie & Louis Pasteur University"), "France", "eftimie"),
     ("Pr Legesse Lemecha Obsu", ("Adama Science and Technology University",) * 2, "Éthiopie", "lemecha"),
+    # institution et pays non précisés : seul le nom est affiché
+    ("Dr Houssein Ahmed Assoweh", None, None, "assoweh"),
 ]
 
 NATIONAL = [
