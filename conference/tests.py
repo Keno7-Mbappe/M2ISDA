@@ -102,14 +102,14 @@ class SiteTests(TestCase):
         self.assertNotIn("seront annoncés sur cette page", page)
         self.assertIn("Mathematical and Computational Applications (MCA)", page)
 
-    def test_organising_committee_has_five_researchers(self):
+    def test_organising_committee_has_six_researchers(self):
         page = html.unescape(self.get("/").content.decode())
         org = page[page.index('id="organisation" class="page"'):page.index('id="scientifique" class="page"')]
-        for name in ("Dr Yahyeh Souleiman", "Dr Liban Ismail", "Dr Souleiman Omar", "Dr Doualeh Ali", "Dr Souleiman Isman Guedi"):
+        for name in ("Dr Yahyeh Souleiman", "Dr Liban Ismail", "Dr Souleiman Omar", "Dr Doualeh Ali", "Dr Souleiman Isman Guedi", "Dr Hassan Ali Barkad"):
             self.assertIn(name, org)
         self.assertNotIn("Assoweh", org)
-        self.assertEqual(org[:org.index("Doctorants")].count("Maître de conférences"), 5)
-        self.assertIn("Cinq enseignants-chercheurs, six doctorants", org)
+        self.assertEqual(org[:org.index("Doctorants")].count("Maître de conférences"), 6)
+        self.assertIn("Six enseignants-chercheurs, six doctorants", org)
         self.assertNotIn("Membres permanents", page)
 
     def test_scientific_committee_includes_assoweh(self):

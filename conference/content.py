@@ -76,7 +76,7 @@ MCF = ("Maître de conférences", "Associate professor")
 PERMANENTS = [
     ("Dr Yahyeh Souleiman", "yahyeh", True), ("Dr Liban Ismail", "liban", True),
     ("Dr Souleiman Omar", "souleiman", True), ("Dr Doualeh Ali", "doualeh", True),
-    ("Dr Souleiman Isman Guedi", "guedi", True),
+    ("Dr Souleiman Isman Guedi", "guedi", True), ("Dr Hassan Ali Barkad", "barkad", True),
 ]
 DOCTORANTS = [
     ("Said Ismail", "Le Havre Normandie", "said"), ("Gouled Souleiman", "Le Havre Normandie", "gouled"),
