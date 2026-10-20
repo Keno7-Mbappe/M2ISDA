@@ -108,6 +108,7 @@ class SiteTests(TestCase):
         for name in ("Dr Yahyeh Souleiman", "Dr Liban Ismail", "Dr Souleiman Omar", "Dr Doualeh Ali", "Dr Souleiman Isman Guedi"):
             self.assertIn(name, org)
         self.assertNotIn("Assoweh", org)
+        self.assertEqual(org[:org.index("Doctorants")].count("Maître de conférences"), 5)
         self.assertIn("Cinq enseignants-chercheurs, six doctorants", org)
         self.assertNotIn("Membres permanents", page)
 
