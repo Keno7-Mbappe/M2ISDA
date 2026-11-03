@@ -83,6 +83,10 @@ DOCTORANTS = [
     ("Ali Mohamed", "La Rochelle", "alim"), ("Saida Ballah", "Nantes", "saida"),
     ("Hakim Amer", "Toulon", "hakim"), ("Kadir Ali", "Marie et Louis Pasteur", "kadir"),
 ]
+MASTER_STUDENTS = [
+    ("Kenedid Yacin", "kenedid"), ("Asma Ahmed", "asma"),
+    ("Mahdi Said", "mahdi"), ("Fatouma Soubere", "fatouma"),
+]
 _UD = ("Maître de conférences, Université de Djibouti", "Associate Professor, University of Djibouti")
 SCIENTISTS = [
     ("Dr Liban Ismail", _UD, "Djibouti", "liban"),

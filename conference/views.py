@@ -23,6 +23,7 @@ def index(request):
         "mcf": c.MCF,
         "permanents": [{"name": p[0], "img": c.P + p[1] + ".png", "role": p[2]} for p in c.PERMANENTS],
         "doctorants": [{"name": p[0], "aff": p[1], "img": c.P + p[2] + ".png"} for p in c.DOCTORANTS],
+        "master_students": [{"name": p[0], "img": c.P + p[1] + ".png"} for p in c.MASTER_STUDENTS],
         "scientists": [
             {"name": s[0], "aff": s[1], "country": (s[2], c.COUNTRIES[s[2]]) if s[2] else None, "img": c.P + s[3] + ".png"}
             for s in c.SCIENTISTS

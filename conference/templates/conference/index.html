@@ -151,6 +151,9 @@
   </div>
 
   <h3 class="subh rv">{% t "Étudiants du master" "Master’s students" %}</h3>
+  <div class="people people--sm">
+    {% for p in master_students %}<figure class="person rv" style="--d:{% widthratio forloop.counter0 1 60 %}ms"><img src="{% static p.img %}" alt="{{ p.name }}" width="140" height="140" loading="lazy"><figcaption><b>{{ p.name }}</b><span>{% t "Étudiant en Master" "Master’s student" %}</span></figcaption></figure>{% endfor %}
+  </div>
   <div class="card card--navy master rv">
     <h3>{% t "Master Intelligence artificielle et modélisation des données" "Master’s in Artificial Intelligence and Data Modelling" %}</h3>
     <p class="card-p">{% t "Les étudiants du master participent à l’organisation de la conférence : accueil et accompagnement des participants, secrétariat des sessions, appui technique en salle et couverture de l’événement. Ils y assistent également comme auditeurs, aux côtés des doctorants." "The Master’s students take part in running the conference: welcoming and assisting participants, session secretariat, technical support in the rooms and coverage of the event. They also attend as listeners, alongside the doctoral students." %}</p>
