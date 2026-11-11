@@ -26,15 +26,32 @@ class SiteTests(TestCase):
         missing = [(fr, en) for fr, en in pairs if norm(fr) not in page or norm(en) not in page]
         self.assertEqual(missing, [])
 
-    def test_top_menu_has_the_ten_original_entries_in_order(self):
+    def test_top_menu_keeps_the_ten_original_entries_in_order_and_adds_two(self):
         page = self.get("/").content.decode()
         start = page.index('id="topnav"')
         side = page[start:page.index("</nav>", start)]
         hrefs = re.findall(r'href="#(\w+)"', side)
-        self.assertEqual(hrefs, ["accueil", "organisation", "scientifique", "conferenciers", "dates",
-                                 "inscription", "programme", "publications", "soumission", "partenaires"])
+        self.assertEqual([h for h in hrefs if h not in ("thematiques", "participants")],
+                         ["accueil", "organisation", "scientifique", "conferenciers", "dates",
+                          "inscription", "programme", "publications", "soumission", "partenaires"])
+        self.assertEqual(hrefs, ["accueil", "organisation", "scientifique", "conferenciers", "thematiques", "dates",
+                                 "inscription", "participants", "programme", "publications", "soumission", "partenaires"])
         for page_id in hrefs:
             self.assertIn(f'id="{page_id}" class="page"', page)
+
+    def test_topics_page_shows_the_eight_axes_with_an_image_each(self):
+        page = html.unescape(self.get("/").content.decode())
+        section = page[page.index('id="thematiques" class="page"'):page.index('id="dates" class="page"')]
+        self.assertEqual(section.count('class="theme rv"'), 8)
+        self.assertEqual(section.count("conference/img/themes/"), 8)
+        self.assertIn("Modélisation épidémiologique et santé publique", section)
+
+    def test_participants_page_lists_invited_then_permanent_then_doctoral(self):
+        page = html.unescape(self.get("/").content.decode())
+        section = page[page.index('id="participants" class="page"'):page.index('id="programme" class="page"')]
+        self.assertEqual(section.count('class="who rv"'), 23)
+        order = [section.index(x) for x in ("Ramsès Djidjou-Demasse", "Dr Yahyeh Souleiman", "Said Ismail")]
+        self.assertEqual(order, sorted(order))
 
     def test_lamo_and_university_logos_present(self):
         page = self.get("/").content.decode()
@@ -109,7 +126,7 @@ class SiteTests(TestCase):
             self.assertIn(name, org)
         self.assertNotIn("Assoweh", org)
         self.assertEqual(org[:org.index("Doctorants")].count("Maître de conférences"), 6)
-        self.assertIn("Six enseignants-chercheurs, six doctorants", org)
+        self.assertIn("Six enseignants-chercheurs, sept doctorants", org)
         self.assertNotIn("Membres permanents", page)
 
     def test_scientific_committee_includes_assoweh(self):

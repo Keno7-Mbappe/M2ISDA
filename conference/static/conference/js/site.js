@@ -65,7 +65,7 @@
   var pill = $('.nav-pill'), swapTimer = null;
   function placePill() {
     var a = $('.topnav a[aria-current="page"]'); if (!pill || !a || !a.offsetWidth) return;
-    pill.style.width = a.offsetWidth + 'px'; pill.style.transform = 'translateX(' + a.offsetLeft + 'px)'; pill.classList.add('on');
+    pill.style.setProperty('--pc', getComputedStyle(a).getPropertyValue('--c')); pill.style.width = a.offsetWidth + 'px'; pill.style.transform = 'translateX(' + a.offsetLeft + 'px)'; pill.classList.add('on');
   }
   function setNav(page) {
     navLinks.forEach(function (a) {
@@ -134,7 +134,7 @@
   function tick() {
     var t = Math.max(0, target - Date.now()) / 1000, d = Math.floor(t / 86400); t -= d * 86400;
     var h = Math.floor(t / 3600); t -= h * 3600; var m = Math.floor(t / 60), s = Math.floor(t - m * 60);
-    cd.d.textContent = String(d); cd.h.textContent = pad(h); cd.m.textContent = pad(m);
+    cd.d.textContent = String(d); var mi = $('#cd-mini'); if (mi) mi.textContent = 'J−' + d; cd.h.textContent = pad(h); cd.m.textContent = pad(m);
     var sv = pad(s); if (cd.s.textContent !== sv) { cd.s.textContent = sv; cd.s.classList.remove('tick'); void cd.s.offsetWidth; cd.s.classList.add('tick'); }
   }
   tick(); setInterval(tick, 1000);

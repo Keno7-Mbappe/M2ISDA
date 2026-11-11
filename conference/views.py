@@ -14,7 +14,6 @@ def index(request):
             {"name": s[0], "aff": s[1], "country": (s[2], c.COUNTRIES[s[2]]), "img": c.P + s[3] + ".png"}
             for s in c.SPEAKERS
         ],
-        "topics": [a[1] for a in c.AXES],
         "days": c.DAYS,
         "milestones": [
             {"iso": m[0], "date": m[1], "year": m[2], "label": m[3], "delay": i * 100, "last": i == len(c.MILESTONES) - 1}
@@ -28,6 +27,22 @@ def index(request):
             {"name": s[0], "aff": s[1], "country": (s[2], c.COUNTRIES[s[2]]) if s[2] else None, "img": c.P + s[3] + ".png"}
             for s in c.SCIENTISTS
         ],
+        "themes": [
+            {"no": a[0], "title": a[1], "formula": a[2], "name": a[3], "img": "conference/img/themes/" + d[0] + ".webp",
+             "cap": d[1], "kw": list(zip(d[2][0], d[2][1])),
+             "credit": dict(zip(("author", "lic", "lic_url", "page", "note"), c.THEME_CREDITS[d[0]]))}
+            for a, d in zip(c.AXES, c.THEME_DETAILS)
+        ],
+        "registered": [
+            {"name": r[0], "aff": r[1], "country": (r[2], c.COUNTRIES[r[2]]) if r[2] else None,
+             "ini": "".join(w[0] for w in r[0].split()[:2]).upper()}
+            for r in c.REGISTERED
+        ],
+        "participants_total": len(c.SPEAKERS) + len(c.PERMANENTS) + len(c.DOCTORANTS) + len(c.REGISTERED),
+        "perm_off": len(c.SPEAKERS),
+        "doc_off": len(c.SPEAKERS) + len(c.PERMANENTS),
+        "reg_off": len(c.SPEAKERS) + len(c.PERMANENTS) + len(c.DOCTORANTS),
+        "participants_updated": c.PARTICIPANTS_UPDATED,
         "universities": [{"name": u[0], "img": c.P + u[1] + ".png"} for u in c.UNIVERSITIES],
         "si": c.SPECIAL_ISSUE,
         "tex_lines": c.tex_lines(),

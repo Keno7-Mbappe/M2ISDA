@@ -33,6 +33,47 @@ AXES = [
     ("VIII", ("Aide à la décision et systèmes d’aide à la décision", "Decision support systems"), "a* = argmax 𝔼[U(a, θ)]", "Bayes"),
 ]
 
+# Rubrique « Thématiques » : une illustration et quelques mots-clés par axe (même ordre que AXES).
+# (fichier image dans img/themes/, légende de l'image, mots-clés)
+THEME_DETAILS = [
+    ("i-epidemiologie", ("Anopheles stephensi, vecteur du paludisme", "Anopheles stephensi, a malaria vector"),
+     (("Modèles compartimentaux", "Dynamique de transmission", "Contrôle optimal", "Prévision"),
+      ("Compartmental models", "Transmission dynamics", "Optimal control", "Forecasting"))),
+    ("ii-statistique", ("Salle de serveurs d’un centre de données", "Servers in a data centre"),
+     (("Inférence statistique", "Biostatistique", "Apprentissage automatique", "Données massives"),
+      ("Statistical inference", "Biostatistics", "Machine learning", "Big data"))),
+    ("iii-optimisation", ("Échangeur routier de nuit, un réseau à optimiser", "A road interchange at night, a network to optimise"),
+     (("Optimisation convexe et non convexe", "Programmation linéaire", "Méthodes de gradient", "Recherche opérationnelle"),
+      ("Convex and non-convex optimization", "Linear programming", "Gradient methods", "Operations research"))),
+    ("iv-ecosystemes", ("Récif corallien de la mer Rouge", "Red Sea coral reef"),
+     (("Systèmes dynamiques", "Dynamique des populations", "Proies et prédateurs", "Biodiversité"),
+      ("Dynamical systems", "Population dynamics", "Predator–prey models", "Biodiversity"))),
+    ("v-climat", ("Nuages vus de l’espace, îles Canaries", "Clouds seen from space, Canary Islands"),
+     (("Équations aux dérivées partielles", "Modèles climatiques", "Données environnementales", "Prévision"),
+      ("Partial differential equations", "Climate models", "Environmental data", "Forecasting"))),
+    ("vi-ports", ("Terminal à conteneurs du port de Djibouti", "Container terminal of the port of Djibouti"),
+     (("Files d’attente", "Optimisation logistique", "Simulation", "Corridors de transport"),
+      ("Queueing theory", "Logistics optimization", "Simulation", "Transport corridors"))),
+    ("vii-ingenierie", ("Simulation numérique de l’écoulement, NASA", "Numerical flow simulation, NASA"),
+     (("Éléments finis", "Équations aux dérivées partielles", "Calcul scientifique", "Modélisation industrielle"),
+      ("Finite elements", "Partial differential equations", "Scientific computing", "Industrial modelling"))),
+    ("viii-decision", ("Salle de contrôle : suivre et décider", "Control room: monitoring and deciding"),
+     (("Optimisation multicritère", "Théorie de la décision", "Inférence bayésienne", "Systèmes d’aide à la décision"),
+      ("Multi-objective optimization", "Decision theory", "Bayesian inference", "Decision support systems"))),
+]
+
+# Crédits des photos de la rubrique « Thématiques » : (auteur, licence, lien de licence ou "", page source, mention)
+THEME_CREDITS = {
+    "i-epidemiologie": ("Jim Gathany / CDC", "Domaine public", "", "https://commons.wikimedia.org/wiki/File:Anopheles_stephensi.jpeg", ""),
+    "ii-statistique": ("BalticServers.com", "CC BY-SA 3.0", "https://creativecommons.org/licenses/by-sa/3.0/", "https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg", "recadrée"),
+    "iii-optimisation": ("rawpixel", "CC0", "https://creativecommons.org/publicdomain/zero/1.0/", "https://www.rawpixel.com/image/3302515/free-photo-image-bridge-architecture-building", "recadrée"),
+    "iv-ecosystemes": ("Thomas Hubauer", "CC BY-SA 2.0", "https://creativecommons.org/licenses/by-sa/2.0/", "https://commons.wikimedia.org/wiki/File:Coral_reef_near_Marsa_Alam.jpg", "recadrée"),
+    "v-climat": ("ESA — contient des données Copernicus Sentinel modifiées", "Usage libre avec mention", "", "https://commons.wikimedia.org/wiki/File:Earth_from_Space-_Cloud_patterns_over_the_Canary_Islands_ESA521157.jpg", "recadrée"),
+    "vi-ports": ("Skilla1st", "CC BY-SA 4.0", "https://creativecommons.org/licenses/by-sa/4.0/", "https://commons.wikimedia.org/wiki/File:The_container_terminal_at_the_Port_of_Djibouti.jpg", "recadrée"),
+    "vii-ingenierie": ("NASA", "Domaine public", "", "https://commons.wikimedia.org/wiki/File:X-43A_(Hyper_-_X)_Mach_7_computational_fluid_dynamic_(CFD).jpg", "fond recoloré"),
+    "viii-decision": ("Loozrboy", "CC BY-SA 2.0", "https://creativecommons.org/licenses/by-sa/2.0/", "https://commons.wikimedia.org/wiki/File:City_tv_control_room_Doors_Open_Toronto_2012.jpg", "recadrée"),
+}
+
 DAYS = [
     {
         "wd": ("Mardi", "Tuesday"), "num": "19",
@@ -82,7 +123,14 @@ DOCTORANTS = [
     ("Said Ismail", "Le Havre Normandie", "said"), ("Gouled Souleiman", "Le Havre Normandie", "gouled"),
     ("Ali Mohamed", "La Rochelle", "alim"), ("Saida Ballah", "Nantes", "saida"),
     ("Hakim Amer", "Toulon", "hakim"), ("Kadir Ali", "Marie et Louis Pasteur", "kadir"),
+    ("Abdoulrahman Farah", "", "farah"),
 ]
+# Rubrique « Participants » — liste provisoire, mise à jour au fil des inscriptions.
+# Ordre d'affichage : invités (SPEAKERS), permanents du laboratoire (PERMANENTS), doctorants (DOCTORANTS),
+# puis les participants inscrits ci-dessous. Pour en ajouter : (nom, établissement, pays)  — pays ∈ COUNTRIES ou "".
+PARTICIPANTS_UPDATED = ("7 novembre 2026", "7 November 2026")
+REGISTERED = []
+
 MASTER_STUDENTS = [
     ("Kenedid Yacin", "kenedid"), ("Asma Ahmed", "asma"),
     ("Mahdi Said", "mahdi"), ("Fatouma Soubere", "fatouma"),

@@ -3,20 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#F4EEE2">
+<meta name="theme-color" content="#070F24">
 <title>M2ISDA 2027 — Djibouti, 19–21 janvier 2027</title>
 <meta name="description" content="M2ISDA 2027 : 2e conférence internationale de modélisation mathématique et d’innovations en sciences des données avancées. Université de Djibouti, 19–21 janvier 2027.">
 <meta property="og:title" content="M2ISDA 2027 — Djibouti, 19–21 janvier 2027">
 <meta property="og:description" content="Modélisation mathématique et innovations en sciences des données avancées. Appel à communications ouvert jusqu’au 5 janvier 2027.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://m2isda.com/">
-<meta property="og:image" content="https://m2isda.com{% static 'conference/img/campus.jpg' %}">
+<meta property="og:image" content="https://m2isda.com{% static 'conference/img/og-logo.jpg' %}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <link rel="canonical" href="https://m2isda.com/">
-<link rel="icon" href="{% static 'conference/img/ud-logo.png' %}" type="image/png">
+<link rel="icon" href="{% static 'conference/img/favicon-48.png' %}" type="image/png" sizes="48x48">
+<link rel="icon" href="{% static 'conference/img/favicon-192.png' %}" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="{% static 'conference/img/apple-touch-icon.png' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="{% static 'conference/css/site.css' %}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="{% static 'conference/css/site.css' %}?v=20261111d">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -34,6 +38,7 @@
       <span class="brand-txt"><b>M2ISDA <em>2027</em></b><small>{% t "Université de Djibouti · Laboratoire LAMO" "University of Djibouti · LAMO Laboratory" %}</small></span>
     </a>
     <div class="top-right">
+      <a class="pillinfo" href="#dates">{% t "19–21 janv. 2027" "19–21 Jan 2027" %}<b id="cd-mini">J−—</b></a>
       <div class="lang" role="group" aria-label="Langue / Language">
         <button type="button" data-lang="fr" aria-pressed="true">FR</button>
         <button type="button" data-lang="en" aria-pressed="false">EN</button>
@@ -48,8 +53,10 @@
         <a href="#organisation">{{ icons.organisation|safe }}<span>{% t "Comité d’organisation" "Organising committee" %}</span></a>
         <a href="#scientifique">{{ icons.scientifique|safe }}<span>{% t "Comité scientifique" "Scientific committee" %}</span></a>
         <a href="#conferenciers">{{ icons.conferenciers|safe }}<span>{% t "Conférenciers invités" "Invited speakers" %}</span></a>
+        <a href="#thematiques">{{ icons.thematiques|safe }}<span>{% t "Thématiques" "Topics" %}</span></a>
         <a href="#dates">{{ icons.dates|safe }}<span>{% t "Dates importantes" "Key dates" %}</span></a>
         <a href="#inscription">{{ icons.inscription|safe }}<span>Inscription</span></a>
+        <a href="#participants">{{ icons.participants|safe }}<span>{% t "Participants" "Participants" %}</span></a>
         <a href="#programme">{{ icons.programme|safe }}<span>Programme</span></a>
         <a href="#publications">{{ icons.publications|safe }}<span>Publications</span></a>
         <a href="#soumission">{{ icons.soumission|safe }}<span>{% t "Soumission de résumé" "Abstract submission" %}</span></a>
@@ -61,8 +68,10 @@
     <a href="#organisation">{{ icons.organisation|safe }}<span>{% t "Comité d’organisation" "Organising committee" %}</span></a>
     <a href="#scientifique">{{ icons.scientifique|safe }}<span>{% t "Comité scientifique" "Scientific committee" %}</span></a>
     <a href="#conferenciers">{{ icons.conferenciers|safe }}<span>{% t "Conférenciers invités" "Invited speakers" %}</span></a>
+    <a href="#thematiques">{{ icons.thematiques|safe }}<span>{% t "Thématiques" "Topics" %}</span></a>
     <a href="#dates">{{ icons.dates|safe }}<span>{% t "Dates importantes" "Key dates" %}</span></a>
     <a href="#inscription">{{ icons.inscription|safe }}<span>Inscription</span></a>
+    <a href="#participants">{{ icons.participants|safe }}<span>{% t "Participants" "Participants" %}</span></a>
     <a href="#programme">{{ icons.programme|safe }}<span>Programme</span></a>
     <a href="#publications">{{ icons.publications|safe }}<span>Publications</span></a>
     <a href="#soumission">{{ icons.soumission|safe }}<span>{% t "Soumission de résumé" "Abstract submission" %}</span></a>
@@ -81,7 +90,7 @@
   <div class="hero-grid">
     <div class="hero-txt">
       <p class="eyebrow rv"><span class="dot"></span>{% t "2e édition · Conférence internationale" "2nd edition · International conference" %}</p>
-      <h1 class="hero-h1" aria-label="M2ISDA 2027"><span class="ln" aria-hidden="true"><span>M2ISDA</span></span> <span class="ln yr" aria-hidden="true"><span>2027</span></span></h1>
+      <h1 class="hero-h1" aria-label="M2ISDA 2027"><span class="hl" aria-hidden="true"><span>M<i>2</i>ISDA</span></span> <span class="hl yr" aria-hidden="true"><span>2027</span></span></h1>
       <p class="hero-sub rv" style="--d:120ms">{% t "Modélisation mathématique et innovations en sciences des données avancées" "Mathematical modelling and innovations in advanced data sciences" %}</p>
 
       <ul class="facts rv" style="--d:180ms">
@@ -138,7 +147,7 @@
 <section class="sec">
   <div class="head rv"><p class="kicker">{% t "LAMO — Université de Djibouti" "LAMO — University of Djibouti" %}</p>
     <h2>{% t "Comité d’organisation" "Organising committee" %}</h2>
-    <p class="sub">{% t "Six enseignants-chercheurs, six doctorants et les étudiants du Master Intelligence artificielle et modélisation des données assurent la préparation scientifique, l’accueil des conférenciers et la logistique des trois journées." "Six academic researchers, six doctoral students and the students of the Master’s programme in Artificial Intelligence and Data Modelling handle the scientific preparation, the welcome of speakers and the logistics of the three days." %}</p></div>
+    <p class="sub">{% t "Six enseignants-chercheurs, sept doctorants et les étudiants du Master Intelligence artificielle et modélisation des données assurent la préparation scientifique, l’accueil des conférenciers et la logistique des trois journées." "Six academic researchers, seven doctoral students and the students of the Master’s programme in Artificial Intelligence and Data Modelling handle the scientific preparation, the welcome of speakers and the logistics of the three days." %}</p></div>
 
   <h3 class="subh rv">{% t "Enseignants-chercheurs" "Academic researchers" %}</h3>
   <div class="people people--perm">
@@ -147,7 +156,7 @@
 
   <h3 class="subh rv">{% t "Doctorants" "Doctoral students" %}</h3>
   <div class="people people--sm">
-    {% for p in doctorants %}<figure class="person rv" style="--d:{% widthratio forloop.counter0 1 60 %}ms"><img src="{% static p.img %}" alt="{{ p.name }}" width="140" height="140" loading="lazy"><figcaption><b>{{ p.name }}</b><span>{{ p.aff }}</span></figcaption></figure>{% endfor %}
+    {% for p in doctorants %}<figure class="person rv" style="--d:{% widthratio forloop.counter0 1 60 %}ms"><img src="{% static p.img %}" alt="{{ p.name }}" width="140" height="140" loading="lazy"><figcaption><b>{{ p.name }}</b><span>{% t "Doctorant" "Doctoral student" %}</span></figcaption></figure>{% endfor %}
   </div>
 
   <h3 class="subh rv">{% t "Étudiants du master" "Master’s students" %}</h3>
@@ -187,6 +196,38 @@
     </li>
     {% endfor %}
   </ul>
+</section>
+</div>
+
+<!-- ============================ THÉMATIQUES ============================ -->
+<div id="thematiques" class="page">
+<section class="sec">
+  <div class="head rv"><p class="kicker">{% t "Huit axes de recherche" "Eight research areas" %}</p>
+    <h2>{% t "Thématiques" "Topics" %}</h2>
+    <p class="sub">{% t "Les contributions sont attendues dans l’un des huit axes de la conférence, de la modélisation épidémiologique à l’aide à la décision. Chaque axe est illustré par une image et par l’équation qui le résume." "Contributions are expected in one of the conference’s eight areas, from epidemiological modelling to decision support. Each area is illustrated by an image and by the equation that sums it up." %}</p></div>
+  <ol class="themes">
+    {% for th in themes %}
+    <li class="theme rv" style="--d:{% cycle '0' '90' %}ms">
+      <figure class="theme-fig">
+        <img src="{% static th.img %}" alt="" width="1200" height="760" loading="lazy">
+        <span class="theme-no" aria-hidden="true">{{ th.no }}</span>
+        <code class="theme-eq">{{ th.formula }}</code>
+        <figcaption>{% t th.cap.0 th.cap.1 %}</figcaption>
+      </figure>
+      <div class="theme-body">
+        <h3>{% t th.title.0 th.title.1 %}</h3>
+        <ul class="theme-kw">{% for k in th.kw %}<li>{% t k.0 k.1 %}</li>{% endfor %}</ul>
+        <a class="theme-go" href="#soumission">{% t "Soumettre dans cet axe" "Submit in this area" %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+  <details class="credits rv">
+    <summary>{% t "Crédits des images" "Image credits" %}</summary>
+    <ol>
+      {% for th in themes %}<li><b>{{ th.no }}</b> <span>{% t th.cap.0 th.cap.1 %}</span> — {{ th.credit.author }} · {% if th.credit.lic_url %}<a href="{{ th.credit.lic_url }}" target="_blank" rel="noopener">{{ th.credit.lic }}</a>{% else %}{{ th.credit.lic }}{% endif %}{% if th.credit.note %} · {{ th.credit.note }}{% endif %} · <a href="{{ th.credit.page }}" target="_blank" rel="noopener">{% t "source" "source" %}</a></li>{% endfor %}
+    </ol>
+  </details>
 </section>
 </div>
 
@@ -238,6 +279,77 @@
   <div class="grid2">
     <article class="card rv"><h3>{% t "Formalités d’entrée" "Entry formalities" %}</h3><p>{% t "La plupart des participants entrent à Djibouti avec un e-Visa, demandé en ligne sur le portail de l’État et reçu par courriel. Le comité d’organisation établit sur demande une lettre d’invitation à joindre au dossier." "Most participants enter Djibouti with an e-Visa, applied for online on the government portal and received by email. The organising committee issues an invitation letter on request, to be attached to the application." %}</p><a class="btn btn--ghost btn--sm tbtn" href="https://www.egouv.dj/" target="_blank" rel="noopener">{% t "Portail e-Visa · egouv.dj" "e-Visa portal · egouv.dj" %}</a></article>
     <article class="card rv" style="--d:80ms"><h3>{% t "Lieu et saison" "Venue and season" %}</h3><p>{% t "La conférence se tient sur le campus de Balbala de l’Université de Djibouti. Janvier est la période la plus clémente de l’année à Djibouti. L’aéroport international Djibouti-Ambouli est à une trentaine de minutes du campus." "The conference takes place on the Balbala campus of the University of Djibouti. January is the mildest time of year in Djibouti. Djibouti-Ambouli international airport is about thirty minutes from the campus." %}</p><p class="gap">{% t "Les informations sur l’hébergement et les transports seront communiquées aux participants inscrits." "Accommodation and transport information will be sent to registered participants." %}</p></article>
+  </div>
+</section>
+</div>
+
+<!-- ============================ PARTICIPANTS ============================ -->
+<div id="participants" class="page">
+<section class="sec">
+  <div class="head rv"><p class="kicker">{% t "Liste provisoire" "Provisional list" %}</p>
+    <h2>Participants</h2>
+    <p class="sub">{% t "Liste provisoire, mise à jour au fil des inscriptions. Elle présente d’abord les conférenciers invités, puis les enseignants-chercheurs permanents du laboratoire LAMO, puis les doctorants." "Provisional list, updated as registrations come in. It lists the invited speakers first, then the permanent academic staff of the LAMO laboratory, then the doctoral students." %}</p></div>
+
+  <div class="stats stats--4 rv">
+    <div><b data-count="{{ participants_total }}">{{ participants_total }}</b><span>{% t "participants" "participants" %}</span></div>
+    <div><b data-count="{{ speakers|length }}">{{ speakers|length }}</b><span>{% t "conférenciers invités" "invited speakers" %}</span></div>
+    <div><b data-count="{{ permanents|length }}">{{ permanents|length }}</b><span>{% t "permanents du laboratoire" "laboratory staff" %}</span></div>
+    <div><b data-count="{{ doctorants|length }}">{{ doctorants|length }}</b><span>{% t "doctorants" "doctoral students" %}</span></div>
+  </div>
+  <p class="upd rv"><i class="upd-dot" aria-hidden="true"></i>{% t "Dernière mise à jour" "Last updated" %} : <b>{% t participants_updated.0 participants_updated.1 %}</b></p>
+
+  <h3 class="subh rv">{% t "Conférenciers invités" "Invited speakers" %}<span class="subh-n">{{ speakers|length }}</span></h3>
+  <ol class="roll">
+    {% for s in speakers %}
+    <li class="who rv" style="--d:{% widthratio forloop.counter0 1 40 %}ms">
+      <span class="who-n">{{ forloop.counter|stringformat:"02d" }}</span>
+      <img src="{% static s.img %}" alt="" width="56" height="56" loading="lazy">
+      <div class="who-t"><b>{{ s.name }}</b><span>{% t s.aff.0 s.aff.1 %}</span><em class="chip">{% t s.country.0 s.country.1 %}</em></div>
+    </li>
+    {% endfor %}
+  </ol>
+
+  <h3 class="subh rv">{% t "Permanents du laboratoire LAMO" "LAMO laboratory staff" %}<span class="subh-n">{{ permanents|length }}</span></h3>
+  <ol class="roll">
+    {% for p in permanents %}
+    <li class="who rv" style="--d:{% widthratio forloop.counter0 1 40 %}ms">
+      <span class="who-n">{{ forloop.counter|add:perm_off|stringformat:"02d" }}</span>
+      <img src="{% static p.img %}" alt="" width="56" height="56" loading="lazy">
+      <div class="who-t"><b>{{ p.name }}</b><span>{% t mcf.0 mcf.1 %} · {% t "Université de Djibouti" "University of Djibouti" %}</span><em class="chip">Djibouti</em></div>
+    </li>
+    {% endfor %}
+  </ol>
+
+  <h3 class="subh rv">{% t "Doctorants" "Doctoral students" %}<span class="subh-n">{{ doctorants|length }}</span></h3>
+  <ol class="roll">
+    {% for p in doctorants %}
+    <li class="who rv" style="--d:{% widthratio forloop.counter0 1 40 %}ms">
+      <span class="who-n">{{ forloop.counter|add:doc_off|stringformat:"02d" }}</span>
+      <img src="{% static p.img %}" alt="" width="56" height="56" loading="lazy">
+      <div class="who-t"><b>{{ p.name }}</b>{% if p.aff %}<span>{{ p.aff }}</span>{% endif %}<em class="chip">{% t "Doctorant" "Doctoral student" %}</em></div>
+    </li>
+    {% endfor %}
+  </ol>
+
+  {% if registered %}
+  <h3 class="subh rv">{% t "Participants inscrits" "Registered participants" %}<span class="subh-n">{{ registered|length }}</span></h3>
+  <ol class="roll">
+    {% for r in registered %}
+    <li class="who rv" style="--d:{% widthratio forloop.counter0 1 40 %}ms">
+      <span class="who-n">{{ forloop.counter|add:reg_off|stringformat:"02d" }}</span>
+      <span class="who-ini" aria-hidden="true">{{ r.ini }}</span>
+      <div class="who-t"><b>{{ r.name }}</b><span>{{ r.aff }}</span>{% if r.country %}<em class="chip">{% t r.country.0 r.country.1 %}</em>{% endif %}</div>
+    </li>
+    {% endfor %}
+  </ol>
+  {% endif %}
+
+  <div class="card card--navy join rv">
+    <div>
+      <h3>{% t "Votre nom n’est pas encore dans la liste ?" "Your name isn’t on the list yet?" %}</h3>
+      <p class="card-p">{% t "Les participants sont ajoutés au fil des inscriptions, ouvertes jusqu’au 31 décembre 2026." "Participants are added as registrations come in; registration stays open until 31 December 2026." %}</p>
+    </div>
+    <a class="btn btn--light" href="#inscription">{% t "Je m’inscris" "Register" %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>
 </div>
@@ -335,11 +447,6 @@
     </div>
   </div>
 
-  <h3 class="subh rv">{% t "Axes thématiques" "Topic areas" %}</h3>
-  <ul class="topics">
-    {% for t in topics %}<li class="rv" style="--d:{% widthratio forloop.counter0 1 45 %}ms"><span class="tn">{{ forloop.counter }}</span>{% t t.0 t.1 %}</li>{% endfor %}
-  </ul>
-
   <h3 class="subh rv">{% t "Modèles de résumé" "Abstract templates" %}</h3>
   <div class="grid2">
     <div class="card rv">
@@ -363,8 +470,8 @@
 
   <h3 class="subh rv">{% t "Affiche de la conférence" "Conference poster" %}</h3>
   <figure class="poster rv">
-    <img id="poster-fr" src="{% static 'conference/img/poster-fr.jpg' %}" alt="Affiche M2ISDA 2027" width="860" height="1216" loading="lazy">
-    <img id="poster-en" src="{% static 'conference/img/poster-en.jpg' %}" alt="M2ISDA 2027 poster" width="860" height="1216" loading="lazy" hidden>
+    <img id="poster-fr" src="{% static 'conference/img/affiche-invites-fr.jpg' %}" alt="Affiche M2ISDA 2027 : les conférenciers invités" width="1024" height="1280" loading="lazy">
+    <img id="poster-en" src="{% static 'conference/img/affiche-invites-en.jpg' %}" alt="M2ISDA 2027 poster: the invited speakers" width="1024" height="1280" loading="lazy" hidden>
   </figure>
 </section>
 </div>
@@ -406,6 +513,6 @@
 </footer>
 
 {{ tex|json_script:"tex-src" }}
-<script src="{% static 'conference/js/site.js' %}" defer></script>
+<script src="{% static 'conference/js/site.js' %}?v=20261111d" defer></script>
 </body>
 </html>
