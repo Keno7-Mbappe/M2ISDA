@@ -1,0 +1,17 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Ajouter une liste{% endblock %}
+{% block content %}
+<a class="back" href="{% url 'dash_home' %}">← Retour à la liste</a>
+<div class="pagehead"><div><p class="kicker">Participants</p><h1>Ajouter une liste</h1></div></div>
+<form class="formcard" method="post" novalidate>
+  {% csrf_token %}
+  <p class="lead">Collez une personne par ligne, avec des colonnes séparées par un point-virgule : <b>Nom ; Établissement ; Pays ; Statut</b>.</p>
+  <p class="dim small">Vous pouvez aussi copier-coller directement les colonnes depuis Excel. Le pays s’écrit en français ou en anglais (par exemple « Maroc » ou « Morocco ») ; le statut est l’un de : invité, enseignant-chercheur, doctorant, stagiaire, participant. Pays et statut peuvent rester vides (statut par défaut : participant). Les personnes déjà présentes (même nom, même établissement) sont ignorées.</p>
+  {% if errors %}<div class="msg msg--error" role="alert"><b>Rien n’a été ajouté. À corriger :</b><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>{% endif %}
+  <label class="field"><span>Liste</span>{{ form.lines }}</label>
+  <div class="formbtns">
+    <button class="btn btn--gold" type="submit">Ajouter à la liste</button>
+    <a class="btn btn--plain" href="{% url 'dash_home' %}">Annuler</a>
+  </div>
+</form>
+{% endblock %}

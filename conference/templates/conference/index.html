@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="{% static 'conference/css/site.css' %}?v=20261111d">
+<link rel="stylesheet" href="{% static 'conference/css/site.css' %}?v=20261112e">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -222,12 +222,6 @@
     </li>
     {% endfor %}
   </ol>
-  <details class="credits rv">
-    <summary>{% t "Crédits des images" "Image credits" %}</summary>
-    <ol>
-      {% for th in themes %}<li><b>{{ th.no }}</b> <span>{% t th.cap.0 th.cap.1 %}</span> — {{ th.credit.author }} · {% if th.credit.lic_url %}<a href="{{ th.credit.lic_url }}" target="_blank" rel="noopener">{{ th.credit.lic }}</a>{% else %}{{ th.credit.lic }}{% endif %}{% if th.credit.note %} · {{ th.credit.note }}{% endif %} · <a href="{{ th.credit.page }}" target="_blank" rel="noopener">{% t "source" "source" %}</a></li>{% endfor %}
-    </ol>
-  </details>
 </section>
 </div>
 
@@ -288,61 +282,76 @@
 <section class="sec">
   <div class="head rv"><p class="kicker">{% t "Liste provisoire" "Provisional list" %}</p>
     <h2>Participants</h2>
-    <p class="sub">{% t "Liste provisoire, mise à jour au fil des inscriptions. Elle présente d’abord les conférenciers invités, puis les enseignants-chercheurs permanents du laboratoire LAMO, puis les doctorants." "Provisional list, updated as registrations come in. It lists the invited speakers first, then the permanent academic staff of the LAMO laboratory, then the doctoral students." %}</p></div>
+    <p class="sub">{% t "Liste classée par ordre alphabétique, mise à jour au fil des inscriptions." "List in alphabetical order, updated as registrations come in." %}</p></div>
 
-  <div class="stats stats--4 rv">
-    <div><b data-count="{{ participants_total }}">{{ participants_total }}</b><span>{% t "participants" "participants" %}</span></div>
-    <div><b data-count="{{ speakers|length }}">{{ speakers|length }}</b><span>{% t "conférenciers invités" "invited speakers" %}</span></div>
-    <div><b data-count="{{ permanents|length }}">{{ permanents|length }}</b><span>{% t "permanents du laboratoire" "laboratory staff" %}</span></div>
-    <div><b data-count="{{ doctorants|length }}">{{ doctorants|length }}</b><span>{% t "doctorants" "doctoral students" %}</span></div>
+  <div class="stats rv">
+    <div><b data-count="{{ total }}">{{ total }}</b><span>{% t "participants" "participants" %}</span></div>
+    <div><b data-count="{{ n_countries }}">{{ n_countries }}</b><span>{% t "pays" "countries" %}</span></div>
+    <div><b data-count="{{ n_inst }}">{{ n_inst }}</b><span>{% t "établissements" "institutions" %}</span></div>
   </div>
-  <p class="upd rv"><i class="upd-dot" aria-hidden="true"></i>{% t "Dernière mise à jour" "Last updated" %} : <b>{% t participants_updated.0 participants_updated.1 %}</b></p>
+  {% if updated %}<p class="upd rv"><i class="upd-dot" aria-hidden="true"></i>{% t "Dernière mise à jour" "Last updated" %} : <b>{% t updated.0 updated.1 %}</b></p>{% endif %}
 
-  <h3 class="subh rv">{% t "Conférenciers invités" "Invited speakers" %}<span class="subh-n">{{ speakers|length }}</span></h3>
-  <ol class="roll">
-    {% for s in speakers %}
-    <li class="who rv" style="--d:{% widthratio forloop.counter0 1 40 %}ms">
-      <span class="who-n">{{ forloop.counter|stringformat:"02d" }}</span>
-      <img src="{% static s.img %}" alt="" width="56" height="56" loading="lazy">
-      <div class="who-t"><b>{{ s.name }}</b><span>{% t s.aff.0 s.aff.1 %}</span><em class="chip">{% t s.country.0 s.country.1 %}</em></div>
-    </li>
-    {% endfor %}
-  </ol>
+  <figure class="world rv" id="world">
+    <div class="world-head">
+      <div>
+        <p class="world-t">{% t "Une conférence ouverte sur le monde" "A conference open to the world" %}</p>
+        <p class="world-sub"><b>{{ n_countries }}</b> {% t "pays" "countries" %} <i aria-hidden="true">·</i> <b>{{ total }}</b> participants</p>
+      </div>
+      <p class="world-key"><span><i class="key key--host" aria-hidden="true"></i>{% t "Pays hôte" "Host country" %}</span><span><i class="key" aria-hidden="true"></i>{% t "Pays représentés" "Countries represented" %}</span></p>
+    </div>
+    <div class="world-map">
+      <svg viewBox="0 0 {{ map_w }} {{ map_h }}" role="img" aria-label="{% t 'Carte du monde des pays représentés' 'World map of the countries represented' %}" focusable="false">
+        <path class="world-grid" d="{{ map_grid }}"/>
+        <path class="world-dots" d="{{ map_rest }}" style="stroke-width:{{ map_dot }}"/>
+        <path class="world-dots world-dots--on" d="{{ map_on }}" style="stroke-width:{{ map_dot }}"/>
+        {% for a in arcs %}<path class="world-arc" d="{{ a }}" pathLength="1" style="--i:{{ forloop.counter0 }}"/>{% endfor %}
+      </svg>
+      {% for c in pins %}
+      <button type="button" class="pin{% if c.host %} pin--host{% endif %}" style="left:{{ c.x }}%;top:{{ c.y }}%;--s:{{ c.size }}px" data-q-fr="{{ c.fr }}" data-q-en="{{ c.en }}">
+        <i aria-hidden="true"></i>
+        <span class="pin-tip"><b>{% t c.fr c.en %}</b>{% if c.n %} · {{ c.n }}{% endif %}{% if c.host %} · {% t "pays hôte" "host country" %}{% endif %}</span>
+      </button>
+      {% endfor %}
+    </div>
+    <figcaption>
+      <ul class="world-legend">
+        {% for c in pins %}{% if c.n %}<li><button type="button" class="wchip" data-q-fr="{{ c.fr }}" data-q-en="{{ c.en }}">{% t c.fr c.en %}<b>{{ c.n }}</b></button></li>{% endif %}{% endfor %}
+      </ul>
+    </figcaption>
+  </figure>
 
-  <h3 class="subh rv">{% t "Permanents du laboratoire LAMO" "LAMO laboratory staff" %}<span class="subh-n">{{ permanents|length }}</span></h3>
-  <ol class="roll">
-    {% for p in permanents %}
-    <li class="who rv" style="--d:{% widthratio forloop.counter0 1 40 %}ms">
-      <span class="who-n">{{ forloop.counter|add:perm_off|stringformat:"02d" }}</span>
-      <img src="{% static p.img %}" alt="" width="56" height="56" loading="lazy">
-      <div class="who-t"><b>{{ p.name }}</b><span>{% t mcf.0 mcf.1 %} · {% t "Université de Djibouti" "University of Djibouti" %}</span><em class="chip">Djibouti</em></div>
-    </li>
-    {% endfor %}
-  </ol>
-
-  <h3 class="subh rv">{% t "Doctorants" "Doctoral students" %}<span class="subh-n">{{ doctorants|length }}</span></h3>
-  <ol class="roll">
-    {% for p in doctorants %}
-    <li class="who rv" style="--d:{% widthratio forloop.counter0 1 40 %}ms">
-      <span class="who-n">{{ forloop.counter|add:doc_off|stringformat:"02d" }}</span>
-      <img src="{% static p.img %}" alt="" width="56" height="56" loading="lazy">
-      <div class="who-t"><b>{{ p.name }}</b>{% if p.aff %}<span>{{ p.aff }}</span>{% endif %}<em class="chip">{% t "Doctorant" "Doctoral student" %}</em></div>
-    </li>
-    {% endfor %}
-  </ol>
-
-  {% if registered %}
-  <h3 class="subh rv">{% t "Participants inscrits" "Registered participants" %}<span class="subh-n">{{ registered|length }}</span></h3>
-  <ol class="roll">
-    {% for r in registered %}
-    <li class="who rv" style="--d:{% widthratio forloop.counter0 1 40 %}ms">
-      <span class="who-n">{{ forloop.counter|add:reg_off|stringformat:"02d" }}</span>
-      <span class="who-ini" aria-hidden="true">{{ r.ini }}</span>
-      <div class="who-t"><b>{{ r.name }}</b><span>{{ r.aff }}</span>{% if r.country %}<em class="chip">{% t r.country.0 r.country.1 %}</em>{% endif %}</div>
-    </li>
-    {% endfor %}
-  </ol>
-  {% endif %}
+  <div class="plist rv" id="plist" data-total="{{ total }}">
+    <div class="plist-top">
+      <label class="psearch"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg>
+        <input id="psearch" type="search" autocomplete="off" placeholder="Nom, établissement ou pays…"
+               data-ph-fr="Nom, établissement ou pays…" data-ph-en="Name, institution or country…"
+               aria-label="Rechercher dans la liste des participants"></label>
+      <p class="pcount" id="pcount" aria-live="polite">{{ total }} participants</p>
+    </div>
+    <div class="plist-filters" role="group" aria-label="Filtrer par statut">
+      <button type="button" class="rchip" data-role="" aria-pressed="true">{% t "Tous" "All" %}<b>{{ total }}</b></button>
+      {% for r in roles %}<button type="button" class="rchip rchip--{{ r.code }}" data-role="{{ r.code }}" aria-pressed="false">{% t r.fr r.en %}<b>{{ r.n }}</b></button>{% endfor %}
+    </div>
+    <div class="plist-head" aria-hidden="true"><span>{% t "Nom" "Name" %}</span><span>{% t "Établissement" "Institution" %}</span><span>{% t "Pays" "Country" %}</span></div>
+    <ol class="prows" id="prows">
+      {% for g in groups %}
+      <li class="pgroup">
+        <span class="pletter" aria-hidden="true">{{ g.letter }}</span>
+        <ol class="pgroup-rows">
+          {% for r in g.rows %}
+          <li class="prow" data-s="{{ r.search }}" data-role="{{ r.role }}">
+            <span class="prow-ini" aria-hidden="true">{{ r.ini }}</span>
+            <span class="prow-who"><b class="prow-name">{{ r.name }}</b><em class="role role--{{ r.role }}">{% t r.role_label.0 r.role_label.1 %}</em></span>
+            <span class="prow-inst">{% if r.inst.0 %}{% t r.inst.0 r.inst.1 %}{% else %}—{% endif %}</span>
+            <span class="prow-c">{% if r.country %}<em class="chip">{% t r.country.0 r.country.1 %}</em>{% endif %}</span>
+          </li>
+          {% endfor %}
+        </ol>
+      </li>
+      {% endfor %}
+    </ol>
+    <p class="pnone" id="pnone" hidden>{% t "Aucun participant ne correspond à cette recherche." "No participant matches this search." %}</p>
+  </div>
 
   <div class="card card--navy join rv">
     <div>
@@ -513,6 +522,6 @@
 </footer>
 
 {{ tex|json_script:"tex-src" }}
-<script src="{% static 'conference/js/site.js' %}?v=20261111d" defer></script>
+<script src="{% static 'conference/js/site.js' %}?v=20261112e" defer></script>
 </body>
 </html>

@@ -1,0 +1,76 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Tableau de bord{% endblock %}
+{% block content %}
+<div class="pagehead">
+  <div>
+    <p class="kicker">Tableau de bord</p>
+    <h1>Participants</h1>
+  </div>
+  <div class="actions">
+    <a class="btn btn--ghost" href="{% url 'dash_export' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>Exporter (CSV)</a>
+    <a class="btn btn--ghost" href="{% url 'dash_bulk' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>Ajouter une liste</a>
+    <a class="btn btn--gold" href="{% url 'dash_add' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Ajouter un participant</a>
+  </div>
+</div>
+
+<div class="cards">
+  <div class="card"><b>{{ total }}</b><span>participants</span></div>
+  <div class="card"><b>{{ n_countries }}</b><span>pays</span></div>
+  <div class="card"><b>{{ n_inst }}</b><span>établissements</span></div>
+  <div class="card card--date"><b>{% if last %}{{ last|date:"j M Y" }}{% else %}—{% endif %}</b><span>dernière modification</span></div>
+</div>
+
+<section class="panel">
+  <div class="panel-top">
+    <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg>
+      <input id="q" type="search" placeholder="Nom, établissement ou pays…" autocomplete="off" aria-label="Rechercher dans la liste"></label>
+    <p class="count" id="count" aria-live="polite">{{ total }} participant{{ total|pluralize }}</p>
+  </div>
+  {% if rows %}
+  <div class="tablewrap">
+  <table class="tbl" id="tbl">
+    <thead><tr><th class="c-n">#</th><th>Nom</th><th>Statut</th><th>Établissement</th><th>Pays</th><th class="c-act"><span class="sr">Actions</span></th></tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr data-s="{{ r.p.name }} {{ r.p.institution }} {{ r.p.institution_en }} {{ r.country }} {{ r.role_label }}">
+        <td class="c-n">{{ forloop.counter }}</td>
+        <td class="c-name">{{ r.p.name }}</td>
+        <td><span class="role role--{{ r.role }}">{{ r.role_label }}</span></td>
+        <td>{{ r.p.institution|default:"—" }}</td>
+        <td>{% if r.country %}<span class="chip">{{ r.country }}</span>{% else %}<span class="dim">—</span>{% endif %}</td>
+        <td class="c-act">
+          <a class="ico" href="{% url 'dash_edit' r.p.pk %}" title="Modifier {{ r.p.name }}" aria-label="Modifier {{ r.p.name }}"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4ZM13.5 6.5l4 4"/></svg></a>
+          <a class="ico ico--del" href="{% url 'dash_delete' r.p.pk %}" title="Supprimer {{ r.p.name }}" aria-label="Supprimer {{ r.p.name }}"><svg viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10 11v5M14 11v5"/></svg></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="empty" id="none" hidden>Aucun résultat pour cette recherche.</p>
+  {% else %}
+  <p class="empty">La liste est vide. Ajoutez un premier participant ou collez une liste complète.</p>
+  {% endif %}
+</section>
+
+<p class="note">La liste est classée par ordre alphabétique sur le site. Les modifications apparaissent immédiatement dans la rubrique Participants et sur la carte du monde.</p>
+
+<script>
+(function () {
+  var q = document.getElementById('q'), rows = Array.prototype.slice.call(document.querySelectorAll('#tbl tbody tr'));
+  if (!q || !rows.length) return;
+  function fold(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+  var idx = rows.map(function (r) { return fold(r.getAttribute('data-s')); });
+  var count = document.getElementById('count'), none = document.getElementById('none');
+  q.addEventListener('input', function () {
+    var words = fold(q.value).split(/\s+/).filter(Boolean), n = 0;
+    rows.forEach(function (r, i) {
+      var ok = words.every(function (w) { return idx[i].indexOf(w) !== -1; });
+      r.hidden = !ok; if (ok) n++;
+    });
+    count.textContent = n + ' participant' + (n > 1 ? 's' : '') + (words.length ? ' trouvé' + (n > 1 ? 's' : '') : '');
+    none.hidden = n !== 0;
+  });
+})();
+</script>
+{% endblock %}

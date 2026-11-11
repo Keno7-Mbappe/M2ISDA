@@ -125,12 +125,6 @@ DOCTORANTS = [
     ("Hakim Amer", "Toulon", "hakim"), ("Kadir Ali", "Marie et Louis Pasteur", "kadir"),
     ("Abdoulrahman Farah", "", "farah"),
 ]
-# Rubrique « Participants » — liste provisoire, mise à jour au fil des inscriptions.
-# Ordre d'affichage : invités (SPEAKERS), permanents du laboratoire (PERMANENTS), doctorants (DOCTORANTS),
-# puis les participants inscrits ci-dessous. Pour en ajouter : (nom, établissement, pays)  — pays ∈ COUNTRIES ou "".
-PARTICIPANTS_UPDATED = ("7 novembre 2026", "7 November 2026")
-REGISTERED = []
-
 MASTER_STUDENTS = [
     ("Kenedid Yacin", "kenedid"), ("Asma Ahmed", "asma"),
     ("Mahdi Said", "mahdi"), ("Fatouma Soubere", "fatouma"),

@@ -1,0 +1,33 @@
+{% load static %}<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#070F24">
+<title>{% block title %}Administration{% endblock %} · M2ISDA 2027</title>
+<link rel="icon" href="{% static 'conference/img/favicon-48.png' %}" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="{% static 'conference/css/dashboard.css' %}?v=1">
+</head>
+<body class="dash {% block bodyclass %}{% endblock %}">
+{% block body %}
+<header class="bar">
+  <div class="bar-in">
+    <a class="bar-brand" href="{% url 'dash_home' %}"><b>M2ISDA <em>2027</em></b><span>Administration</span></a>
+    <nav class="bar-nav" aria-label="Administration">
+      <a href="{% url 'index' %}" target="_blank" rel="noopener">Voir le site<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      <span class="bar-user">{{ user.get_username }}</span>
+      <form method="post" action="{% url 'dash_logout' %}">{% csrf_token %}<button type="submit" class="bar-out">Se déconnecter</button></form>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  {% if messages %}<ul class="msgs" role="status">{% for m in messages %}<li class="msg msg--{{ m.tags }}">{{ m }}</li>{% endfor %}</ul>{% endif %}
+  {% block content %}{% endblock %}
+</main>
+{% endblock %}
+</body>
+</html>

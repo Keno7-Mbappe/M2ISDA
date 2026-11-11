@@ -1,0 +1,15 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Supprimer{% endblock %}
+{% block content %}
+<a class="back" href="{% url 'dash_home' %}">← Retour à la liste</a>
+<div class="pagehead"><div><p class="kicker">Participants</p><h1>Supprimer ce participant ?</h1></div></div>
+<form class="formcard formcard--narrow" method="post">
+  {% csrf_token %}
+  <p class="lead"><b>{{ p.name }}</b>{% if p.institution %}<br><span class="dim">{{ p.institution }}{% if p.country_fr %} · {{ p.country_fr }}{% endif %}</span>{% endif %}</p>
+  <p>Cette personne disparaîtra de la liste et de la carte du site. Cette action est définitive.</p>
+  <div class="formbtns">
+    <button class="btn btn--danger-solid" type="submit">Oui, supprimer</button>
+    <a class="btn btn--plain" href="{% url 'dash_home' %}">Annuler</a>
+  </div>
+</form>
+{% endblock %}

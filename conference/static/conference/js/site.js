@@ -25,6 +25,8 @@
     var pf = $('#poster-fr'), pe = $('#poster-en');
     if (pf && pe) { pf.hidden = l !== 'fr'; pe.hidden = l === 'fr'; }
     $$('[data-copy]').forEach(function (b) { b.textContent = b.getAttribute('data-label-' + l); });
+    $$('[data-ph-fr]').forEach(function (el) { el.setAttribute('placeholder', el.getAttribute('data-ph-' + l)); });
+    pfilter();
     doc.title = TITLES[l];
     milestones();
     try { localStorage.setItem('m2isda_lang', l); } catch (e) {}
@@ -164,6 +166,39 @@
       t = setTimeout(function () { btn.textContent = btn.getAttribute('data-label-' + lang); }, 1800);
     });
   });
+
+  /* ------------------------------------------------------------ liste des participants : recherche */
+  var psearch = $('#psearch'), prows = $$('#prows .prow'), pgroups = $$('#prows .pgroup'), prole = '';
+  function fold(s) { return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
+  function pfilter() {
+    if (!psearch) return;
+    var words = fold(psearch.value).split(' ').filter(Boolean), n = 0;
+    prows.forEach(function (r) {
+      var s = r.getAttribute('data-s'), ok = (!prole || r.getAttribute('data-role') === prole) && words.every(function (w) { return s.indexOf(w) !== -1; });
+      r.hidden = !ok; if (ok) n++;
+    });
+    pgroups.forEach(function (g) { g.hidden = !g.querySelector('.prow:not([hidden])'); });
+    var q = words.length > 0 || prole !== '', fr = lang === 'fr';
+    $('#pcount').textContent = n + ' ' + (q ? (fr ? 'résultat' : 'result') : 'participant') + ((fr ? n > 1 : n !== 1) ? 's' : '');
+    $('#pnone').hidden = n !== 0;
+  }
+  if (psearch) {
+    psearch.addEventListener('input', pfilter);
+    $$('.rchip').forEach(function (b) {
+      b.addEventListener('click', function () {
+        prole = b.getAttribute('data-role') || '';
+        $$('.rchip').forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+        pfilter();
+      });
+    });
+    $$('#world [data-q-fr]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var v = b.getAttribute('data-q-' + lang);
+        psearch.value = fold(psearch.value) === fold(v) ? '' : v; pfilter();
+        var box = $('#plist'); if (box) box.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      });
+    });
+  }
 
   /* ------------------------------------------------------------ démarrage */
   try { var saved = localStorage.getItem('m2isda_lang'); if (saved === 'en' || saved === 'fr') lang = saved; } catch (e) {}

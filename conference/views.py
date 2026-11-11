@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from . import content as c
+from .participants import participants_context
 
 
 def index(request):
@@ -33,21 +34,12 @@ def index(request):
              "credit": dict(zip(("author", "lic", "lic_url", "page", "note"), c.THEME_CREDITS[d[0]]))}
             for a, d in zip(c.AXES, c.THEME_DETAILS)
         ],
-        "registered": [
-            {"name": r[0], "aff": r[1], "country": (r[2], c.COUNTRIES[r[2]]) if r[2] else None,
-             "ini": "".join(w[0] for w in r[0].split()[:2]).upper()}
-            for r in c.REGISTERED
-        ],
-        "participants_total": len(c.SPEAKERS) + len(c.PERMANENTS) + len(c.DOCTORANTS) + len(c.REGISTERED),
-        "perm_off": len(c.SPEAKERS),
-        "doc_off": len(c.SPEAKERS) + len(c.PERMANENTS),
-        "reg_off": len(c.SPEAKERS) + len(c.PERMANENTS) + len(c.DOCTORANTS),
-        "participants_updated": c.PARTICIPANTS_UPDATED,
         "universities": [{"name": u[0], "img": c.P + u[1] + ".png"} for u in c.UNIVERSITIES],
         "si": c.SPECIAL_ISSUE,
         "tex_lines": c.tex_lines(),
         "tex": c.TEX,
     }
+    ctx.update(participants_context())
     return render(request, "conference/index.html", ctx)
 
 

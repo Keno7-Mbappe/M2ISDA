@@ -1,0 +1,21 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Connexion{% endblock %}
+{% block bodyclass %}dash--login{% endblock %}
+{% block body %}
+<main class="login">
+  <form class="login-card" method="post" autocomplete="on">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <p class="kicker">Administration</p>
+    <h1>M2ISDA <em>2027</em></h1>
+    <p class="login-sub">Connectez-vous pour gérer la liste des participants.</p>
+    {% if error %}<p class="msg msg--error" role="alert">{{ error }}</p>{% endif %}
+    <label class="field"><span>Identifiant</span>
+      <input type="text" name="username" value="{{ username }}" autocomplete="username" autocapitalize="none" required autofocus></label>
+    <label class="field"><span>Mot de passe</span>
+      <input type="password" name="password" autocomplete="current-password" required></label>
+    <button class="btn btn--gold btn--block" type="submit">Se connecter</button>
+    <a class="login-back" href="{% url 'index' %}">← Retour au site</a>
+  </form>
+</main>
+{% endblock %}
