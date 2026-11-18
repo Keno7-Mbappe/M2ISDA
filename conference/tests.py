@@ -51,9 +51,9 @@ class SiteTests(TestCase):
         page = html.unescape(self.get("/").content.decode())
         section = page[page.index('id="participants" class="page"'):page.index('id="programme" class="page"')]
         names = re.findall(r'<b class="prow-name">(.*?)</b>', section)
-        self.assertEqual(len(names), 27)
+        self.assertEqual(len(names), 36)
         self.assertEqual(names, sorted(names, key=sort_key))
-        self.assertEqual(names[:3], ["Abdisalam Hassan", "Abdoulrahman Farah", "Ali Mohamed"])
+        self.assertEqual(names[:3], ["Abdikani Mohamed Aden", "Abdirahim Mohamed Muhumed", "Abdisalam Hassan"])
         self.assertIn("Dr Doualeh Ali", names)
         self.assertNotIn("<img", section)
         self.assertIn('id="psearch"', section)
@@ -169,7 +169,19 @@ class SiteTests(TestCase):
 class ParticipantsDataTests(TestCase):
     def test_initial_list_is_seeded(self):
         from .models import Participant
-        self.assertEqual(Participant.objects.count(), 27)
+        self.assertEqual(Participant.objects.count(), 36)
+
+    def test_full_list_from_the_spreadsheet_is_seeded(self):
+        from .models import Participant
+        amoud = Participant.objects.filter(institution="Université Amoud")
+        self.assertEqual(amoud.count(), 8)
+        self.assertEqual(Participant.objects.filter(country="SO").count(), 10)
+        self.assertEqual(Participant.objects.filter(role="participant").count(), 9)
+        joseph = Participant.objects.get(name="Joseph Ngatchou-Wandji")
+        self.assertEqual((joseph.institution, joseph.country), ("Université de Lorraine", "FR"))
+        farah = Participant.objects.get(name="Abdoulrahman Farah")
+        self.assertEqual((farah.institution, farah.country, farah.country2), ("Université de Lorraine", "FR", "DJ"))
+        self.assertEqual(Participant.objects.get(name="Mustafe Aden Muhumed").institution, "Université de Hargeisa")
 
     def test_new_participant_appears_on_the_page_and_the_map(self):
         from .models import Participant
@@ -177,7 +189,7 @@ class ParticipantsDataTests(TestCase):
         page = html.unescape(self.client.get("/", secure=True).content.decode())
         self.assertIn("Zoé Tremblay", page)
         self.assertIn('data-q-fr="Canada"', page)
-        self.assertEqual(page.count('class="prow"'), 28)
+        self.assertEqual(page.count('class="prow"'), 37)
 
     def test_titles_do_not_disturb_alphabetical_order(self):
         from .participants import sort_key
@@ -255,7 +267,7 @@ class DashboardTests(TestCase):
         self.assertRedirects(response, "/admin/", fetch_redirect_response=False)
         page = html.unescape(self.get("/admin/").content.decode())
         self.assertIn("Ramsès Djidjou-Demasse", page)
-        self.assertEqual(page.count("<tr data-s="), 27)
+        self.assertEqual(page.count("<tr data-s="), 36)
 
     def test_open_redirect_is_not_possible(self):
         response = self.post("/admin/connexion/", {"username": "chef", "password": self.PWD, "next": "https://evil.example/"})
@@ -300,7 +312,7 @@ class DashboardTests(TestCase):
         response = self.get("/admin/participants/export.csv")
         text = response.content.decode("utf-8-sig")
         self.assertIn("text/csv", response["Content-Type"])
-        self.assertEqual(len(text.strip().splitlines()), 28)
+        self.assertEqual(len(text.strip().splitlines()), 37)
         self.assertIn("Ramsès Djidjou-Demasse;IRD — MIVEGEC;;France;Conférencier invité", text)
 
     def test_logout_requires_post(self):
@@ -369,8 +381,8 @@ class TwoCountriesTests(TestCase):
 
     def test_a_person_with_two_countries_counts_in_each_of_them(self):
         page = html.unescape(self.client.get("/", secure=True).content.decode())
-        # France : 5 invités + 7 doctorants ; Djibouti : 6 enseignants-chercheurs + 4 stagiaires + 7 doctorants
-        self.assertRegex(page, r'data-q-fr="France"[^>]*>France<b>12</b>')
+        # France : 5 invités + 1 participant + 7 doctorants ; Djibouti : 6 enseignants-chercheurs + 4 stagiaires + 7 doctorants
+        self.assertRegex(page, r'data-q-fr="France"[^>]*>France<b>13</b>')
         self.assertRegex(page, r'data-q-fr="Djibouti"[^>]*>Djibouti<b>17</b>')
         self.assertContains(self.client.get("/", secure=True), '<b>6</b> <span data-en="countries">pays</span>', html=False)
 
