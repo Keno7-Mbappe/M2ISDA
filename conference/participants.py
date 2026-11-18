@@ -122,7 +122,8 @@ def participants_context():
         "pins": pins,
         "arcs": arcs,
         "n_countries": len([c for c in pins if c["n"]]),
-        "n_inst": len({r["inst"][0].strip().lower() for r in rows if r["inst"][0].strip()}),
+        # « DPCR — Directeur général » et « DPCR — Directeur des opérations » comptent pour un seul établissement
+        "n_inst": len({r["inst"][0].split(" — ")[0].strip().lower() for r in rows if r["inst"][0].strip()}),
         "map_on": on,
         "map_rest": rest,
         "map_grid": _graticule(),

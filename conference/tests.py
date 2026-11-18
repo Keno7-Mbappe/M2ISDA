@@ -51,7 +51,7 @@ class SiteTests(TestCase):
         page = html.unescape(self.get("/").content.decode())
         section = page[page.index('id="participants" class="page"'):page.index('id="programme" class="page"')]
         names = re.findall(r'<b class="prow-name">(.*?)</b>', section)
-        self.assertEqual(len(names), 36)
+        self.assertEqual(len(names), 38)
         self.assertEqual(names, sorted(names, key=sort_key))
         self.assertEqual(names[:3], ["Abdikani Mohamed Aden", "Abdirahim Mohamed Muhumed", "Abdisalam Hassan"])
         self.assertIn("Dr Doualeh Ali", names)
@@ -169,14 +169,27 @@ class SiteTests(TestCase):
 class ParticipantsDataTests(TestCase):
     def test_initial_list_is_seeded(self):
         from .models import Participant
-        self.assertEqual(Participant.objects.count(), 36)
+        self.assertEqual(Participant.objects.count(), 38)
+
+    def test_dpcr_managers_are_listed_once_as_an_institution(self):
+        from .models import Participant
+        dg = Participant.objects.get(name="Warsama Mouhoumed Bouh")
+        self.assertEqual((dg.institution, dg.institution_en, dg.country), ("DPCR — Directeur général", "DPCR — Director General", "DJ"))
+        ops = Participant.objects.get(name="Abdourahman Haroun")
+        self.assertEqual((ops.institution, ops.country), ("DPCR — Directeur des opérations", "DJ"))
+        page = html.unescape(self.client.get("/", secure=True).content.decode())
+        self.assertIn("DPCR — Directeur général", page)
+        from .participants import participants_context
+        before = participants_context()["n_inst"]
+        Participant.objects.filter(institution__startswith="DPCR").delete()
+        self.assertEqual(participants_context()["n_inst"], before - 1)
 
     def test_full_list_from_the_spreadsheet_is_seeded(self):
         from .models import Participant
         amoud = Participant.objects.filter(institution="Université Amoud")
         self.assertEqual(amoud.count(), 8)
         self.assertEqual(Participant.objects.filter(country="SO").count(), 10)
-        self.assertEqual(Participant.objects.filter(role="participant").count(), 9)
+        self.assertEqual(Participant.objects.filter(role="participant").count(), 11)
         joseph = Participant.objects.get(name="Joseph Ngatchou-Wandji")
         self.assertEqual((joseph.institution, joseph.country), ("Université de Lorraine", "FR"))
         farah = Participant.objects.get(name="Abdoulrahman Farah")
@@ -189,7 +202,7 @@ class ParticipantsDataTests(TestCase):
         page = html.unescape(self.client.get("/", secure=True).content.decode())
         self.assertIn("Zoé Tremblay", page)
         self.assertIn('data-q-fr="Canada"', page)
-        self.assertEqual(page.count('class="prow"'), 37)
+        self.assertEqual(page.count('class="prow"'), 39)
 
     def test_titles_do_not_disturb_alphabetical_order(self):
         from .participants import sort_key
@@ -267,7 +280,7 @@ class DashboardTests(TestCase):
         self.assertRedirects(response, "/admin/", fetch_redirect_response=False)
         page = html.unescape(self.get("/admin/").content.decode())
         self.assertIn("Ramsès Djidjou-Demasse", page)
-        self.assertEqual(page.count("<tr data-s="), 36)
+        self.assertEqual(page.count("<tr data-s="), 38)
 
     def test_open_redirect_is_not_possible(self):
         response = self.post("/admin/connexion/", {"username": "chef", "password": self.PWD, "next": "https://evil.example/"})
@@ -312,7 +325,7 @@ class DashboardTests(TestCase):
         response = self.get("/admin/participants/export.csv")
         text = response.content.decode("utf-8-sig")
         self.assertIn("text/csv", response["Content-Type"])
-        self.assertEqual(len(text.strip().splitlines()), 37)
+        self.assertEqual(len(text.strip().splitlines()), 39)
         self.assertIn("Ramsès Djidjou-Demasse;IRD — MIVEGEC;;France;Conférencier invité", text)
 
     def test_logout_requires_post(self):
@@ -381,9 +394,9 @@ class TwoCountriesTests(TestCase):
 
     def test_a_person_with_two_countries_counts_in_each_of_them(self):
         page = html.unescape(self.client.get("/", secure=True).content.decode())
-        # France : 5 invités + 1 participant + 7 doctorants ; Djibouti : 6 enseignants-chercheurs + 4 stagiaires + 7 doctorants
+        # France : 5 invités + 1 participant + 7 doctorants ; Djibouti : 6 enseignants-chercheurs + 4 stagiaires + 2 DPCR + 7 doctorants
         self.assertRegex(page, r'data-q-fr="France"[^>]*>France<b>13</b>')
-        self.assertRegex(page, r'data-q-fr="Djibouti"[^>]*>Djibouti<b>17</b>')
+        self.assertRegex(page, r'data-q-fr="Djibouti"[^>]*>Djibouti<b>19</b>')
         self.assertContains(self.client.get("/", secure=True), '<b>6</b> <span data-en="countries">pays</span>', html=False)
 
     def test_codes_ignore_duplicates_and_unknown_codes(self):
