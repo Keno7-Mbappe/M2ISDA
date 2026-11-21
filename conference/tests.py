@@ -343,20 +343,28 @@ class DashboardTests(TestCase):
 
 
 class RolesTests(TestCase):
-    def test_interns_and_doctoral_students_are_listed_with_their_status(self):
+    def test_interns_and_doctoral_students_are_listed_but_their_status_is_not_shown(self):
         from .models import Participant
+        # le statut reste enregistré (tableau de bord)…
         self.assertEqual(Participant.objects.filter(role="stagiaire").count(), 4)
         self.assertEqual(Participant.objects.filter(role="doctorant").count(), 7)
         self.assertEqual(Participant.objects.filter(role="chercheur").count(), 6)
         self.assertEqual(Participant.objects.filter(role="invite").count(), 10)
+        # … mais la liste publique ne l'affiche pas : ni étiquette, ni filtre, ni couleur par statut
         page = html.unescape(self.client.get("/", secure=True).content.decode())
         section = page[page.index('id="participants" class="page"'):page.index('id="programme" class="page"')]
-        self.assertEqual(section.count('data-role="stagiaire"'), 4 + 1)  # 4 lignes + le filtre
-        self.assertEqual(section.count('data-role="doctorant"'), 7 + 1)
         for name in ("Kenedid Yacin", "Asma Ahmed", "Mahdi Said", "Fatouma Soubere", "Abdoulrahman Farah"):
             self.assertIn(name, section)
-        self.assertIn("Stagiaire (master)", section)
-        self.assertIn("Doctorant", section)
+        for gone in ('class="role', "rchip", "data-role", "Stagiaire (master)", "Conférencier invité", "Enseignants-chercheurs",
+                     "Doctorants", "Autres participants", "Filtrer par statut"):
+            self.assertNotIn(gone, section)
+        self.assertEqual(section.count('class="prow"'), 38)
+
+    def test_search_does_not_match_hidden_statuses(self):
+        from .participants import participants_context
+        searches = " ".join(r["search"] for r in participants_context()["rows"])
+        self.assertNotIn("doctorant", searches)
+        self.assertNotIn("stagiaire", searches)
 
     def test_list_is_grouped_by_letter_and_initials_are_shown(self):
         page = html.unescape(self.client.get("/", secure=True).content.decode())

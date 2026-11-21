@@ -8,7 +8,6 @@ from django.utils import timezone
 from . import worldmap
 from .countries import COUNTRIES
 from .models import Participant
-from .roles import DEFAULT_ROLE, ROLES
 
 MONTHS_FR = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
 MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -62,11 +61,9 @@ def _arc(a, b):
 
 def participants_context():
     people = sorted(Participant.objects.all(), key=lambda p: (sort_key(p.name), p.pk))
-    rows, by_country, role_n = [], {}, {}
+    rows, by_country = [], {}
     for p in people:
         codes = p.codes
-        role = p.role if p.role in ROLES else DEFAULT_ROLE
-        role_n[role] = role_n.get(role, 0) + 1
         initials = "".join(w[0] for w in [w for w in p.name.split() if fold(w) not in TITLES][:2]).upper() or "?"
         rows.append({
             "name": p.name,
@@ -74,10 +71,7 @@ def participants_context():
             "letter": (sort_key(p.name)[:1] or "#").upper(),
             "inst": (p.institution, p.institution_en or p.institution),
             "country": (p.country_fr, p.country_en) if codes else None,
-            "role": role,
-            "role_label": ROLES[role][:2],
-            "search": fold(" ".join([p.name, p.institution, p.institution_en, p.country_fr, p.country_en,
-                                     *codes, ROLES[role][0], ROLES[role][1]])),
+            "search": fold(" ".join([p.name, p.institution, p.institution_en, p.country_fr, p.country_en, *codes])),
         })
         for code in codes:  # une personne rattachée à deux pays compte dans chacun
             info = COUNTRIES[code]
@@ -118,7 +112,6 @@ def participants_context():
         "rows": rows,
         "groups": groups,
         "total": len(rows),
-        "roles": [{"code": k, "n": role_n[k], "fr": ROLES[k][2], "en": ROLES[k][3]} for k in ROLES if role_n.get(k)],
         "pins": pins,
         "arcs": arcs,
         "n_countries": len([c for c in pins if c["n"]]),

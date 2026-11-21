@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="{% static 'conference/css/site.css' %}?v=20261112e">
+<link rel="stylesheet" href="{% static 'conference/css/site.css' %}?v=20261121a">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -328,10 +328,6 @@
                aria-label="Rechercher dans la liste des participants"></label>
       <p class="pcount" id="pcount" aria-live="polite">{{ total }} participants</p>
     </div>
-    <div class="plist-filters" role="group" aria-label="Filtrer par statut">
-      <button type="button" class="rchip" data-role="" aria-pressed="true">{% t "Tous" "All" %}<b>{{ total }}</b></button>
-      {% for r in roles %}<button type="button" class="rchip rchip--{{ r.code }}" data-role="{{ r.code }}" aria-pressed="false">{% t r.fr r.en %}<b>{{ r.n }}</b></button>{% endfor %}
-    </div>
     <div class="plist-head" aria-hidden="true"><span>{% t "Nom" "Name" %}</span><span>{% t "Établissement" "Institution" %}</span><span>{% t "Pays" "Country" %}</span></div>
     <ol class="prows" id="prows">
       {% for g in groups %}
@@ -339,9 +335,9 @@
         <span class="pletter" aria-hidden="true">{{ g.letter }}</span>
         <ol class="pgroup-rows">
           {% for r in g.rows %}
-          <li class="prow" data-s="{{ r.search }}" data-role="{{ r.role }}">
+          <li class="prow" data-s="{{ r.search }}">
             <span class="prow-ini" aria-hidden="true">{{ r.ini }}</span>
-            <span class="prow-who"><b class="prow-name">{{ r.name }}</b><em class="role role--{{ r.role }}">{% t r.role_label.0 r.role_label.1 %}</em></span>
+            <span class="prow-who"><b class="prow-name">{{ r.name }}</b></span>
             <span class="prow-inst">{% if r.inst.0 %}{% t r.inst.0 r.inst.1 %}{% else %}—{% endif %}</span>
             <span class="prow-c">{% if r.country %}<em class="chip">{% t r.country.0 r.country.1 %}</em>{% endif %}</span>
           </li>
@@ -522,6 +518,6 @@
 </footer>
 
 {{ tex|json_script:"tex-src" }}
-<script src="{% static 'conference/js/site.js' %}?v=20261112e" defer></script>
+<script src="{% static 'conference/js/site.js' %}?v=20261121a" defer></script>
 </body>
 </html>

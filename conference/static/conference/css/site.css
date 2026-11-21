@@ -740,22 +740,9 @@ html{overflow-x:clip}
   .pin--host .pin-tip{display:none}
 }
 
-/* statuts */
-.role{display:inline-block;align-self:flex-start;padding:2px 10px;border-radius:999px;font-family:var(--sans);font-style:normal;font-size:12px;font-weight:600;line-height:1.5;letter-spacing:.01em;color:var(--navy);background:rgba(14,34,87,.08)}
-.role--invite{color:#7a5a14;background:rgba(227,182,89,.3)}
-.role--chercheur{color:var(--royal);background:rgba(36,71,184,.11)}
-.role--doctorant{color:#0b6f78;background:rgba(15,138,148,.13)}
-.role--stagiaire{color:#b13e1b;background:rgba(228,87,46,.12)}
-
 /* liste */
 .plist{--lw:76px;border-radius:26px}
-.plist-top{border-bottom:0;padding-bottom:6px}
-.plist-filters{display:flex;flex-wrap:wrap;gap:8px;padding:8px clamp(16px,2.6vw,30px) 18px}
-.rchip{display:inline-flex;align-items:center;gap:9px;padding:6px 8px 6px 14px;border-radius:999px;border:1px solid var(--line-dk);background:#fff;color:var(--text);font-size:14px;font-weight:500;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
-.rchip b{display:grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--navy);background:rgba(14,34,87,.08);transition:background .25s,color .25s}
-@media (hover:hover){.rchip:hover{border-color:var(--ink)}}
-.rchip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
-.rchip[aria-pressed="true"] b{background:var(--gold);color:var(--ink)}
+.plist-top{border-bottom:0;padding-bottom:18px}
 .plist-head{display:grid;grid-template-columns:52px minmax(0,1.05fr) minmax(0,1.5fr) minmax(130px,.55fr);gap:6px 24px;padding:11px clamp(16px,2.6vw,30px) 11px var(--lw);font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);background:color-mix(in srgb,var(--ac) 7%,var(--paper));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .plist-head span:first-child{grid-column:2}
 .plist-head span:nth-child(2){grid-column:3}.plist-head span:nth-child(3){grid-column:4}
@@ -767,9 +754,7 @@ html{overflow-x:clip}
 .prow:last-child{border-bottom:0}
 .prow::before{content:"";position:absolute;left:-1px;top:16%;bottom:16%;width:3px;border-radius:3px;background:var(--rc,var(--ac));transform:scaleY(0);transition:transform .45s var(--ease)}
 @media (hover:hover){.prow:hover::before{transform:none}}
-.prow[data-role=invite]{--rc:var(--gold)}.prow[data-role=chercheur]{--rc:var(--royal)}.prow[data-role=doctorant]{--rc:var(--sea)}.prow[data-role=stagiaire]{--rc:var(--verm)}
 .prow-ini{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;font-family:var(--display);font-style:italic;font-size:17px;font-weight:500;letter-spacing:-.01em;color:var(--rc,var(--navy));background:color-mix(in srgb,var(--rc,var(--navy)) 14%,var(--paper));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--rc,var(--navy)) 32%,transparent)}
-.prow[data-role=invite] .prow-ini{color:#7a5a14}
 .prow-who{display:flex;flex-direction:column;gap:5px;min-width:0}
 .prow .chip{color:var(--navy);background:rgba(14,34,87,.07)}
 @media (max-width:900px){
