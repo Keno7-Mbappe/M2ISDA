@@ -598,9 +598,8 @@ html{overflow-x:clip}
 .theme{position:relative;display:flex;flex-direction:column;overflow:hidden;border-radius:24px;background:var(--paper);border:1px solid color-mix(in srgb,var(--ac) 24%,var(--line));transition:translate .6s var(--ease),box-shadow .5s,border-color .4s}
 .theme-fig{position:relative;margin:0;overflow:hidden;aspect-ratio:1200/760;background:#06122E}
 .theme-fig img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.5s var(--ease)}
-.theme-fig::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,10,30,.42),transparent 30%,transparent 52%,rgba(3,10,30,.88));pointer-events:none}
+.theme-fig::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,10,30,.42),transparent 30%);pointer-events:none}
 .theme-no{position:absolute;z-index:2;left:20px;top:10px;font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(40px,4.2vw,60px);line-height:1;letter-spacing:.01em;color:#fff;text-shadow:0 2px 24px rgba(3,10,30,.7),0 0 38px rgba(20,184,232,.55);transition:transform .8s var(--ease)}
-.theme-fig figcaption{position:absolute;z-index:2;left:18px;right:18px;bottom:15px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#C3D4FF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .theme-body{position:relative;display:flex;flex-direction:column;gap:14px;flex:1;padding:22px 24px 24px}
 .theme-body::before{content:"";position:absolute;left:0;top:0;height:4px;width:100%;background:linear-gradient(90deg,var(--ac),var(--gold));transform:scaleX(.18);transform-origin:left;transition:transform .9s var(--ease)}
 .theme-body h3{font-family:var(--display);font-size:clamp(22px,2.1vw,28px);font-weight:600;line-height:1.14;letter-spacing:-.02em;color:var(--ink);text-wrap:balance;font-variation-settings:"opsz" 28}

@@ -45,6 +45,8 @@ class SiteTests(TestCase):
         self.assertEqual(section.count('class="theme rv"'), 8)
         self.assertEqual(section.count("conference/img/themes/"), 8)
         self.assertIn("Modélisation épidémiologique et santé publique", section)
+        for gone in ("<figcaption", "theme-eq", "<code", "dI/dt", "argmax"):  # ni légende ni formule sur les images
+            self.assertNotIn(gone, section)
 
     def test_participants_page_is_an_alphabetical_list_without_photos(self):
         from .participants import sort_key

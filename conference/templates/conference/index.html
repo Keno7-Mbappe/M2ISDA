@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="{% static 'conference/css/site.css' %}?v=20261121b">
+<link rel="stylesheet" href="{% static 'conference/css/site.css' %}?v=20261121c">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -211,7 +211,6 @@
       <figure class="theme-fig">
         <img src="{% static th.img %}" alt="" width="1200" height="760" loading="lazy">
         <span class="theme-no" aria-hidden="true">{{ th.no }}</span>
-        <figcaption>{% t th.cap.0 th.cap.1 %}</figcaption>
       </figure>
       <div class="theme-body">
         <h3>{% t th.title.0 th.title.1 %}</h3>
@@ -517,6 +516,6 @@
 </footer>
 
 {{ tex|json_script:"tex-src" }}
-<script src="{% static 'conference/js/site.js' %}?v=20261121b" defer></script>
+<script src="{% static 'conference/js/site.js' %}?v=20261121c" defer></script>
 </body>
 </html>
