@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="{% static 'conference/css/site.css' %}?v=20261121a">
+<link rel="stylesheet" href="{% static 'conference/css/site.css' %}?v=20261121b">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -204,14 +204,13 @@
 <section class="sec">
   <div class="head rv"><p class="kicker">{% t "Huit axes de recherche" "Eight research areas" %}</p>
     <h2>{% t "Thématiques" "Topics" %}</h2>
-    <p class="sub">{% t "Les contributions sont attendues dans l’un des huit axes de la conférence, de la modélisation épidémiologique à l’aide à la décision. Chaque axe est illustré par une image et par l’équation qui le résume." "Contributions are expected in one of the conference’s eight areas, from epidemiological modelling to decision support. Each area is illustrated by an image and by the equation that sums it up." %}</p></div>
+    <p class="sub">{% t "Les contributions sont attendues dans l’un des huit axes de la conférence, de la modélisation épidémiologique à l’aide à la décision. Chaque axe est illustré par une image." "Contributions are expected in one of the conference’s eight areas, from epidemiological modelling to decision support. Each area is illustrated by an image." %}</p></div>
   <ol class="themes">
     {% for th in themes %}
     <li class="theme rv" style="--d:{% cycle '0' '90' %}ms">
       <figure class="theme-fig">
         <img src="{% static th.img %}" alt="" width="1200" height="760" loading="lazy">
         <span class="theme-no" aria-hidden="true">{{ th.no }}</span>
-        <code class="theme-eq">{{ th.formula }}</code>
         <figcaption>{% t th.cap.0 th.cap.1 %}</figcaption>
       </figure>
       <div class="theme-body">
@@ -518,6 +517,6 @@
 </footer>
 
 {{ tex|json_script:"tex-src" }}
-<script src="{% static 'conference/js/site.js' %}?v=20261121a" defer></script>
+<script src="{% static 'conference/js/site.js' %}?v=20261121b" defer></script>
 </body>
 </html>

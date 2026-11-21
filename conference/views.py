@@ -29,7 +29,7 @@ def index(request):
             for s in c.SCIENTISTS
         ],
         "themes": [
-            {"no": a[0], "title": a[1], "formula": a[2], "name": a[3], "img": "conference/img/themes/" + d[0] + ".webp",
+            {"no": a[0], "title": a[1], "name": a[3], "img": "conference/img/themes/" + d[0] + ".webp",
              "cap": d[1], "kw": list(zip(d[2][0], d[2][1])),
              "credit": dict(zip(("author", "lic", "lic_url", "page", "note"), c.THEME_CREDITS[d[0]]))}
             for a, d in zip(c.AXES, c.THEME_DETAILS)
